@@ -26,11 +26,11 @@ TODO: Add long description of the pod here.
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'kanecheshire' => 'kane.cheshire@googlemail.com' }
   s.source           = { :git => 'https://github.com/kanecheshire/PixelTest.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  # s.social_media_url = 'https://twitter.com/kanecheshire'
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'PixelTest/Classes/**/*'
+  s.source_files = 'PixelTest/**/*', 'PixelTestCase.swift'
   
   # s.resource_bundles = {
   #   'PixelTest' => ['PixelTest/Assets/*.png']

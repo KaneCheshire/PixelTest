@@ -18,7 +18,10 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "PixelTest/Classes/**/*",
+  "source_files": [
+    "PixelTest/**/*",
+    "PixelTestCase.swift"
+  ],
   "frameworks": [
     "UIKit",
     "XCTest"

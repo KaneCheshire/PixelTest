@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		046AD5452C5A765C76B787DEB16386DE /* Pods-PixelTest_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7472AF55EDEF30961C71603791BA17 /* Pods-PixelTest_Example-dummy.m */; };
+		0E84A5482C9D03D4A4F59830D1253403 /* PixelTest-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FF12501FBF57EC7E290803107F13147 /* PixelTest-dummy.m */; };
 		46FC3F7FE3B9B9ECEB06A24BC977F715 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE147446A1225BA68EA82615B1436CC1 /* Foundation.framework */; };
-		4C644DDA68E5D6086D03977EE58573B8 /* PixelTest-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BDE405EEB7564D2AB360DC7FF30863A /* PixelTest-dummy.m */; };
 		5C5DC6B02E8EDB18C98E8FB76F62ED64 /* Pods-PixelTest_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E29390A25E72E7DA0EF711BCD2FB22 /* Pods-PixelTest_Tests-dummy.m */; };
 		5F446595CE54A4C11DD4F66E46F9DA5C /* Pods-PixelTest_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1B276344C2A259A3DCB201C48A9C5F7F /* Pods-PixelTest_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6A5D274F56C8F1C78EC703F91B49DC97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF04AEFCC4B011565BFFBFFF52B2FCE /* UIKit.framework */; };
 		6BF54DA8E9DE13A65E0E9E9D12AFCD9C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE147446A1225BA68EA82615B1436CC1 /* Foundation.framework */; };
 		756C4083B5836ACDDEBB2CEB325486A9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D9897D646E2BB9FBF73704C04440B2 /* XCTest.framework */; };
+		8B74A62112FF12450E24CB7B5A1C4620 /* PixelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2971353664D428698EEE64B809F72CFE /* PixelTestCase.swift */; };
 		96658EC26B46ABC679E10DAC93373698 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE147446A1225BA68EA82615B1436CC1 /* Foundation.framework */; };
 		C176B6AD54446A64696EA6D00A61019C /* Pods-PixelTest_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 58C6AD5F70F42485F97083ED0ABFD291 /* Pods-PixelTest_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C6B605A862BB3E21344F39D3691FA7FA /* PixelTest-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 59FB8793EF415B8025A9A2C31F435DCA /* PixelTest-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CA0A6392611A8F714CB1C8863A03373D /* PixelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC85DE6BDA8F5622976C7C29A7972B /* PixelTestCase.swift */; };
+		C6B605A862BB3E21344F39D3691FA7FA /* PixelTest-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E9E847889A5E5CFDC03575EB187A618 /* PixelTest-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,42 +33,42 @@
 
 /* Begin PBXFileReference section */
 		016EFA28C4224E275EE244CB2C3BBBEA /* Pods-PixelTest_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PixelTest_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		0BDE405EEB7564D2AB360DC7FF30863A /* PixelTest-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PixelTest-dummy.m"; sourceTree = "<group>"; };
+		0E9E847889A5E5CFDC03575EB187A618 /* PixelTest-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PixelTest-umbrella.h"; sourceTree = "<group>"; };
 		1B276344C2A259A3DCB201C48A9C5F7F /* Pods-PixelTest_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PixelTest_Example-umbrella.h"; sourceTree = "<group>"; };
 		1C5B7B55B4DF5E482DB1ADA61DC7CBE8 /* Pods-PixelTest_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PixelTest_Example-resources.sh"; sourceTree = "<group>"; };
-		298E0D2E9D0E106EDF23C13986AD2AB3 /* PixelTest.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = PixelTest.modulemap; sourceTree = "<group>"; };
+		2971353664D428698EEE64B809F72CFE /* PixelTestCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PixelTestCase.swift; sourceTree = "<group>"; };
+		2FF12501FBF57EC7E290803107F13147 /* PixelTest-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PixelTest-dummy.m"; sourceTree = "<group>"; };
 		392E8016C6D80633959D42F14145DFCD /* Pods-PixelTest_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PixelTest_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		3A06E7197130ADE79C951740C8D296B3 /* Pods-PixelTest_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PixelTest_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4A74E94E3BA6A8F6E820FA416EEE8DF7 /* Pods-PixelTest_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-PixelTest_Tests.modulemap"; sourceTree = "<group>"; };
 		58C6AD5F70F42485F97083ED0ABFD291 /* Pods-PixelTest_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PixelTest_Tests-umbrella.h"; sourceTree = "<group>"; };
-		59FB8793EF415B8025A9A2C31F435DCA /* PixelTest-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PixelTest-umbrella.h"; sourceTree = "<group>"; };
 		5AF48BC4C84B26A5FE95AC1F1A322ACC /* Pods_PixelTest_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PixelTest_Tests.framework; path = "Pods-PixelTest_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		740F7BEA2DC27618DCC6F9F76C43D61B /* PixelTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PixelTest.framework; path = PixelTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7901B8467B6A91E5EA441872DF49D635 /* PixelTest.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = PixelTest.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7B8A7C81E5E8909137AD2498A95D3557 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CDA0143E3D01C29C1A4A37208A9EA29 /* Pods-PixelTest_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PixelTest_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		80A1F93A46BDBBCA7C54B26FC0033D95 /* Pods-PixelTest_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PixelTest_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		80E29390A25E72E7DA0EF711BCD2FB22 /* Pods-PixelTest_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PixelTest_Tests-dummy.m"; sourceTree = "<group>"; };
-		83D662B0B479B191A8B7BEDC85ECEF45 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		87E0E9AC400296C58E532CCACD8DA00E /* Pods-PixelTest_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PixelTest_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		8913CB3F90B3FFD65A4B41A8F7FCC8FF /* Pods-PixelTest_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-PixelTest_Example.modulemap"; sourceTree = "<group>"; };
-		90B46F7F9D02E5323BF4EA3022E29722 /* PixelTest-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PixelTest-prefix.pch"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A0C1D290CF39D8613ABEA7C210C93D8C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		AE1280D59440E480085333CA011F1A91 /* Pods-PixelTest_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PixelTest_Tests-frameworks.sh"; sourceTree = "<group>"; };
+		AE3E2AC0ACEC615A702FAFB605CA8267 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		B4CBB68E1E612675E2A30E398D122AB0 /* Pods-PixelTest_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PixelTest_Example-frameworks.sh"; sourceTree = "<group>"; };
 		B7F879237CF7CC1FAC371260841FC622 /* Pods-PixelTest_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PixelTest_Tests-resources.sh"; sourceTree = "<group>"; };
 		B82FBF6774BEF4705540AF4F180DF582 /* Pods-PixelTest_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PixelTest_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		BAC11E18E5F1D68E9D08DDD3DE79EB46 /* Pods-PixelTest_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PixelTest_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		BCF86F8B3B9701B60A01DD74B75B4B54 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		C165B9C7606C4CF14FB453FAB821F46F /* Pods_PixelTest_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PixelTest_Example.framework; path = "Pods-PixelTest_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C4BC85DE6BDA8F5622976C7C29A7972B /* PixelTestCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PixelTestCase.swift; path = PixelTest/Classes/PixelTestCase.swift; sourceTree = "<group>"; };
 		CE7472AF55EDEF30961C71603791BA17 /* Pods-PixelTest_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PixelTest_Example-dummy.m"; sourceTree = "<group>"; };
 		D0620F072EB6A8B5323BEA92F29EB625 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D0EAA002440058D142554EED9CBEFFE8 /* PixelTest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PixelTest.xcconfig; sourceTree = "<group>"; };
+		D3A3518E2A777CB84E8867F074B02F81 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3DAACEA55A7BEE579E1DFB44F863D57 /* PixelTest-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PixelTest-prefix.pch"; sourceTree = "<group>"; };
 		DDF04AEFCC4B011565BFFBFFF52B2FCE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		DE147446A1225BA68EA82615B1436CC1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		E2D9897D646E2BB9FBF73704C04440B2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		F52C21124FC18ACE4026BEA0A521A3C7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4DBB90621CC0D3B9370CCBFAFC3ACE7 /* PixelTest.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = PixelTest.modulemap; sourceTree = "<group>"; };
+		EA91AB4190BE18D7309B2EF52C39FC8B /* PixelTest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PixelTest.xcconfig; sourceTree = "<group>"; };
+		F04C9A66FEF31AA88D4405890725AB3D /* PixelTest.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = PixelTest.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +101,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04DDBCD6CEFB08A11D3E0DBA6EEB7245 /* PixelTest */ = {
+			isa = PBXGroup;
+			children = (
+				2971353664D428698EEE64B809F72CFE /* PixelTestCase.swift */,
+				95F1C87305BAA9B05EC394D5B55E9A32 /* Pod */,
+				2A1105C5052114E146D87C7BE721ED53 /* Support Files */,
+			);
+			name = PixelTest;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,15 +120,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		29A665D90B1290A41E612CF076677820 /* Support Files */ = {
+		2A1105C5052114E146D87C7BE721ED53 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				F52C21124FC18ACE4026BEA0A521A3C7 /* Info.plist */,
-				298E0D2E9D0E106EDF23C13986AD2AB3 /* PixelTest.modulemap */,
-				D0EAA002440058D142554EED9CBEFFE8 /* PixelTest.xcconfig */,
-				0BDE405EEB7564D2AB360DC7FF30863A /* PixelTest-dummy.m */,
-				90B46F7F9D02E5323BF4EA3022E29722 /* PixelTest-prefix.pch */,
-				59FB8793EF415B8025A9A2C31F435DCA /* PixelTest-umbrella.h */,
+				D3A3518E2A777CB84E8867F074B02F81 /* Info.plist */,
+				E4DBB90621CC0D3B9370CCBFAFC3ACE7 /* PixelTest.modulemap */,
+				EA91AB4190BE18D7309B2EF52C39FC8B /* PixelTest.xcconfig */,
+				2FF12501FBF57EC7E290803107F13147 /* PixelTest-dummy.m */,
+				D3DAACEA55A7BEE579E1DFB44F863D57 /* PixelTest-prefix.pch */,
+				0E9E847889A5E5CFDC03575EB187A618 /* PixelTest-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/PixelTest";
@@ -145,7 +156,7 @@
 		79761FB926F5AA2333664C1336ED8726 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				83941FC72F0AB586F96A2F62C394DEF1 /* PixelTest */,
+				04DDBCD6CEFB08A11D3E0DBA6EEB7245 /* PixelTest */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -161,17 +172,6 @@
 			);
 			sourceTree = "<group>";
 		};
-		83941FC72F0AB586F96A2F62C394DEF1 /* PixelTest */ = {
-			isa = PBXGroup;
-			children = (
-				C4BC85DE6BDA8F5622976C7C29A7972B /* PixelTestCase.swift */,
-				FA3BF0E456BA8EDF95169BCC81D0A2DA /* Pod */,
-				29A665D90B1290A41E612CF076677820 /* Support Files */,
-			);
-			name = PixelTest;
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		926C31924772091F3FBE0E8F025C2B0D /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +180,16 @@
 				E2D9897D646E2BB9FBF73704C04440B2 /* XCTest.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		95F1C87305BAA9B05EC394D5B55E9A32 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				BCF86F8B3B9701B60A01DD74B75B4B54 /* LICENSE */,
+				F04C9A66FEF31AA88D4405890725AB3D /* PixelTest.podspec */,
+				AE3E2AC0ACEC615A702FAFB605CA8267 /* README.md */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		B5E042857032A88F9B6B64A02E16AAA9 /* Pods-PixelTest_Example */ = {
@@ -216,16 +226,6 @@
 			);
 			name = "Pods-PixelTest_Tests";
 			path = "Target Support Files/Pods-PixelTest_Tests";
-			sourceTree = "<group>";
-		};
-		FA3BF0E456BA8EDF95169BCC81D0A2DA /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				83D662B0B479B191A8B7BEDC85ECEF45 /* LICENSE */,
-				7901B8467B6A91E5EA441872DF49D635 /* PixelTest.podspec */,
-				A0C1D290CF39D8613ABEA7C210C93D8C /* README.md */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +297,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2A814595B72CA3BD5D91CC7C0E7BDE8A /* Build configuration list for PBXNativeTarget "PixelTest" */;
 			buildPhases = (
-				848BD03A06A42530D3967F293943B857 /* Sources */,
+				EAB0F9065457B6EE181591B355790F89 /* Sources */,
 				403015B162064A9BEE11DE42E4D85D4B /* Frameworks */,
 				35CADF9A25371E8C29413D787DB159AF /* Headers */,
 			);
@@ -347,20 +347,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		848BD03A06A42530D3967F293943B857 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4C644DDA68E5D6086D03977EE58573B8 /* PixelTest-dummy.m in Sources */,
-				CA0A6392611A8F714CB1C8863A03373D /* PixelTestCase.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		DCDEA79546660538AA7E59CB103048B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				046AD5452C5A765C76B787DEB16386DE /* Pods-PixelTest_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAB0F9065457B6EE181591B355790F89 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E84A5482C9D03D4A4F59830D1253403 /* PixelTest-dummy.m in Sources */,
+				8B74A62112FF12450E24CB7B5A1C4620 /* PixelTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,7 +378,7 @@
 /* Begin XCBuildConfiguration section */
 		070C3A143C803CA734A03470E93B9CB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0EAA002440058D142554EED9CBEFFE8 /* PixelTest.xcconfig */;
+			baseConfigurationReference = EA91AB4190BE18D7309B2EF52C39FC8B /* PixelTest.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -557,7 +557,7 @@
 		};
 		A55588C5EB9FA65628154A5B70BABF09 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0EAA002440058D142554EED9CBEFFE8 /* PixelTest.xcconfig */;
+			baseConfigurationReference = EA91AB4190BE18D7309B2EF52C39FC8B /* PixelTest.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
