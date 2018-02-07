@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PixelTest
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

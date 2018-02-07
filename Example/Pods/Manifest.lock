@@ -1,0 +1,16 @@
+PODS:
+  - PixelTest (0.1.0)
+
+DEPENDENCIES:
+  - PixelTest (from `../`)
+
+EXTERNAL SOURCES:
+  PixelTest:
+    :path: ../
+
+SPEC CHECKSUMS:
+  PixelTest: 007c07e1baf8f39fdc4c97d6630774f2b02cb8f6
+
+PODFILE CHECKSUM: 9d1d21be006a8eccd3f315fd6afeaa53c1ad183c
+
+COCOAPODS: 1.4.0

@@ -1,0 +1,22 @@
+{
+  "name": "PixelTest",
+  "version": "0.1.0",
+  "summary": "A short description of PixelTest.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/kanecheshire/PixelTest",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "kanecheshire": "kane.cheshire@googlemail.com"
+  },
+  "source": {
+    "git": "https://github.com/kanecheshire/PixelTest.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "PixelTest/Classes/**/*"
+}
