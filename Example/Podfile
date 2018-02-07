@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'PixelTest_Example' do
+  pod 'PixelTest', :path => '../'
+
+  target 'PixelTest_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
