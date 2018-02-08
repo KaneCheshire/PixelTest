@@ -37,6 +37,14 @@ open class PixelTestCase: XCTestCase {
         case unableToCreateFileURL
     }
     
+    // MARK: Private
+    
+    private enum ImageType: String {
+        case reference = "Reference"
+        case diff = "Diff"
+        case failure = "Failure"
+    }
+    
     // MARK: - Properties -
     // MARK: Public
     
@@ -60,15 +68,15 @@ open class PixelTestCase: XCTestCase {
     // MARK: Private
     
     private func record(_ view: UIView, window: UIWindow, scale: Scale, file: StaticString, function: StaticString, line: UInt = #line) throws {
-        guard let url = try fileURL(forFunction: function, scale: scale) else { throw Error.unableToCreateFileURL }
+        guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference) else { throw Error.unableToCreateFileURL }
         guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
-        let data = UIImagePNGRepresentation(image) ?? Data()
-        try data.write(to: url, options: .atomic)
+        let data = UIImagePNGRepresentation(image)
+        try data?.write(to: url, options: .atomic)
         XCTFail("Snapshot recorded, disable record mode and re-run tests to verify.", file: file, line: line)
     }
     
     private func test(_ view: UIView, window: UIWindow, scale: Scale, file: StaticString, function: StaticString, line: UInt = #line) throws {
-        guard let url = try fileURL(forFunction: function, scale: scale) else { throw Error.unableToCreateFileURL }
+        guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference) else { throw Error.unableToCreateFileURL }
         guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
         let data = try Data(contentsOf: url, options: .uncached)
         let imageScale: CGFloat
@@ -78,22 +86,38 @@ open class PixelTestCase: XCTestCase {
         }
         let recordedImage = UIImage(data: data, scale: imageScale)!
         if !image.equalTo(recordedImage) {
-            XCTFail("Snapshots do not match", file: file, line: line)
+            if let diffImage = image.diff(with: recordedImage), let url = try fileURL(forFunction: function, scale: scale, imageType: .diff) { // TODO: Get rid of nesting
+                let data = UIImagePNGRepresentation(diffImage)
+                try data?.write(to: url, options: .atomic)
+            }
+            if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure) {
+                let data = UIImagePNGRepresentation(image)
+                try data?.write(to: url, options: .atomic)
+            }
+            XCTFail("Snapshots do not match", file: file, line: line) // TODO: Clearer messaging
+        } else {
+            if let url = try fileURL(forFunction: function, scale: scale, imageType: .diff) {
+                try? FileManager.default.removeItem(at: url)
+            }
+            if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure) {
+                try? FileManager.default.removeItem(at: url)
+            }
         }
     }
     
-    private func fileURL(forFunction function: StaticString, scale: Scale) throws -> URL? {
+    private func fileURL(forFunction function: StaticString, scale: Scale, imageType: ImageType) throws -> URL? {
         guard let directory = ProcessInfo.processInfo.environment["PIXEL_TESTS_DIR"] else { fatalError("Please set `PIXEL_TESTS_DIR` as an environment variable") }
-        if !FileManager.default.fileExists(atPath: directory) {
-            try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: nil)
+        let directoryWithImageType = "\(directory)/\(imageType.rawValue)"
+        if !FileManager.default.fileExists(atPath: directoryWithImageType) {
+            try FileManager.default.createDirectory(atPath: directoryWithImageType, withIntermediateDirectories: true, attributes: nil)
         }
         let functionWithParenthesisRemoved = "\(function)".trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         switch scale {
         case .native:
-            let path = "\(directory)/\(functionWithParenthesisRemoved)@\(Int(UIScreen.main.scale))x.png"
+            let path = "\(directoryWithImageType)/\(functionWithParenthesisRemoved)@\(Int(UIScreen.main.scale))x.png"
             return URL(fileURLWithPath: path)
         case .explicit(let scale):
-            let path = "\(directory)/\(functionWithParenthesisRemoved)@\(Int(scale))x.png"
+            let path = "\(directoryWithImageType)/\(functionWithParenthesisRemoved)@\(Int(scale))x.png"
             return URL(fileURLWithPath: path)
         }
         

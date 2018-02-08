@@ -58,11 +58,13 @@ class Tests: PixelTestCase {
 extension Tests {
     
     private func verifyView(with size: CGSize, file: StaticString, function: StaticString, line: UInt) throws {
-        let view = UIView()
+        let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: size.width).isActive = true
         view.heightAnchor.constraint(equalToConstant: size.height).isActive = true
         view.backgroundColor = .red
+        // Uncomment to make test fail
+//        view.text = "Hello World"
         
         let parentView = UIView()
         parentView.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +73,7 @@ extension Tests {
             view.topAnchor.constraint(equalTo: parentView.topAnchor),
             view.leftAnchor.constraint(equalTo: parentView.leftAnchor),
             view.rightAnchor.constraint(equalTo: parentView.rightAnchor),
-            view.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+            view.bottomAnchor.constraint(equalTo: parentView.bottomAnchor), //TODO: Can all this fuff be handled by the test case?
             ])
         parentView.setNeedsLayout()
         parentView.layoutIfNeeded()

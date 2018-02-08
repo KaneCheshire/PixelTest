@@ -90,7 +90,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "PIXEL_TESTS_DIR"
-            value = "$(SOURCE_ROOT)/Snapshots/Reference"
+            value = "$(SOURCE_ROOT)/Snapshots"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
