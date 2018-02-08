@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/kanecheshire/PixelTest.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/kanecheshire'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
   s.source_files = 'PixelTest/**/*', 'PixelTestCase.swift'
   s.frameworks = 'UIKit', 'XCTest'
 end
