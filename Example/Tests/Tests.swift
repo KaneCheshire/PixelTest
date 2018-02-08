@@ -59,10 +59,10 @@ class Tests: PixelTestCase {
 
 extension Tests {
     
-    private func verifyView(with options: PixelTestCase.Options, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) throws {
+    private func verifyView(with option: PixelTestCase.Option, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) throws {
         let view = UILabel()
         view.backgroundColor = .red
-        try verify(view, options: options, file: file, function: function, line: line)
+        try verify(view, option: option, file: file, function: function, line: line)
     }
     
 }

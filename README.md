@@ -59,8 +59,7 @@ class TestClass: PixelTestCase {
 
   func test_someViewLaysOutProperly() throws {
     let view = MyCustomView()
-    // ... magic code that lays out your view .. //
-    try verify(view)
+    try verify(view, options: .dynamicHeight(fixedWith: 100))
   }
 
 }
@@ -69,6 +68,10 @@ class TestClass: PixelTestCase {
 Once you've overridden `setUp()`, simply run your tests. Each test that runs while `mode` is set to `.record` will record a reference image. Once you disable record mode (either by removing the line of code or by setting `mode` to `.test`), each subsequent run of your tests will check the saved reference image. If even 1 pixel is different, the test will fail.
 
 If a test fails, you'll find two images in the `Diff` and `Failure` directories (in the directory you set up in the first step). You can use these images to see what's changed and what went wrong. If it was an intentional change, you can re-record your snapshots. Be careful to only run the tests you want to re-record in record mode, because it will overwrite any tests that run.
+
+You can decide whether PixelTest tests your view with dynamic height or width, or fixed height and width. When you call `verify(view)` you're also required to pass in an `Option`. Typically this would be `.dynamicHeight(fixedWith: 320)`, which means that PixelTest will attempt to test your view with a fixed with of `320`, but allow it to dynamically grow based on its content.
+
+This leaves you free to populate your view without having ugly layout code in your project or modules.
 
 ## Known issues
 

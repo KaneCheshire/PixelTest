@@ -43,7 +43,7 @@ open class PixelTestCase: XCTestCase {
     /// - dynamicHeight: <#dynamicHeight description#>
     /// - dynamicHeightWidth: <#dynamicHeightWidth description#>
     /// - fixed: <#fixed description#>
-    public enum Options {
+    public enum Option {
         case dynamicWidth(fixedHeight: CGFloat)
         case dynamicHeight(fixedWidth: CGFloat)
         case dynamicHeightWidth
@@ -82,14 +82,14 @@ open class PixelTestCase: XCTestCase {
     // MARK: Public
     
     public func verify(_ view: UIView,
-                       options: Options,
+                       option: Option,
                        scale: Scale = .explicit(1),
                        file: StaticString = #file,
                        function: StaticString = #function,
                        line: UInt = #line) throws {
         guard let window = UIApplication.shared.keyWindow else { throw Error.noKeyWindow }
         window.addSubview(view)
-        layOut(view, with: options)
+        layOut(view, with: option)
         guard view.bounds.width != 0 else { throw Error.viewHasNoWidth }
         guard view.bounds.height != 0 else { throw Error.viewHasNoHeight }
         view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width.rounded(.up), height: view.bounds.width.rounded(.up))
@@ -102,9 +102,9 @@ open class PixelTestCase: XCTestCase {
     // MARK: Private
     
     private func layOut(_ view: UIView,
-                        with options: Options) {
+                        with option: Option) {
         view.translatesAutoresizingMaskIntoConstraints = false
-        switch options {
+        switch option {
         case .dynamicHeight(fixedWidth: let width):
             view.widthAnchor.constraint(equalToConstant: width).isActive = true
         case .dynamicWidth(fixedHeight: let height):
