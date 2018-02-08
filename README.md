@@ -25,7 +25,7 @@ Snapshot tests are an excellent (and super fast) way to ensure that your layout 
 
 First things first, you need to tell PixelTest where to store reference images. To do this, in Xcode click on:
 
-[your scheme name] > [edit sceme...] > [Run] > [Arguments]
+[your scheme name] > [edit scheme...] > [Run] > [Arguments]
 
 And then add a new environment variable named `PIXEL_TESTS_DIR` with a value of something like `$(SOURCE_ROOT)/Snapshots`.
 
