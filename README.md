@@ -27,7 +27,7 @@ First things first, you need to tell PixelTest where to store reference images. 
 
 [your scheme name] > [edit scheme...] > [Run] > [Arguments]
 
-And then add a new environment variable named `PIXEL_TESTS_DIR` with a value of something like `$(SOURCE_ROOT)/Snapshots`.
+And then add a new environment variable named `PIXELTEST_DIR` with a value of something like `$(SOURCE_ROOT)/Snapshots`.
 
 PixelTest will store all reference, failure and diff images in here for testing. I'd like to be able to support storing snapshots in multiple locations (for example if you've got multiple modules/subprojects), so if you have any ideas please raise and issue!
 

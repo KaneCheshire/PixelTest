@@ -89,7 +89,7 @@
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "PIXEL_TESTS_DIR"
+            key = "PIXELTEST_DIR"
             value = "$(SOURCE_ROOT)/Snapshots"
             isEnabled = "YES">
          </EnvironmentVariable>

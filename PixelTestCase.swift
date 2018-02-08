@@ -106,7 +106,7 @@ open class PixelTestCase: XCTestCase {
     }
     
     private func fileURL(forFunction function: StaticString, scale: Scale, imageType: ImageType) throws -> URL? {
-        guard let directory = ProcessInfo.processInfo.environment["PIXEL_TESTS_DIR"] else { fatalError("Please set `PIXEL_TESTS_DIR` as an environment variable") }
+        guard let directory = ProcessInfo.processInfo.environment["PIXELTEST_DIR"] else { fatalError("Please set `PIXEL_TESTS_DIR` as an environment variable") }
         let directoryWithImageType = "\(directory)/\(imageType.rawValue)"
         if !FileManager.default.fileExists(atPath: directoryWithImageType) {
             try FileManager.default.createDirectory(atPath: directoryWithImageType, withIntermediateDirectories: true, attributes: nil)
