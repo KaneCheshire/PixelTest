@@ -13,6 +13,8 @@ Snapshot tests are perfect for quickly checking complex layouts, while at the sa
 
 Unlike other snapshot testing options, PixelTest supports declaring which resolution to record your snapshots in, so it doesn't matter which simulator you run your snapshot tests on.
 
+As an added bonus, PixelTest also clears up after itself. If you fix a failing test, the failure and diff images are automatically removed for you.
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
