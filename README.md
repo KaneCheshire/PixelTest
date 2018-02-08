@@ -1,6 +1,6 @@
 # PixelTest
 
-[![CI Status](http://img.shields.io/travis/kanecheshire/PixelTest.svg?style=flat)](https://travis-ci.org/kanecheshire/PixelTest)
+[![CI Status](http://img.shields.io/travis/kanecheshire/PixelTest.svg?style=flat)](https://travis-ci.org/KaneCheshire/PixelTest)
 [![Version](https://img.shields.io/cocoapods/v/PixelTest.svg?style=flat)](http://cocoapods.org/pods/PixelTest)
 [![License](https://img.shields.io/cocoapods/l/PixelTest.svg?style=flat)](http://cocoapods.org/pods/PixelTest)
 [![Platform](https://img.shields.io/cocoapods/p/PixelTest.svg?style=flat)](http://cocoapods.org/pods/PixelTest)
