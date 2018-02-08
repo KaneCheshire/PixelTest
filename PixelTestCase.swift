@@ -99,15 +99,13 @@ open class PixelTestCase: XCTestCase {
                        file: StaticString = #file,
                        function: StaticString = #function,
                        line: UInt = #line) throws {
-        guard let window = UIApplication.shared.keyWindow else { throw Error.noKeyWindow }
-        window.addSubview(view)
         layOut(view, with: option)
         guard view.bounds.width != 0 else { throw Error.viewHasNoWidth }
         guard view.bounds.height != 0 else { throw Error.viewHasNoHeight }
-        view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width.rounded(.up), height: view.bounds.height.rounded(.up))
+        view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width.rounded(.up), height: view.bounds.height.rounded(.up)) // Horrible hacky thing to make sure images are recorded at the same size as the bounds
         switch mode {
-        case .record: try record(view, window: window, scale: scale, file: file, function: function)
-        case .test: try test(view, window: window, scale: scale, file: file, function: function)
+        case .record: try record(view, scale: scale, file: file, function: function, line: line)
+        case .test: try test(view, scale: scale, file: file, function: function, line: line)
         }
     }
     
@@ -142,15 +140,14 @@ open class PixelTestCase: XCTestCase {
         parentView.setNeedsLayout()
         parentView.layoutIfNeeded()
         view.setNeedsLayout()
-        view.layoutIfNeeded()
+        view.layoutIfNeeded() // TODO: I don't think this is needed
     }
     
     private func record(_ view: UIView,
-                        window: UIWindow,
-                        scale: Scale,
+                        scale: Scale, // TODO: Scale stuff isn't working properly across different scale simulators yet
                         file: StaticString,
                         function: StaticString,
-                        line: UInt = #line) throws {
+                        line: UInt) throws {
         guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference) else { throw Error.unableToCreateFileURL }
         guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
         let data = UIImagePNGRepresentation(image)
@@ -159,11 +156,10 @@ open class PixelTestCase: XCTestCase {
     }
     
     private func test(_ view: UIView,
-                      window: UIWindow,
                       scale: Scale,
                       file: StaticString,
                       function: StaticString,
-                      line: UInt = #line) throws {
+                      line: UInt) throws {
         guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference) else { throw Error.unableToCreateFileURL }
         guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
         let data = try Data(contentsOf: url, options: .uncached)
@@ -174,22 +170,30 @@ open class PixelTestCase: XCTestCase {
         }
         let recordedImage = UIImage(data: data, scale: imageScale)!
         if !image.equalTo(recordedImage) {
-            if let diffImage = image.diff(with: recordedImage), let url = try fileURL(forFunction: function, scale: scale, imageType: .diff) { // TODO: Get rid of nesting
-                let data = UIImagePNGRepresentation(diffImage)
-                try data?.write(to: url, options: .atomic)
-            }
-            if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure) {
-                let data = UIImagePNGRepresentation(image)
-                try data?.write(to: url, options: .atomic)
-            }
+            try storeDiffAndFailureImages(from: image, recordedImage: recordedImage, function: function, scale: scale)
             XCTFail("Snapshots do not match", file: file, line: line) // TODO: Clearer messaging
         } else {
-            if let url = try fileURL(forFunction: function, scale: scale, imageType: .diff) {
-                try? FileManager.default.removeItem(at: url)
-            }
-            if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure) {
-                try? FileManager.default.removeItem(at: url)
-            }
+            try removeDiffAndFailureImages(function: function, scale: scale)
+        }
+    }
+    
+    private func storeDiffAndFailureImages(from originalImage: UIImage, recordedImage: UIImage, function: StaticString, scale: Scale) throws {
+        if let diffImage = originalImage.diff(with: recordedImage), let url = try fileURL(forFunction: function, scale: scale, imageType: .diff) {
+            let data = UIImagePNGRepresentation(diffImage)
+            try data?.write(to: url, options: .atomic) // TODO: This will fail the test if it fails, intended?
+        }
+        if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure) {
+            let data = UIImagePNGRepresentation(originalImage)
+            try data?.write(to: url, options: .atomic)
+        }
+    }
+    
+    private func removeDiffAndFailureImages(function: StaticString, scale: Scale) throws {
+        if let url = try fileURL(forFunction: function, scale: scale, imageType: .diff) {
+            try? FileManager.default.removeItem(at: url)
+        }
+        if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure) {
+            try? FileManager.default.removeItem(at: url)
         }
     }
     
@@ -224,7 +228,10 @@ extension UIView { // TODO: Move
         case .explicit(let explicitScale): imageScale = explicitScale
         }
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, imageScale)
-        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        context.saveGState()
+        layer.render(in: context)
+        context.restoreGState()
         guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
         UIGraphicsEndImageContext()
         return image
