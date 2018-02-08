@@ -80,7 +80,7 @@ PixelTest currently only works in iOS projects.
 
 ## Author
 
-@kanecheshire, [kane.codes](http://kanecheshire.com)
+@KaneCheshire, [kane.codes](http://kanecheshire.com)
 
 ## License
 
