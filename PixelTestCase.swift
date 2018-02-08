@@ -19,44 +19,46 @@ open class PixelTestCase: XCTestCase {
     // MARK: - Enums -
     // MARK: Public
     
-    /// <#Description#>
+    /// Represents the scale of the resulting snapshot image.
+    /// I.e. whether it's @1x, @2x, @3x etc.
     ///
-    /// - native: <#native description#>
-    /// - explicit: <#explicit description#>
+    /// - native: Uses the device's native scale. (@2x on an iPhone SE, @3x on an iPhone 8)
+    /// - explicit: Forces an explicit scale, regardless of device.
     public enum Scale {
         case native
         case explicit(CGFloat)
     }
     
-    /// <#Description#>
+    /// Represents a mode that the test/tests are running in.
+    /// Typically you would change this in `setUp()`.
     ///
-    /// - record: <#record description#>
-    /// - test: <#test description#>
+    /// - record: The tests are running in record mode. While this mode is set, any tests that run record a snapshot, overwriting any existing snapshots for that test.
+    /// - test: The tests are running in test mode. While this mode is set, any tests that run will be verified against recorded snapshots.
     public enum Mode {
         case record
         case test
     }
     
-    /// <#Description#>
+    /// Represents an option for verifying a view.
     ///
-    /// - dynamicWidth: <#dynamicWidth description#>
-    /// - dynamicHeight: <#dynamicHeight description#>
-    /// - dynamicHeightWidth: <#dynamicHeightWidth description#>
-    /// - fixed: <#fixed description#>
+    /// - dynamicWidth: The view should have a dynamic width, but fixed height.
+    /// - dynamicHeight: The view should have a dynamic height, but fixed width.
+    /// - dynamicWidthHeight: The view should have a dynamic width and height.
+    /// - fixed: The view should have a fixed width and height.
     public enum Option {
         case dynamicWidth(fixedHeight: CGFloat)
         case dynamicHeight(fixedWidth: CGFloat)
-        case dynamicHeightWidth
+        case dynamicWidthHeight
         case fixed(width: CGFloat, height: CGFloat)
     }
     
-    /// <#Description#>
+    /// Represents an error that could occur specific to `PixelTestCase`.
     ///
-    /// - viewHasNoWidth: <#viewHasNoWidth description#>
-    /// - viewHasNoHeight: <#viewHasNoHeight description#>
-    /// - unableToCreateImage: <#unableToCreateImage description#>
-    /// - noKeyWindow: <#noKeyWindow description#>
-    /// - unableToCreateFileURL: <#unableToCreateFileURL description#>
+    /// - viewHasNoWidth: The view provided has no width so cannot be verified.
+    /// - viewHasNoHeight: The view provided has no height so canot be verified.
+    /// - unableToCreateImage: The test case was unable to create an image for recording or testing.
+    /// - noKeyWindow: The tests were unable to find a key window for the shared application, which is needed for snapshotting.
+    /// - unableToCreateFileURL: The tests were unable to create a file URL required for testing.
     public enum Error: Swift.Error {
         case viewHasNoWidth
         case viewHasNoHeight
@@ -81,6 +83,16 @@ open class PixelTestCase: XCTestCase {
     // MARK: - Functions -
     // MARK: Public
     
+    /// Verifies a view.
+    /// If this is called while in record mode, a new snapshot are recorded, overwriting any existing recorded snapshot.
+    /// If this is called while in test mode, a new snapshot is created and compared to a previously recorded snapshot.
+    /// If tests fail while in test mode, a failure and diff image are stored locally, which you can find in the same directory as the snapshot recording. This should show up in your git changes.
+    /// If tests succeed after diffs and failures have been stored, PixelTest will automatically remove them so you don't have to clear them from git yourself.
+    ///
+    /// - Parameters:
+    ///   - view: The view to verify.
+    ///   - option: The options to verify the view with.
+    ///   - scale: The scale to record/test the snapshot with.
     public func verify(_ view: UIView,
                        option: Option,
                        scale: Scale = .explicit(1),
@@ -112,7 +124,7 @@ open class PixelTestCase: XCTestCase {
         case .fixed(width: let width, height: let height):
             view.widthAnchor.constraint(equalToConstant: width).isActive = true
             view.heightAnchor.constraint(equalToConstant: height).isActive = true
-        case .dynamicHeightWidth: break
+        case .dynamicWidthHeight: break
         }
         embed(view)
     }
