@@ -11,7 +11,7 @@ Snapshot testing compares one of your views rendered into an image, to a previou
 
 Snapshot tests are perfect for quickly checking complex layouts, while at the same time future proofing them against accidental changes.
 
-Unlike other snapshot testing options, PixelTest supports declaring which resolution to record your snapshots in, so it doesn't matter which simulator you run your snapshot tests on.
+~~Unlike other snapshot testing options, PixelTest supports declaring which resolution to record your snapshots in, so it doesn't matter which simulator you run your snapshot tests on.~~ (This isn't currently working but it's high on the list of things to figure out)
 
 As an added bonus, PixelTest also clears up after itself. If you fix a failing test, the failure and diff images are automatically removed for you.
 
