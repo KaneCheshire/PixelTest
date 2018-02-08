@@ -197,20 +197,20 @@ open class PixelTestCase: XCTestCase {
                          scale: Scale,
                          imageType: ImageType) throws -> URL? {
         guard let directory = ProcessInfo.processInfo.environment["PIXELTEST_DIR"] else { fatalError("Please set `PIXEL_TESTS_DIR` as an environment variable") }
-        let directoryWithImageType = "\(directory)/\(imageType.rawValue)"
+        let directoryName = "\(type(of: self))".components(separatedBy: ".").last ?? ""
+        let directoryWithImageType = "\(directory)/\(imageType.rawValue)/\(directoryName)"
         if !FileManager.default.fileExists(atPath: directoryWithImageType) {
             try FileManager.default.createDirectory(atPath: directoryWithImageType, withIntermediateDirectories: true, attributes: nil)
         }
         let functionWithParenthesisRemoved = "\(function)".trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var path = "\(directoryWithImageType)/\(functionWithParenthesisRemoved)"
         switch scale {
         case .native:
-            let path = "\(directoryWithImageType)/\(functionWithParenthesisRemoved)@\(Int(UIScreen.main.scale))x.png"
-            return URL(fileURLWithPath: path)
+            path += "@\(Int(UIScreen.main.scale))x.png"
         case .explicit(let scale):
-            let path = "\(directoryWithImageType)/\(functionWithParenthesisRemoved)@\(Int(scale))x.png"
-            return URL(fileURLWithPath: path)
+            path += "@\(Int(scale))x.png"
         }
-        
+        return URL(fileURLWithPath: path)
     }
     
 }

@@ -2,7 +2,7 @@ import UIKit
 import XCTest
 import PixelTest
 
-class Tests: PixelTestCase {
+class ExampleTests: PixelTestCase {
     
     override func setUp() {
         super.setUp()
@@ -57,7 +57,7 @@ class Tests: PixelTestCase {
     
 }
 
-extension Tests {
+extension ExampleTests {
     
     private func verifyView(with option: PixelTestCase.Option, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) throws {
         let view = UILabel()
