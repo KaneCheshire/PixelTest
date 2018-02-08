@@ -1,42 +1,26 @@
-#
-# Be sure to run `pod lib lint PixelTest.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
   s.name             = 'PixelTest'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of PixelTest.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
+  s.summary          = 'PixelTest is a Swift-first, simple and modern snapshot testing tool.'
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  PixelTest is a modern, Swift-only snapshot testing tool.
+
+  Snapshot testing compares one of your views rendered into an image, to a previously recorded image, allowing for 0% difference or the test will fail.
+
+  Snapshot tests are perfect for quickly checking complex layouts, while at the same time future proofing them against accidental changes.
+
+  Unlike other snapshot testing options, PixelTest supports declaring which resolution to record your snapshots in, so it doesn't matter which simulator you run your snapshot tests on.
+
+  As an added bonus, PixelTest also clears up after itself. If you fix a failing test, the failure and diff images are automatically removed for you.
                        DESC
 
   s.homepage         = 'https://github.com/kanecheshire/PixelTest'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'kanecheshire' => 'kane.cheshire@googlemail.com' }
+  s.author           = { 'Kane Cheshire' => 'kane.cheshire@googlemail.com' }
   s.source           = { :git => 'https://github.com/kanecheshire/PixelTest.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/kanecheshire'
+  s.social_media_url = 'https://twitter.com/kanecheshire'
 
   s.ios.deployment_target = '8.0'
-
   s.source_files = 'PixelTest/**/*', 'PixelTestCase.swift'
-  
-  # s.resource_bundles = {
-  #   'PixelTest' => ['PixelTest/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'XCTest'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
