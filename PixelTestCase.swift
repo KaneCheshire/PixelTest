@@ -104,7 +104,7 @@ open class PixelTestCase: XCTestCase {
         layOut(view, with: option)
         guard view.bounds.width != 0 else { throw Error.viewHasNoWidth }
         guard view.bounds.height != 0 else { throw Error.viewHasNoHeight }
-        view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width.rounded(.up), height: view.bounds.width.rounded(.up))
+        view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width.rounded(.up), height: view.bounds.height.rounded(.up))
         switch mode {
         case .record: try record(view, window: window, scale: scale, file: file, function: function)
         case .test: try test(view, window: window, scale: scale, file: file, function: function)
