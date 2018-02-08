@@ -12,7 +12,6 @@ import XCTest
 // TODO: README
 // TODO: CONTRIBUTING
 // TODO: CHANGELOG
-// TODO: Failure diffs
 
 /// Subclass `PixelTestCase` and `import PixelTest`
 open class PixelTestCase: XCTestCase {
@@ -51,6 +50,7 @@ open class PixelTestCase: XCTestCase {
         window.addSubview(view)
         guard view.bounds.width != 0 else { throw Error.viewHasNoWidth }
         guard view.bounds.height != 0 else { throw Error.viewHasNoHeight }
+        view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width.rounded(.up), height: view.bounds.width.rounded(.up))
         switch mode {
         case .record: try record(view, window: window, scale: scale, file: file, function: function)
         case .test: try test(view, window: window, scale: scale, file: file, function: function)
@@ -125,4 +125,23 @@ extension UIImage { // TODO: Move
         return UIImagePNGRepresentation(self) == UIImagePNGRepresentation(image)
     }
     
+    func diff(with image: UIImage) -> UIImage? { // TODO: split this up
+        let maxWidth = max(size.width, image.size.width)
+        let maxHeight = max(size.height, image.size.height)
+        let diffSize = CGSize(width: maxWidth, height: maxHeight)
+        UIGraphicsBeginImageContextWithOptions(diffSize, true, scale)
+        let context = UIGraphicsGetCurrentContext()
+        draw(in: CGRect(origin: .zero, size: size))
+        context?.setAlpha(0.5)
+        context?.beginTransparencyLayer(auxiliaryInfo: nil)
+        image.draw(in: CGRect(origin: .zero, size: image.size))
+        context?.setBlendMode(.difference)
+        context?.setFillColor(UIColor.white.cgColor)
+        context?.fill(CGRect(origin: .zero, size: diffSize))
+        context?.endTransparencyLayer()
+        let diffImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return diffImage
+    }
+
 }

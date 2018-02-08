@@ -9,12 +9,60 @@ class Tests: PixelTestCase {
 //        mode = .record
     }
     
-    func test_aView() throws {
+    func test_regularSize() throws {
+        try verifyView(with: CGSize(width: 100, height: 100), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointZeroOne_width() throws {
+        try verifyView(with: CGSize(width: 100.01, height: 100), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointNineNine_width() throws {
+        try verifyView(with: CGSize(width: 100.99, height: 100), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointTwoFive_width() throws {
+        try verifyView(with: CGSize(width: 100.25, height: 100), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointSevenFive_width() throws {
+        try verifyView(with: CGSize(width: 100.75, height: 100), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointFive_width() throws {
+        try verifyView(with: CGSize(width: 100.5, height: 100), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointZeroOne_height() throws {
+        try verifyView(with: CGSize(width: 100, height: 100.01), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointNineNine_height() throws {
+        try verifyView(with: CGSize(width: 100, height: 100.99), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointFive_height() throws {
+        try verifyView(with: CGSize(width: 100, height: 100.5), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointTwoFive_height() throws {
+        try verifyView(with: CGSize(width: 100, height: 100.25), file: #file, function: #function, line: #line)
+    }
+    
+    func test_pointSevenFive_height() throws {
+        try verifyView(with: CGSize(width: 100, height: 100.75), file: #file, function: #function, line: #line)
+    }
+    
+}
+
+extension Tests {
+    
+    private func verifyView(with size: CGSize, file: StaticString, function: StaticString, line: UInt) throws {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        view.widthAnchor.constraint(equalToConstant: 500).isActive = true
-        view.backgroundColor  = .red
+        view.widthAnchor.constraint(equalToConstant: size.width).isActive = true
+        view.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+        view.backgroundColor = .red
         
         let parentView = UIView()
         parentView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +77,8 @@ class Tests: PixelTestCase {
         parentView.layoutIfNeeded()
         view.setNeedsLayout()
         view.layoutIfNeeded()
-        try verify(view)
+        try verify(view, file: file, function: function, line: line)
     }
+    
 }
 
