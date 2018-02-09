@@ -1,5 +1,11 @@
 PODS:
-  - PixelTest (0.1.0)
+  - AEXML (4.2.2)
+  - PathKit (0.9.0)
+  - PixelTest (0.3.0):
+    - xcproj
+  - xcproj (4.0.0):
+    - AEXML (~> 4.1)
+    - PathKit (~> 0.8)
 
 DEPENDENCIES:
   - PixelTest (from `../`)
@@ -9,7 +15,10 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  PixelTest: 8312d572bf280f73591bee003281424bb23812b9
+  AEXML: 5ebafc1b75e0bcf0f1b09b8ca8fed2d5a199479b
+  PathKit: bc177736eb737341ddee2c24413d81ef1abc9ba4
+  PixelTest: 8eeba3d0a1cdcb08c9060ed9713d182b484dd389
+  xcproj: 4e2bcd38e36e30205d3038923f146240556b1838
 
 PODFILE CHECKSUM: 9d1d21be006a8eccd3f315fd6afeaa53c1ad183c
 
