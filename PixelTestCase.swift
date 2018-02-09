@@ -9,7 +9,6 @@
 import UIKit
 import XCTest
 
-// TODO: README
 // TODO: CONTRIBUTING
 // TODO: CHANGELOG
 
@@ -27,6 +26,20 @@ open class PixelTestCase: XCTestCase {
     public enum Scale {
         case native
         case explicit(CGFloat)
+        
+        var explicitOrScreenNativeValue: CGFloat {
+            switch self {
+            case .native: return UIScreen.main.scale
+            case .explicit(let explicit): return explicit
+            }
+        }
+        
+        var explicitOrCoreGraphicsValue: CGFloat {
+            switch self {
+            case .native: return 0
+            case .explicit(let explicit): return explicit
+            }
+        }
     }
     
     /// Represents a mode that the test/tests are running in.
@@ -163,12 +176,7 @@ open class PixelTestCase: XCTestCase {
         guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference) else { throw Error.unableToCreateFileURL }
         guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
         let data = try Data(contentsOf: url, options: .uncached)
-        let imageScale: CGFloat
-        switch scale {
-        case .native: imageScale = UIScreen.main.scale
-        case .explicit(let explicitScale): imageScale = explicitScale
-        }
-        let recordedImage = UIImage(data: data, scale: imageScale)!
+        let recordedImage = UIImage(data: data, scale: scale.explicitOrScreenNativeValue)!
         if !image.equalTo(recordedImage) {
             try storeDiffAndFailureImages(from: image, recordedImage: recordedImage, function: function, scale: scale)
             XCTFail("Snapshots do not match", file: file, line: line) // TODO: Clearer messaging
@@ -177,7 +185,10 @@ open class PixelTestCase: XCTestCase {
         }
     }
     
-    private func storeDiffAndFailureImages(from originalImage: UIImage, recordedImage: UIImage, function: StaticString, scale: Scale) throws {
+    private func storeDiffAndFailureImages(from originalImage: UIImage,
+                                           recordedImage: UIImage,
+                                           function: StaticString,
+                                           scale: Scale) throws {
         if let diffImage = originalImage.diff(with: recordedImage), let url = try fileURL(forFunction: function, scale: scale, imageType: .diff) {
             let data = UIImagePNGRepresentation(diffImage)
             try data?.write(to: url, options: .atomic) // TODO: This will fail the test if it fails, intended?
@@ -188,7 +199,8 @@ open class PixelTestCase: XCTestCase {
         }
     }
     
-    private func removeDiffAndFailureImages(function: StaticString, scale: Scale) throws {
+    private func removeDiffAndFailureImages(function: StaticString,
+                                            scale: Scale) throws {
         if let url = try fileURL(forFunction: function, scale: scale, imageType: .diff) {
             try? FileManager.default.removeItem(at: url)
         }
@@ -200,20 +212,29 @@ open class PixelTestCase: XCTestCase {
     private func fileURL(forFunction function: StaticString,
                          scale: Scale,
                          imageType: ImageType) throws -> URL? {
-        guard let directory = ProcessInfo.processInfo.environment["PIXELTEST_DIR"] else { fatalError("Please set `PIXEL_TESTS_DIR` as an environment variable") }
-        let directoryName = "\(type(of: self))".components(separatedBy: ".").last ?? ""
-        let directoryWithImageType = "\(directory)/\(imageType.rawValue)/\(directoryName)"
-        if !FileManager.default.fileExists(atPath: directoryWithImageType) {
-            try FileManager.default.createDirectory(atPath: directoryWithImageType, withIntermediateDirectories: true, attributes: nil)
-        }
+        let baseDirectory = baseDirectoryPath(with: imageType)
+        try createBaseDirectoryIfNecessary(baseDirectory)
+        return fullFileURL(withBaseDirectoryPath: baseDirectory, function: function, scale: scale)
+    }
+    
+    private func baseDirectoryPath(with imageType: ImageType) -> String {
+        guard let baseDirectory = ProcessInfo.processInfo.environment["PIXELTEST_DIR"] else { fatalError("Please set `PIXELTEST_DIR` as an environment variable") }
+        let typeComponents = String(reflecting: type(of: self)).components(separatedBy: ".")
+        let moduleName = typeComponents[safe: 0] ?? "Unknown"
+        let className = typeComponents[safe: 1] ?? "Unknown"
+        return "\(baseDirectory)/\(moduleName)/\(imageType.rawValue)/\(className)"
+    }
+    
+    private func createBaseDirectoryIfNecessary(_ baseDirectoryPath: String) throws {
+        guard !FileManager.default.fileExists(atPath: baseDirectoryPath) else { return }
+        try FileManager.default.createDirectory(atPath: baseDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+    }
+    
+    private func fullFileURL(withBaseDirectoryPath baseDirectoryPath: String,
+                             function: StaticString,
+                             scale: Scale) -> URL? {
         let functionWithParenthesisRemoved = "\(function)".trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var path = "\(directoryWithImageType)/\(functionWithParenthesisRemoved)"
-        switch scale {
-        case .native:
-            path += "@\(Int(UIScreen.main.scale))x.png"
-        case .explicit(let scale):
-            path += "@\(Int(scale))x.png"
-        }
+        let path = "\(baseDirectoryPath)/\(functionWithParenthesisRemoved)@\(scale.explicitOrScreenNativeValue)x.png"
         return URL(fileURLWithPath: path)
     }
     
@@ -222,12 +243,7 @@ open class PixelTestCase: XCTestCase {
 extension UIView { // TODO: Move
     
     func image(withScale scale: PixelTestCase.Scale) -> UIImage? {
-        let imageScale: CGFloat
-        switch scale {
-        case .native: imageScale = 0
-        case .explicit(let explicitScale): imageScale = explicitScale
-        }
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, imageScale)
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale.explicitOrCoreGraphicsValue)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.saveGState()
         layer.render(in: context)
@@ -265,4 +281,12 @@ extension UIImage { // TODO: Move
         return diffImage
     }
 
+}
+
+extension Array {
+    
+    subscript(safe index: Index) -> Element? {
+        return indices ~= index ? self[index] : nil
+    }
+    
 }
