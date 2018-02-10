@@ -29,9 +29,13 @@ First things first, you need to tell PixelTest where to store reference images. 
 
 ![Scheme Settings](Media/Images/scheme-settings.png)
 
-And then add a new environment variable named `PIXELTEST_DIR` with a value of something like `$(SOURCE_ROOT)/Snapshots`.
+And then add a new environment variable named `PIXELTEST_BASE_DIR` with a value of `$(SOURCE_ROOT)`.
 
-PixelTest will store all reference, failure and diff images in here for testing. I'd like to be able to support storing snapshots in multiple locations (for example if you've got multiple modules/subprojects), so if you have any ideas please raise an issue!
+This lets PixelTest know where your project/workspace base directory is. PixelTest will use this base directory to find the correct place to store reference, failure and diff images for testing for each test target.
+
+Internally, when running a test, PixelTest finds the directory that contains the test target, and then stores everything for that test target in that directory.
+
+This means snapshots are stored in the same directory that your module is located in, making it easier to extract your module - with all its tests - in the future.
 
 ### Step 2
 
@@ -67,7 +71,7 @@ class TestClass: PixelTestCase {
 
 Once you've overridden `setUp()`, simply run your tests. Each test that runs while `mode` is set to `.record` will record a reference image. Once you disable record mode (either by removing the line of code or by setting `mode` to `.test`), each subsequent run of your tests will check the saved reference image. If even 1 pixel is different, the test will fail.
 
-If a test fails, you'll find two images in the `Diff` and `Failure` directories (in the directory you set up in the first step). You can use these images to see what's changed and what went wrong. If it was an intentional change, you can re-record your snapshots. Be careful to only run the tests you want to re-record in record mode, because it will overwrite any tests that run.
+If a test fails, you'll find two images in the `Diff` and `Failure` directories located in the directory that contains the test target. You can use these images to see what's changed and what went wrong. If it was an intentional change, you can re-record your snapshots. Be careful to only run the tests you want to re-record in record mode, because it will overwrite any tests that run.
 
 You can decide whether PixelTest tests your view with dynamic height or width, or fixed height and width. When you call `verify(view)` you're also required to pass in an `Option`. Typically this would be `.dynamicHeight(fixedWith: 320)`, which means that PixelTest will attempt to test your view with a fixed with of `320`, but allow it to dynamically grow based on its content.
 

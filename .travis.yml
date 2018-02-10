@@ -11,4 +11,4 @@ language: objective-c
 # - pod install --project-directory=Example
 script:
 - xcodebuild test -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -sdk iphonesimulator11.2 ONLY_ACTIVE_ARCH=NO | xcpretty
-- pod lib lint
+- pod lib lint --allow-warnings

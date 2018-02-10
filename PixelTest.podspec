@@ -21,6 +21,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/kanecheshire'
 
   s.ios.deployment_target = '9.0'
-  s.source_files = 'PixelTest/**/*', 'PixelTestCase.swift'
+  s.source_files = 'PixelTest/**/*', 'PixelTest.swift'
   s.frameworks = 'UIKit', 'XCTest'
+  s.dependency 'xcproj'
 end
