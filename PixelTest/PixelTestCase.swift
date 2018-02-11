@@ -1,5 +1,5 @@
 //
-//  PixelTest.swift
+//  PixelTestCase.swift
 //  PixelTest
 //
 //  Created by Kane Cheshire on 13/09/2017.
@@ -116,19 +116,22 @@ open class PixelTestCase: XCTestCase {
     ///   - scale: The scale to record/test the snapshot with.
     public func verify(_ view: UIView,
                        option: Option,
-                       scale: Scale = .explicit(2),
+                       scale: Scale = .native,
                        file: StaticString = #file,
                        function: StaticString = #function,
                        line: UInt = #line) throws {
         layOut(view, with: option)
         guard view.bounds.width != 0 else { throw Error.viewHasNoWidth }
         guard view.bounds.height != 0 else { throw Error.viewHasNoHeight }
-        view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width.rounded(.up), height: view.bounds.height.rounded(.up)) // Horrible hacky thing to make sure images are recorded at the same size as the bounds
         switch mode {
         case .record: try record(view, scale: scale, file: file, function: function, line: line, option: option)
         case .test: try test(view, scale: scale, file: file, function: function, line: line, option: option)
         }
     }
+    
+}
+
+private extension PixelTestCase {
     
     // MARK: Private
     
@@ -166,10 +169,10 @@ open class PixelTestCase: XCTestCase {
     
     private func record(_ view: UIView,
                         scale: Scale, // TODO: Scale stuff isn't working properly across different scale simulators yet
-                        file: StaticString,
-                        function: StaticString,
-                        line: UInt,
-                        option: Option) throws {
+        file: StaticString,
+        function: StaticString,
+        line: UInt,
+        option: Option) throws {
         guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference, option: option) else { throw Error.unableToCreateFileURL }
         guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
         let data = UIImagePNGRepresentation(image)
@@ -277,57 +280,6 @@ open class PixelTestCase: XCTestCase {
     private func moduleName() -> String {
         let typeComponents = String(reflecting: type(of: self)).components(separatedBy: ".")
         return typeComponents[safe: 0] ?? "Unknown"
-    }
-    
-}
-
-extension UIView { // TODO: Move
-    
-    func image(withScale scale: PixelTestCase.Scale) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale.explicitOrCoreGraphicsValue)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        context.saveGState()
-        layer.render(in: context)
-        context.restoreGState()
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
-        UIGraphicsEndImageContext()
-        return image
-    }
-    
-}
-
-extension UIImage { // TODO: Move
-    
-    func equalTo(_ image: UIImage) -> Bool {
-        guard size == image.size else { return false }
-        return UIImagePNGRepresentation(self) == UIImagePNGRepresentation(image)
-    }
-    
-    func diff(with image: UIImage) -> UIImage? { // TODO: split this up
-        let maxWidth = max(size.width, image.size.width)
-        let maxHeight = max(size.height, image.size.height)
-        let diffSize = CGSize(width: maxWidth, height: maxHeight)
-        UIGraphicsBeginImageContextWithOptions(diffSize, true, scale)
-        let context = UIGraphicsGetCurrentContext()
-        draw(in: CGRect(origin: .zero, size: size))
-        context?.setAlpha(0.5)
-        context?.beginTransparencyLayer(auxiliaryInfo: nil)
-        image.draw(in: CGRect(origin: .zero, size: image.size))
-        context?.setBlendMode(.difference)
-        context?.setFillColor(UIColor.white.cgColor)
-        context?.fill(CGRect(origin: .zero, size: diffSize))
-        context?.endTransparencyLayer()
-        let diffImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return diffImage
-    }
-
-}
-
-extension Array {
-    
-    subscript(safe index: Index) -> Element? {
-        return indices ~= index ? self[index] : nil
     }
     
 }

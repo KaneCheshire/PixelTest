@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PixelTest'
-  s.version          = '0.4.0'
+  s.version          = '0.5.0'
   s.summary          = 'PixelTest is a Swift-first, simple and modern snapshot testing tool.'
   s.description      = <<-DESC
   PixelTest is a modern, Swift-only snapshot testing tool.
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/kanecheshire'
 
   s.ios.deployment_target = '9.0'
-  s.source_files = 'PixelTest/**/*', 'PixelTest.swift'
+  s.source_files = 'PixelTest/**/*.swift'
   s.frameworks = 'UIKit', 'XCTest'
   s.dependency 'xcproj'
 end
