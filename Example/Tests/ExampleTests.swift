@@ -62,6 +62,7 @@ extension ExampleTests {
     private func verifyView(with option: PixelTestCase.Option, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) throws {
         let view = UILabel()
         view.backgroundColor = .red
+//        view.text = "Hello World!" // Uncomment to make tests fail
         try verify(view, option: option, file: file, function: function, line: line)
     }
     
