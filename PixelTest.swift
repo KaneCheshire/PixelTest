@@ -11,9 +11,6 @@ import XCTest
 import xcproj
 import PathKit
 
-// TODO: CONTRIBUTING
-// TODO: CHANGELOG
-
 /// Subclass `PixelTestCase` after `import PixelTest`
 open class PixelTestCase: XCTestCase {
     
@@ -187,30 +184,39 @@ open class PixelTestCase: XCTestCase {
                       line: UInt,
                       option: Option) throws {
         guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference, option: option) else { throw Error.unableToCreateFileURL }
-        guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
+        guard let testImage = view.image(withScale: scale) else { throw Error.unableToCreateImage }
         let data = try Data(contentsOf: url, options: .uncached)
         let recordedImage = UIImage(data: data, scale: scale.explicitOrScreenNativeValue)!
-        if !image.equalTo(recordedImage) {
-            try storeDiffAndFailureImages(from: image, recordedImage: recordedImage, function: function, scale: scale, option: option)
-            XCTFail("Snapshots do not match", file: file, line: line) // TODO: Clearer messaging
+        if !testImage.equalTo(recordedImage) {
+            try storeDiffAndFailureImages(from: testImage, recordedImage: recordedImage, function: function, scale: scale, option: option)
+            XCTFail("Snapshots do not match (see diff image in logs)", file: file, line: line) // TODO: Clearer messaging
         } else {
             try removeDiffAndFailureImages(function: function, scale: scale, option: option)
         }
     }
     
-    private func storeDiffAndFailureImages(from originalImage: UIImage,
+    private func storeDiffAndFailureImages(from failedImage: UIImage,
                                            recordedImage: UIImage,
                                            function: StaticString,
                                            scale: Scale,
                                            option: Option) throws {
-        if let diffImage = originalImage.diff(with: recordedImage), let url = try fileURL(forFunction: function, scale: scale, imageType: .diff, option: option) {
+        if let diffImage = failedImage.diff(with: recordedImage), let url = try fileURL(forFunction: function, scale: scale, imageType: .diff, option: option) {
+            addAttachment(named: "Diff image", image: diffImage)
             let data = UIImagePNGRepresentation(diffImage)
-            try data?.write(to: url, options: .atomic) // TODO: This will fail the test if it fails, intended?
-        }
-        if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure, option: option) {
-            let data = UIImagePNGRepresentation(originalImage)
             try data?.write(to: url, options: .atomic)
         }
+        if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure, option: option) {
+            addAttachment(named: "Failed image", image: failedImage)
+            addAttachment(named: "Original image", image: recordedImage)
+            let data = UIImagePNGRepresentation(failedImage)
+            try data?.write(to: url, options: .atomic)
+        }
+    }
+    
+    private func addAttachment(named name: String, image: UIImage) {
+        let attachment = XCTAttachment(image: image)
+        attachment.name = name
+        add(attachment)
     }
     
     private func removeDiffAndFailureImages(function: StaticString,
