@@ -5,7 +5,12 @@
 [![License](https://img.shields.io/cocoapods/l/PixelTest.svg?style=flat)](http://cocoapods.org/pods/PixelTest)
 [![Platform](https://img.shields.io/cocoapods/p/PixelTest.svg?style=flat)](http://cocoapods.org/pods/PixelTest)
 
-PixelTest is a modern, Swift-only snapshot testing tool.
+- [Key features](#key-features)
+- [Why snapshot test](#why-snapshot-test)
+- [Usage](#usage)
+- [Known limitations](#known-limitations)
+
+PixelTest is a modern, Swift-first snapshot testing tool.
 
 Snapshot testing compares one of your views rendered into an image, to a previously recorded image, allowing for 0% difference or the test will fail.
 
@@ -14,6 +19,16 @@ Snapshot tests are perfect for quickly checking complex layouts, while at the sa
 ~~Unlike other snapshot testing options, PixelTest supports declaring which resolution to record your snapshots in, so it doesn't matter which simulator you run your snapshot tests on.~~ (This isn't currently working but it's high on the list of things to figure out)
 
 As an added bonus, PixelTest also clears up after itself. If you fix a failing test, the failure and diff images are automatically removed for you.
+
+## Key features
+
+PixelTest is an excellent alternative to other options because PixelTest:
+
+- Is written in Swift so it's able to take advantage of modern Swift features, like powerful enums.
+- Handles laying out your views for you, leaving your project free of ugly layout code.
+- Supports multiple subprojects/modules in your workspace, finding the right directory to store snapshots automatically.
+- Helps you by showing you the diff image of failed tests directly in the test logs, with no need to leave Xcode.
+- Automatically cleans up after itself by removing failed/diff images stored on disk when the corresponding test is fixed and passes.
 
 ## Why snapshot test?
 
@@ -77,13 +92,13 @@ You can decide whether PixelTest tests your view with dynamic height or width, o
 
 This leaves you free to populate your view without having ugly layout code in your project or modules.
 
-## Known issues
+## Known limitations
 
 PixelTest might not work properly with reusable views like `UITableViewCell`s and `UITableViewHeaderFooterView`s. If you have any issues and figure out a fix please raise an issue or PR.
 
 ## Requirements
 
-PixelTest currently only works in iOS projects.
+PixelTest currently [only works in iOS projects](https://github.com/KaneCheshire/PixelTest/issues/13).
 
 ## Author
 
