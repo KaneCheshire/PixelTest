@@ -59,20 +59,6 @@ open class PixelTestCase: XCTestCase {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 extension PixelTestCase {
     
     // MARK: Internal
