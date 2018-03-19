@@ -66,8 +66,8 @@ open class PixelTestCase: XCTestCase {
         var fileValue: String {
             switch self {
             case .dynamicWidth(fixedHeight: let height): return "dw_\(height)"
-            case .dynamicHeight(fixedWidth: let width): return "dh_\(width)"
-            case .dynamicWidthHeight: return "dh_dw"
+            case .dynamicHeight(fixedWidth: let width): return "\(width)_dh"
+            case .dynamicWidthHeight: return "dw_dh"
             case .fixed(width: let width, height: let height): return "\(width)_\(height)"
             }
         }
@@ -88,9 +88,9 @@ open class PixelTestCase: XCTestCase {
         case unableToCreateFileURL
     }
     
-    // MARK: Private
+    // MARK: Internal
     
-    private enum ImageType: String {
+    enum ImageType: String {
         case reference = "Reference"
         case diff = "Diff"
         case failure = "Failure"
@@ -114,12 +114,7 @@ open class PixelTestCase: XCTestCase {
     ///   - view: The view to verify.
     ///   - option: The options to verify the view with.
     ///   - scale: The scale to record/test the snapshot with.
-    public func verify(_ view: UIView,
-                       option: Option,
-                       scale: Scale = .native,
-                       file: StaticString = #file,
-                       function: StaticString = #function,
-                       line: UInt = #line) throws {
+    public func verify(_ view: UIView, option: Option, scale: Scale = .native, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) throws {
         layOut(view, with: option)
         guard view.bounds.width != 0 else { throw Error.viewHasNoWidth }
         guard view.bounds.height != 0 else { throw Error.viewHasNoHeight }
@@ -129,14 +124,17 @@ open class PixelTestCase: XCTestCase {
         }
     }
     
-}
-
-private extension PixelTestCase {
+    // MARK: Internal
+    
+    func fileURL(forFunction function: StaticString, scale: Scale, imageType: ImageType, option: Option, fileManager: FileManagerType = FileManager.default) throws -> URL {
+        let baseDirectory = baseDirectoryURL(with: imageType)
+        try createBaseDirectoryIfNecessary(baseDirectory, fileManager: fileManager)
+        return fullFileURL(withBaseDirectoryURL: baseDirectory, function: function, scale: scale, option: option)
+    }
     
     // MARK: Private
     
-    private func layOut(_ view: UIView,
-                        with option: Option) {
+    private func layOut(_ view: UIView, with option: Option) {
         view.translatesAutoresizingMaskIntoConstraints = false
         switch option {
         case .dynamicHeight(fixedWidth: let width):
@@ -163,52 +161,36 @@ private extension PixelTestCase {
             ])
         parentView.setNeedsLayout()
         parentView.layoutIfNeeded()
-        view.setNeedsLayout()
-        view.layoutIfNeeded() // TODO: I don't think this is needed
     }
     
-    private func record(_ view: UIView,
-                        scale: Scale, // TODO: Scale stuff isn't working properly across different scale simulators yet
-        file: StaticString,
-        function: StaticString,
-        line: UInt,
-        option: Option) throws {
-        guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference, option: option) else { throw Error.unableToCreateFileURL }
+    private func record(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, option: Option) throws {
+        let url = try fileURL(forFunction: function, scale: scale, imageType: .reference, option: option)
         guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
         let data = UIImagePNGRepresentation(image)
         try data?.write(to: url, options: .atomic)
         XCTFail("Snapshot recorded, disable record mode and re-run tests to verify.", file: file, line: line)
     }
     
-    private func test(_ view: UIView,
-                      scale: Scale,
-                      file: StaticString,
-                      function: StaticString,
-                      line: UInt,
-                      option: Option) throws {
-        guard let url = try fileURL(forFunction: function, scale: scale, imageType: .reference, option: option) else { throw Error.unableToCreateFileURL }
+    private func test(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, option: Option) throws {
+        let url = try fileURL(forFunction: function, scale: scale, imageType: .reference, option: option)
         guard let testImage = view.image(withScale: scale) else { throw Error.unableToCreateImage }
         let data = try Data(contentsOf: url, options: .uncached)
         let recordedImage = UIImage(data: data, scale: scale.explicitOrScreenNativeValue)!
         if !testImage.equalTo(recordedImage) {
             try storeDiffAndFailureImages(from: testImage, recordedImage: recordedImage, function: function, scale: scale, option: option)
-            XCTFail("Snapshots do not match (see diff image in logs)", file: file, line: line) // TODO: Clearer messaging
+            XCTFail("Snapshots do not match (see diff image in logs)", file: file, line: line)
         } else {
             try removeDiffAndFailureImages(function: function, scale: scale, option: option)
         }
     }
     
-    private func storeDiffAndFailureImages(from failedImage: UIImage,
-                                           recordedImage: UIImage,
-                                           function: StaticString,
-                                           scale: Scale,
-                                           option: Option) throws {
-        if let diffImage = failedImage.diff(with: recordedImage), let url = try fileURL(forFunction: function, scale: scale, imageType: .diff, option: option) {
+    private func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, function: StaticString, scale: Scale, option: Option) throws {
+        if let diffImage = failedImage.diff(with: recordedImage), let url = try? fileURL(forFunction: function, scale: scale, imageType: .diff, option: option) {
             addAttachment(named: "Diff image", image: diffImage)
             let data = UIImagePNGRepresentation(diffImage)
             try data?.write(to: url, options: .atomic)
         }
-        if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure, option: option) {
+        if let url = try? fileURL(forFunction: function, scale: scale, imageType: .failure, option: option) {
             addAttachment(named: "Failed image", image: failedImage)
             addAttachment(named: "Original image", image: recordedImage)
             let data = UIImagePNGRepresentation(failedImage)
@@ -222,24 +204,13 @@ private extension PixelTestCase {
         add(attachment)
     }
     
-    private func removeDiffAndFailureImages(function: StaticString,
-                                            scale: Scale,
-                                            option: Option) throws {
-        if let url = try fileURL(forFunction: function, scale: scale, imageType: .diff, option: option) {
+    private func removeDiffAndFailureImages(function: StaticString, scale: Scale, option: Option) throws {
+        if let url = try? fileURL(forFunction: function, scale: scale, imageType: .diff, option: option) {
             try? FileManager.default.removeItem(at: url)
         }
-        if let url = try fileURL(forFunction: function, scale: scale, imageType: .failure, option: option) {
+        if let url = try? fileURL(forFunction: function, scale: scale, imageType: .failure, option: option) {
             try? FileManager.default.removeItem(at: url)
         }
-    }
-    
-    private func fileURL(forFunction function: StaticString,
-                         scale: Scale,
-                         imageType: ImageType,
-                         option: Option) throws -> URL? {
-        let baseDirectory = baseDirectoryURL(with: imageType)
-        try createBaseDirectoryIfNecessary(baseDirectory)
-        return fullFileURL(withBaseDirectoryURL: baseDirectory, function: function, scale: scale, option: option)
     }
     
     private func baseDirectoryURL(with imageType: ImageType) -> URL {
@@ -249,15 +220,12 @@ private extension PixelTestCase {
         return baseURL.appendingPathComponent("\(moduleName())Snapshots").appendingPathComponent(imageType.rawValue).appendingPathComponent(className)
     }
     
-    private func createBaseDirectoryIfNecessary(_ baseDirectoryURL: URL) throws {
-        guard !FileManager.default.fileExists(atPath: baseDirectoryURL.absoluteString) else { return }
-        try FileManager.default.createDirectory(at: baseDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+    private func createBaseDirectoryIfNecessary(_ baseDirectoryURL: URL, fileManager: FileManagerType = FileManager.default) throws {
+        guard !fileManager.fileExists(atPath: baseDirectoryURL.absoluteString) else { return }
+        try fileManager.createDirectory(at: baseDirectoryURL, withIntermediateDirectories: true, attributes: nil)
     }
     
-    private func fullFileURL(withBaseDirectoryURL baseDirectoryURL: URL,
-                             function: StaticString,
-                             scale: Scale,
-                             option: Option) -> URL? {
+    private func fullFileURL(withBaseDirectoryURL baseDirectoryURL: URL, function: StaticString, scale: Scale, option: Option) -> URL {
         let functionWithParenthesisRemoved = "\(function)".trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         return baseDirectoryURL.appendingPathComponent("\(functionWithParenthesisRemoved)_\(option.fileValue)@\(scale.explicitOrScreenNativeValue)x.png")
     }

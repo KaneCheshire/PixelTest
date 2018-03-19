@@ -13,6 +13,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* ExampleTests.swift */; };
+		C33E27F7205FAE04005A80A5 /* PixelTestCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */; };
 		CDDAC330A2A6E64F6455AD46 /* Pods_PixelTest_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AE5C44B33279316FC3812D /* Pods_PixelTest_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		8C2D2027FDF9DBE6379CDD04 /* Pods-PixelTest_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PixelTest_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PixelTest_Example/Pods-PixelTest_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		94AE5C44B33279316FC3812D /* Pods_PixelTest_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PixelTest_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E582E285F1A932FFF7E961 /* Pods-PixelTest_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PixelTest_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PixelTest_Tests/Pods-PixelTest_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,24 +104,16 @@
 			children = (
 				C30C74132030CD3E00B75E9D /* App */,
 				C30C74122030CD3000B75E9D /* Supporting Files */,
-				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
 			name = "Example for PixelTest";
 			path = PixelTest;
-			sourceTree = "<group>";
-		};
-		607FACD31AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACD41AFB9204008FA782 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				607FACEB1AFB9204008FA782 /* ExampleTests.swift */,
+				C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -146,6 +140,7 @@
 		C30C74122030CD3000B75E9D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				607FACD41AFB9204008FA782 /* Info.plist */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 			);
@@ -405,6 +400,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C33E27F7205FAE04005A80A5 /* PixelTestCaseTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* ExampleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

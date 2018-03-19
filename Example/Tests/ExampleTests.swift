@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-import PixelTest
+@testable import PixelTest
 
 class ExampleTests: PixelTestCase {
     
@@ -52,8 +52,6 @@ class ExampleTests: PixelTestCase {
     func test_pointSevenFive_height() throws {
         try verifyView(with: .fixed(width: 100, height: 100.75))
     }
-    
-    // TODO: Tests for other options, file writing etc.
     
 }
 
