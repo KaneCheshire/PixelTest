@@ -1,8 +1,16 @@
+//
+//  BoundingSizeTests.swift
+//  PixelTest_Tests
+//
+//  Created by Kane Cheshire on 19/03/2018.
+//  Copyright © 2018 Kane Cheshire. All rights reserved.
+//
+
 import UIKit
 import XCTest
 @testable import PixelTest
 
-class ExampleTests: PixelTestCase {
+class BoundingSizeTests: PixelTestCase {
     
     override func setUp() {
         super.setUp()
@@ -55,7 +63,7 @@ class ExampleTests: PixelTestCase {
     
 }
 
-extension ExampleTests {
+extension BoundingSizeTests {
     
     private func verifyView(with option: Option, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) throws {
         let view = UILabel()
