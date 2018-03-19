@@ -102,9 +102,8 @@ extension PixelTestCase {
     
     private func record(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, option: Option) throws {
         let url = try fileURL(forFunction: function, scale: scale, imageType: .reference, option: option)
-        guard let image = view.image(withScale: scale) else { throw Error.unableToCreateImage }
-        let data = UIImagePNGRepresentation(image)
-        try data?.write(to: url, options: .atomic)
+        guard let image = view.image(withScale: scale), let data = UIImagePNGRepresentation(image) else { throw Error.unableToCreateImage }
+        try data.write(to: url, options: .atomic)
         XCTFail("Snapshot recorded, disable record mode and re-run tests to verify.", file: file, line: line)
     }
     
@@ -117,7 +116,7 @@ extension PixelTestCase {
             try storeDiffAndFailureImages(from: testImage, recordedImage: recordedImage, function: function, scale: scale, option: option)
             XCTFail("Snapshots do not match (see diff image in logs)", file: file, line: line)
         } else {
-            try removeDiffAndFailureImages(function: function, scale: scale, option: option)
+            removeDiffAndFailureImages(function: function, scale: scale, option: option)
         }
     }
     
@@ -141,7 +140,7 @@ extension PixelTestCase {
         add(attachment)
     }
     
-    private func removeDiffAndFailureImages(function: StaticString, scale: Scale, option: Option) throws {
+    private func removeDiffAndFailureImages(function: StaticString, scale: Scale, option: Option) {
         if let url = try? fileURL(forFunction: function, scale: scale, imageType: .diff, option: option) {
             try? FileManager.default.removeItem(at: url)
         }
