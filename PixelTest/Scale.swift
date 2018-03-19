@@ -10,7 +10,7 @@ import Foundation
 /// Represents the scale of the resulting snapshot image.
 /// I.e. whether it's @1x, @2x, @3x etc.
 ///
-/// - native: Uses the device's native scale. (@2x on an iPhone SE, @3x on an iPhone 8)
+/// - native: Uses the device's native scale. (@2x on an iPhone SE, @3x on an iPhone 8 Plus)
 /// - explicit: Forces an explicit scale, regardless of device.
 public enum Scale {
     case native
