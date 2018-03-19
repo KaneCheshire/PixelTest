@@ -6,7 +6,7 @@ class ExampleTests: PixelTestCase {
     
     override func setUp() {
         super.setUp()
-//        mode = .record
+        mode = .test
     }
     
     func test_regularSize() throws {

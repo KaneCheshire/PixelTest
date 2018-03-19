@@ -163,7 +163,12 @@ extension PixelTestCase {
     }
     
     private func fullFileURL(withBaseDirectoryURL baseDirectoryURL: URL, function: StaticString, scale: Scale, option: Option) -> URL {
-        let functionWithParenthesisRemoved = "\(function)".trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var functionWithParenthesisRemoved = "\(function)".trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        if let range = functionWithParenthesisRemoved.range(of: "test_") {
+            functionWithParenthesisRemoved.removeSubrange(range)
+        } else if let range = functionWithParenthesisRemoved.range(of: "test") {
+            functionWithParenthesisRemoved.removeSubrange(range)
+        }
         return baseDirectoryURL.appendingPathComponent("\(functionWithParenthesisRemoved)_\(option.fileValue)@\(scale.explicitOrScreenNativeValue)x.png")
     }
     
