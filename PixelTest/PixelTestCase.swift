@@ -14,65 +14,6 @@ import PathKit
 /// Subclass `PixelTestCase` after `import PixelTest`
 open class PixelTestCase: XCTestCase {
     
-    // MARK: - Enums -
-    // MARK: Public
-    
-    /// Represents the scale of the resulting snapshot image.
-    /// I.e. whether it's @1x, @2x, @3x etc.
-    ///
-    /// - native: Uses the device's native scale. (@2x on an iPhone SE, @3x on an iPhone 8)
-    /// - explicit: Forces an explicit scale, regardless of device.
-    public enum Scale {
-        case native
-        case explicit(CGFloat)
-        
-        var explicitOrScreenNativeValue: CGFloat {
-            switch self {
-            case .native: return UIScreen.main.scale
-            case .explicit(let explicit): return explicit
-            }
-        }
-        
-        var explicitOrCoreGraphicsValue: CGFloat {
-            switch self {
-            case .native: return 0
-            case .explicit(let explicit): return explicit
-            }
-        }
-    }
-    
-    /// Represents a mode that the test/tests are running in.
-    /// Typically you would change this in `setUp()`.
-    ///
-    /// - record: The tests are running in record mode. While this mode is set, any tests that run record a snapshot, overwriting any existing snapshots for that test.
-    /// - test: The tests are running in test mode. While this mode is set, any tests that run will be verified against recorded snapshots.
-    public enum Mode {
-        case record
-        case test
-    }
-    
-    /// Represents an option for verifying a view.
-    ///
-    /// - dynamicWidth: The view should have a dynamic width, but fixed height.
-    /// - dynamicHeight: The view should have a dynamic height, but fixed width.
-    /// - dynamicWidthHeight: The view should have a dynamic width and height.
-    /// - fixed: The view should have a fixed width and height.
-    public enum Option {
-        case dynamicWidth(fixedHeight: CGFloat)
-        case dynamicHeight(fixedWidth: CGFloat)
-        case dynamicWidthHeight
-        case fixed(width: CGFloat, height: CGFloat)
-        
-        var fileValue: String {
-            switch self {
-            case .dynamicWidth(fixedHeight: let height): return "dw_\(height)"
-            case .dynamicHeight(fixedWidth: let width): return "\(width)_dh"
-            case .dynamicWidthHeight: return "dw_dh"
-            case .fixed(width: let width, height: let height): return "\(width)_\(height)"
-            }
-        }
-    }
-    
     /// Represents an error that could occur specific to `PixelTestCase`.
     ///
     /// - viewHasNoWidth: The view provided has no width so cannot be verified.
@@ -84,16 +25,7 @@ open class PixelTestCase: XCTestCase {
         case viewHasNoWidth
         case viewHasNoHeight
         case unableToCreateImage
-        case noKeyWindow
         case unableToCreateFileURL
-    }
-    
-    // MARK: Internal
-    
-    enum ImageType: String {
-        case reference = "Reference"
-        case diff = "Diff"
-        case failure = "Failure"
     }
     
     // MARK: - Properties -
@@ -123,6 +55,25 @@ open class PixelTestCase: XCTestCase {
         case .test: try test(view, scale: scale, file: file, function: function, line: line, option: option)
         }
     }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+extension PixelTestCase {
     
     // MARK: Internal
     

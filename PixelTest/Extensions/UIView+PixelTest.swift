@@ -13,7 +13,7 @@ extension UIView {
     ///
     /// - Parameter scale: The scale of the image to create.
     /// - Returns: An image, or nil if an image couldn't be created.
-    func image(withScale scale: PixelTestCase.Scale) -> UIImage? {
+    func image(withScale scale: Scale) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale.explicitOrCoreGraphicsValue)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.saveGState()
