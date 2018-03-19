@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.6.0
+
+- Standardises filenames (which is a breaking change for people already using PixelTest)
+
 # 0.5.0
 
 - Adds support for adding `XCTAttachments` to test logs for failed tests.
