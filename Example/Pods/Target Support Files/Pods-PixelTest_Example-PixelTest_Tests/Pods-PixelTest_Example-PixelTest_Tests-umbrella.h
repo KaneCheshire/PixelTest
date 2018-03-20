@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_PixelTest_TestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_PixelTest_TestsVersionString[];
+FOUNDATION_EXPORT double Pods_PixelTest_Example_PixelTest_TestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_PixelTest_Example_PixelTest_TestsVersionString[];
 
