@@ -1,8 +1,15 @@
 use_frameworks!
 
+platform :ios, '11.2'
+
 target 'PixelTest_Example' do
   target 'PixelTest_Tests' do
-    inherit! :search_paths
+    inherit! :complete
     pod 'PixelTest', :path => '../'
+  end
+  
+  target 'PixelTestExampleSnapshotTests' do
+      inherit! :complete
+      pod 'PixelTest', :path => '../'
   end
 end

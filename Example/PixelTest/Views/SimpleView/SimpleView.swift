@@ -1,9 +1,9 @@
 //
 //  SimpleView.swift
-//  PixelTest
+//  PixelTest_Example
 //
-//  Created by Kane Cheshire on 19/03/2018.
-//  Copyright © 2018 Kane Cheshire. All rights reserved.
+//  Created by Kane Cheshire on 20/03/2018.
+//  Copyright © 2018 CocoaPods. All rights reserved.
 //
 
 import UIKit
@@ -15,10 +15,8 @@ struct SimpleViewModel {
     
 }
 
-/// A simple view with a title and subtitle,
-/// where the title has one line, the subtitle has multiple lines.
 final class SimpleView: UIView {
-
+    
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var subtitleLabel: UILabel!
     
@@ -29,14 +27,13 @@ final class SimpleView: UIView {
     
 }
 
-//extension UIView {
-//    
-//    static func loadFromNib<T>() -> T {
-//        let name = "\(classForCoder())"
-//        let bundle = Bundle(for: self)
-//        let nib = UINib(nibName: name, bundle: bundle)
-//        return nib.instantiate(withOwner: nil, options: nil)[0] as! T
-//    }
-//    
-//}
-
+extension UIView {
+    
+    static var nib: UINib {
+        return UINib(nibName: "\(classForCoder())", bundle: Bundle(for: self))
+    }
+    
+    static func loadFromNib<T>() -> T {
+        return nib.instantiate(withOwner: nil, options: nil).first as! T
+    }
+}

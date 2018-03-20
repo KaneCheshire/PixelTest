@@ -52,6 +52,21 @@
                BlueprintName = "PixelTest_Tests"
                ReferencedContainer = "container:PixelTest.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "MockPixelTestCase">
+               </Test>
+            </SkippedTests>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C302ED962060FDAF004BDC29"
+               BuildableName = "PixelTestExampleSnapshotTests.xctest"
+               BlueprintName = "PixelTestExampleSnapshotTests"
+               ReferencedContainer = "container:PixelTest.xcodeproj">
+            </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
