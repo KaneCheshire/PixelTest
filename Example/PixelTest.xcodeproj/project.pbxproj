@@ -46,6 +46,8 @@
 		8C2D2027FDF9DBE6379CDD04 /* Pods-PixelTest_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PixelTest_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PixelTest_Example/Pods-PixelTest_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		94AE5C44B33279316FC3812D /* Pods_PixelTest_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PixelTest_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E582E285F1A932FFF7E961 /* Pods-PixelTest_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PixelTest_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PixelTest_Tests/Pods-PixelTest_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		C3001D9A20607CE20079F8DA /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CONTRIBUTING.md; path = ../CONTRIBUTING.md; sourceTree = "<group>"; };
+		C3001D9B20607CEC0079F8DA /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,6 +134,8 @@
 			children = (
 				6765F7A9CE40B43B77E89C21 /* PixelTest.podspec */,
 				013C5DA0DE81FFE83563BA64 /* README.md */,
+				C3001D9B20607CEC0079F8DA /* CHANGELOG.md */,
+				C3001D9A20607CE20079F8DA /* CONTRIBUTING.md */,
 				556EA39D5F270545B107D407 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
