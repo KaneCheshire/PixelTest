@@ -17,6 +17,7 @@
 		C3001DA92060F59E0079F8DA /* SimpleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3001DA82060F59E0079F8DA /* SimpleView.swift */; };
 		C302ED9A2060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302ED992060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift */; };
 		C302EDA22060FE34004BDC29 /* SimpleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C302EDA12060FE34004BDC29 /* SimpleView.xib */; };
+		C302EDA5206140E1004BDC29 /* UIView+NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EDA4206140E1004BDC29 /* UIView+NibLoading.swift */; };
 		C33E27F7205FAE04005A80A5 /* PixelTestCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */; };
 		CDDAC330A2A6E64F6455AD46 /* Pods_PixelTest_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AE5C44B33279316FC3812D /* Pods_PixelTest_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 		C302ED992060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestExampleSnapshotTests.swift; sourceTree = "<group>"; };
 		C302ED9B2060FDAF004BDC29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C302EDA12060FE34004BDC29 /* SimpleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleView.xib; sourceTree = "<group>"; };
+		C302EDA4206140E1004BDC29 /* UIView+NibLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIView+NibLoading.swift"; path = "Helpers/UIView+NibLoading.swift"; sourceTree = "<group>"; };
 		C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +140,7 @@
 		607FACD21AFB9204008FA782 /* Example for PixelTest */ = {
 			isa = PBXGroup;
 			children = (
+				C302EDA3206140CC004BDC29 /* Helpers */,
 				C30C74132030CD3E00B75E9D /* App */,
 				C3001DA22060F51A0079F8DA /* Views */,
 				C30C74122030CD3000B75E9D /* Supporting Files */,
@@ -199,6 +202,14 @@
 				C302ED9B2060FDAF004BDC29 /* Info.plist */,
 			);
 			path = PixelTestExampleSnapshotTests;
+			sourceTree = "<group>";
+		};
+		C302EDA3206140CC004BDC29 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C302EDA4206140E1004BDC29 /* UIView+NibLoading.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		C30C74122030CD3000B75E9D /* Supporting Files */ = {
@@ -554,6 +565,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3001DA92060F59E0079F8DA /* SimpleView.swift in Sources */,
+				C302EDA5206140E1004BDC29 /* UIView+NibLoading.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

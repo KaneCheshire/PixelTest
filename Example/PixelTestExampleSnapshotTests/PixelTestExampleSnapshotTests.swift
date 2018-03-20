@@ -10,11 +10,13 @@ import XCTest
 import PixelTest
 @testable import PixelTest_Example
 
+// Try changing values below to make tests fail. Failed tests include diff images in test reports (found in the last tab on the left sidebar in Xcode)
+
 class PixelTestExampleSnapshotTests: PixelTestCase {
     
     override func setUp() {
         super.setUp()
-        mode = .test
+        mode = .test // Change this to .record to record new snapshots or overwrite existing ones
     }
     
     // A good initial test is how the view should look with regular expected data
