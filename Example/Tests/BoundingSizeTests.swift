@@ -8,13 +8,21 @@
 
 import UIKit
 import XCTest
+@testable import PixelTest_Example
 @testable import PixelTest
 
 class BoundingSizeTests: PixelTestCase {
     
     override func setUp() {
         super.setUp()
-        mode = .test
+        mode = .record
+    }
+    
+    func test_simpleView_regularData() throws {
+        let view: SimpleView = .init()
+//        let viewModel = SimpleViewModel(title: "Hello World", subtitle: "This is a simple test")
+//        view.configure(with: viewModel)
+//        try verify(view, option: .dynamicHeight(fixedWidth: 320))
     }
     
     func test_regularSize() throws {

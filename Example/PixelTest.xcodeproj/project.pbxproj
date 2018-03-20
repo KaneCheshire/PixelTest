@@ -13,6 +13,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* BoundingSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* BoundingSizeTests.swift */; };
+		C3001DA62060F51A0079F8DA /* SimpleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3001DA42060F51A0079F8DA /* SimpleView.swift */; };
+		C3001DA72060F51A0079F8DA /* SimpleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3001DA52060F51A0079F8DA /* SimpleView.xib */; };
 		C33E27F7205FAE04005A80A5 /* PixelTestCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */; };
 		CDDAC330A2A6E64F6455AD46 /* Pods_PixelTest_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AE5C44B33279316FC3812D /* Pods_PixelTest_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -48,6 +50,8 @@
 		A5E582E285F1A932FFF7E961 /* Pods-PixelTest_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PixelTest_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PixelTest_Tests/Pods-PixelTest_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C3001D9A20607CE20079F8DA /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CONTRIBUTING.md; path = ../CONTRIBUTING.md; sourceTree = "<group>"; };
 		C3001D9B20607CEC0079F8DA /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
+		C3001DA42060F51A0079F8DA /* SimpleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleView.swift; sourceTree = "<group>"; };
+		C3001DA52060F51A0079F8DA /* SimpleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleView.xib; sourceTree = "<group>"; };
 		C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				C30C74132030CD3E00B75E9D /* App */,
+				C3001DA22060F51A0079F8DA /* Views */,
 				C30C74122030CD3000B75E9D /* Supporting Files */,
 			);
 			name = "Example for PixelTest";
@@ -139,6 +144,23 @@
 				556EA39D5F270545B107D407 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		C3001DA22060F51A0079F8DA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C3001DA32060F51A0079F8DA /* SimpleView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C3001DA32060F51A0079F8DA /* SimpleView */ = {
+			isa = PBXGroup;
+			children = (
+				C3001DA42060F51A0079F8DA /* SimpleView.swift */,
+				C3001DA52060F51A0079F8DA /* SimpleView.xib */,
+			);
+			path = SimpleView;
 			sourceTree = "<group>";
 		};
 		C30C74122030CD3000B75E9D /* Supporting Files */ = {
@@ -259,6 +281,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3001DA72060F51A0079F8DA /* SimpleView.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -396,6 +419,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3001DA62060F51A0079F8DA /* SimpleView.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
