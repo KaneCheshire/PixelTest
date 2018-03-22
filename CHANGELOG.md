@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.7.0
+
+- Changes naming of `Option` to `LayoutStyle`
+- Adds the recorded snapshot as an `XCTAttachment`
+
 # 0.6.0
 
 - Standardises filenames (which is a breaking change for people already using PixelTest)

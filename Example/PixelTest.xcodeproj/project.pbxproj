@@ -18,6 +18,9 @@
 		C302ED9A2060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302ED992060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift */; };
 		C302EDA22060FE34004BDC29 /* SimpleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C302EDA12060FE34004BDC29 /* SimpleView.xib */; };
 		C302EDA5206140E1004BDC29 /* UIView+NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EDA4206140E1004BDC29 /* UIView+NibLoading.swift */; };
+		C302EDA920618B32004BDC29 /* DynamicTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EDA720618B32004BDC29 /* DynamicTypeView.swift */; };
+		C302EDAA20618B32004BDC29 /* DynamicTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C302EDA820618B32004BDC29 /* DynamicTypeView.xib */; };
+		C302EDAC20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */; };
 		C33E27F7205FAE04005A80A5 /* PixelTestCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */; };
 		CDDAC330A2A6E64F6455AD46 /* Pods_PixelTest_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94AE5C44B33279316FC3812D /* Pods_PixelTest_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -71,6 +74,9 @@
 		C302ED9B2060FDAF004BDC29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C302EDA12060FE34004BDC29 /* SimpleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SimpleView.xib; sourceTree = "<group>"; };
 		C302EDA4206140E1004BDC29 /* UIView+NibLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIView+NibLoading.swift"; path = "Helpers/UIView+NibLoading.swift"; sourceTree = "<group>"; };
+		C302EDA720618B32004BDC29 /* DynamicTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeView.swift; sourceTree = "<group>"; };
+		C302EDA820618B32004BDC29 /* DynamicTypeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DynamicTypeView.xib; sourceTree = "<group>"; };
+		C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeViewSnapshotTests.swift; sourceTree = "<group>"; };
 		C33E27F6205FAE04005A80A5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,6 +187,7 @@
 		C3001DA22060F51A0079F8DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C302EDA620618ADD004BDC29 /* DynamicTypeView */,
 				C3001DA32060F51A0079F8DA /* SimpleView */,
 			);
 			path = Views;
@@ -199,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				C302ED992060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift */,
+				C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */,
 				C302ED9B2060FDAF004BDC29 /* Info.plist */,
 			);
 			path = PixelTestExampleSnapshotTests;
@@ -210,6 +218,15 @@
 				C302EDA4206140E1004BDC29 /* UIView+NibLoading.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		C302EDA620618ADD004BDC29 /* DynamicTypeView */ = {
+			isa = PBXGroup;
+			children = (
+				C302EDA720618B32004BDC29 /* DynamicTypeView.swift */,
+				C302EDA820618B32004BDC29 /* DynamicTypeView.xib */,
+			);
+			path = DynamicTypeView;
 			sourceTree = "<group>";
 		};
 		C30C74122030CD3000B75E9D /* Supporting Files */ = {
@@ -364,6 +381,7 @@
 			files = (
 				C302EDA22060FE34004BDC29 /* SimpleView.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				C302EDAA20618B32004BDC29 /* DynamicTypeView.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -566,6 +584,7 @@
 			files = (
 				C3001DA92060F59E0079F8DA /* SimpleView.swift in Sources */,
 				C302EDA5206140E1004BDC29 /* UIView+NibLoading.swift in Sources */,
+				C302EDA920618B32004BDC29 /* DynamicTypeView.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,6 +601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C302EDAC20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift in Sources */,
 				C302ED9A2060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
