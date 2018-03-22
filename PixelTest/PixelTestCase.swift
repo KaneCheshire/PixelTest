@@ -105,7 +105,7 @@ extension PixelTestCase {
         guard let image = view.image(withScale: scale), let data = UIImagePNGRepresentation(image) else { throw Error.unableToCreateImage }
         try data.write(to: url, options: .atomic)
         addAttachment(named: "Recorded image", image: image)
-        XCTFail("Snapshot recorded, disable record mode and re-run tests to verify.", file: file, line: line)
+        XCTFail("Snapshot recorded (see recorded image in logs), disable record mode and re-run tests to verify.", file: file, line: line)
     }
     
     private func test(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, option: Option) throws {
