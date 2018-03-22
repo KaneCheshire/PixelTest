@@ -24,7 +24,7 @@ class DynamicTypeViewSnapshotTests: PixelTestCase {
         let viewModel = DynamicTypeViewModel(text: "Hello world")
         let traitCollection = UITraitCollection(preferredContentSizeCategory: .medium)
         view.configure(with: viewModel, traitCollection: traitCollection)
-        try verify(view, option: .dynamicHeight(fixedWidth: 320))
+        try verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
     }
     
     func test_accessibilityExtraExtraExtraLargeSize() throws {
@@ -32,6 +32,6 @@ class DynamicTypeViewSnapshotTests: PixelTestCase {
         let viewModel = DynamicTypeViewModel(text: "Hello world")
         let traitCollection = UITraitCollection(preferredContentSizeCategory: .accessibilityExtraExtraExtraLarge)
         view.configure(with: viewModel, traitCollection: traitCollection)
-        try verify(view, option: .dynamicHeight(fixedWidth: 320))
+        try verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
     }
 }
