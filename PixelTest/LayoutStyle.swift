@@ -1,5 +1,5 @@
 //
-//  Option.swift
+//  LayoutStyle.swift
 //  PixelTest
 //
 //  Created by Kane Cheshire on 19/03/2018.
