@@ -12,20 +12,6 @@ import XCTest
 /// Subclass `PixelTestCase` after `import PixelTest`
 open class PixelTestCase: XCTestCase {
     
-    /// Represents an error that could occur specific to `PixelTestCase`.
-    ///
-    /// - viewHasNoWidth: The view provided has no width so cannot be verified.
-    /// - viewHasNoHeight: The view provided has no height so canot be verified.
-    /// - unableToCreateImage: The test case was unable to create an image for recording or testing.
-    /// - noKeyWindow: The tests were unable to find a key window for the shared application, which is needed for snapshotting.
-    /// - unableToCreateFileURL: The tests were unable to create a file URL required for testing.
-    public enum Error: Swift.Error {
-        case viewHasNoWidth
-        case viewHasNoHeight
-        case unableToCreateImage
-        case unableToCreateFileURL
-    }
-    
     // MARK: - Properties -
     // MARK: Open
     
