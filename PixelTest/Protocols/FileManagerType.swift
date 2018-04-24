@@ -11,6 +11,7 @@ protocol FileManagerType {
     
     func fileExists(atPath path: String) -> Bool
     func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey : Any]?) throws
+    func enumerator(atPath path: String) -> FileManager.DirectoryEnumerator?
     
 }
 
