@@ -27,15 +27,7 @@ class PixelTestCaseTests: XCTestCase {
         testCase.fileCoordinator = mockFileCoordinator
     }
     
-    func test_record() {
-        testCase.mode = .record
-        let testView = UIView(frame: .init(x: 0, y: 0, width: 10, height: 10))
-        testCase.verify(testView, layoutStyle: .dynamicWidthHeight)
-        XCTAssertEqual(mockLayoutCoordinator.layOutCallCount, 1)
-        XCTAssertEqual(mockTestCoordinator.recordCallCount, 1)
-    }
-    
-    func test_test_success() { // TODO: Test failure
+    func test_test_success() {
         testCase.mode = .test
         let testView = UIView(frame: .init(x: 0, y: 0, width: 10, height: 10))
         testCase.verify(testView, layoutStyle: .dynamicWidthHeight)
