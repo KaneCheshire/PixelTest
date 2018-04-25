@@ -7,6 +7,7 @@
 
 - [Key features](#key-features)
 - [Why snapshot test](#why-snapshot-test)
+- [Installation](#installation)
 - [Usage](#usage)
 - [Known limitations](#known-limitations)
 
@@ -34,6 +35,22 @@ PixelTest is an excellent alternative to other options because PixelTest:
 
 Snapshot tests are an excellent (and super fast) way to ensure that your layout never breaks. We cover logic with unit tests, and behaviour with automation/UI tests, and snapshot tests cover how the app actually looks. It ensures that complex layouts aren't broken from the start, which means less time going back and forth running the app, but also means you or anyone else is free to refactor a view without fear of breaking the way it looks.
 
+## Installation
+
+PixelTest is available on Cocoapods.
+
+Add PixelTest to a **test target** in your `Podfile`:
+
+```ruby
+target 'YourAppTarget' do
+  target 'YourAppTestTarget' do
+    pod 'PixelTest'
+  end
+end
+```
+
+Then navigate to where your `Podfile` is located in Terminal and run `pod update`.
+
 ## Usage
 
 ### Step 1
@@ -58,6 +75,7 @@ Next you'll want to create a unit test case **(not a UI test case, this is impor
 
 ```swift
 import PixelTest
+@testable import YourAppTarget
 
 class TestClass: PixelTestCase {
 
@@ -76,9 +94,9 @@ class TestClass: PixelTestCase {
     mode = .record
   }
 
-  func test_someViewLaysOutProperly() throws {
+  func test_someViewLaysOutProperly() {
     let view = MyCustomView()
-    try verify(view, layoutStyle: .dynamicHeight(fixedWidth: 100))
+    verify(view, layoutStyle: .dynamicHeight(fixedWidth: 100))
   }
 
 }
