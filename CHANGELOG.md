@@ -1,9 +1,14 @@
 # Changelog
 
-# 0.7.0
+# 1.0.0
 
 - The `verify()` function no longer `throws`.
 - Significantly better test coverage.
+
+# 0.7.0
+
+- Changes naming of `Option` to `LayoutStyle`
+- Adds the recorded snapshot as an `XCTAttachment`
 
 # 0.6.0
 
