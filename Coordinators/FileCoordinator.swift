@@ -69,15 +69,15 @@ struct FileCoordinator: FileCoordinatorType {
         return try Data(contentsOf: url, options: .uncached)
     }
     
-    /// <#Description#>
+    /// Stores diff and failure images on-disk.
     ///
     /// - Parameters:
-    ///   - diffImage: <#diffImage description#>
-    ///   - failedImage: <#failedImage description#>
-    ///   - pixelTestCase: <#pixelTestCase description#>
-    ///   - function: <#function description#>
-    ///   - scale: <#scale description#>
-    ///   - layoutStyle: <#layoutStyle description#>
+    ///   - diffImage: The diff image to store.
+    ///   - failedImage: The failed image to store.
+    ///   - pixelTestCase: The test case requesting the store.
+    ///   - function: The function the images were created with.
+    ///   - scale: The scale the images were created with.
+    ///   - layoutStyle: The style of layout the images were created with.
     func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
         if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle), let data = UIImagePNGRepresentation(diffImage) {
             try? write(data, to: url)
@@ -87,13 +87,13 @@ struct FileCoordinator: FileCoordinatorType {
         }
     }
     
-    /// <#Description#>
+    /// Removes diff and failure images from disk (if they exist).
     ///
     /// - Parameters:
-    ///   - pixelTestCase: <#pixelTestCase description#>
-    ///   - function: <#function description#>
-    ///   - scale: <#scale description#>
-    ///   - layoutStyle: <#layoutStyle description#>
+    ///   - pixelTestCase: The test case requesting the removal.
+    ///   - function: The function the diff and failure images were originally for.
+    ///   - scale: The scale the diff and failure images were originally created in.
+    ///   - layoutStyle: The style of layout the images were created with.
     func removeDiffAndFailureImages(for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
         if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle) {
             try? fileManager.removeItem(at: url)
