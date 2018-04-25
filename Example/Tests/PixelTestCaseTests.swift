@@ -2,8 +2,8 @@
 //  PixelTestCaseTests.swift
 //  PixelTest_Tests
 //
-//  Created by Kane Cheshire on 19/03/2018.
-//  Copyright © 2018 Kane Cheshire. All rights reserved.
+//  Created by Kane Cheshire on 25/04/2018.
+//  Copyright © 2018 CocoaPods. All rights reserved.
 //
 
 import XCTest
@@ -11,234 +11,122 @@ import XCTest
 
 class PixelTestCaseTests: XCTestCase {
     
-    private var baseDir = ProcessInfo.processInfo.environment["PIXELTEST_BASE_DIR"]!
+    private var testCase: PixelTestCase!
+    private var mockLayoutCoordinator: MockLayoutCoordinator!
+    private var mockTestCoordinator: MockTestCoordinator!
+    private var mockFileCoordinator: MockFileCoordinator!
     
-    func test_createsBaseDirectory_ifDoesntExist() throws {
-        let testCase = MockPixelTestCase()
-        let fileManager = MockFileManager()
-        fileManager.fileExists = false
-        XCTAssertEqual(fileManager.fileExistsCallCount, 0)
-        XCTAssertEqual(fileManager.createDirectoryCallCount, 0)
-        _ = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .diff, layoutStyle: .dynamicWidthHeight, fileManager: fileManager)
-        XCTAssertEqual(fileManager.fileExistsCallCount, 1)
-        XCTAssertEqual(fileManager.createDirectoryCallCount, 1)
+    override func setUp() {
+        super.setUp()
+        mockLayoutCoordinator = MockLayoutCoordinator()
+        mockTestCoordinator = MockTestCoordinator()
+        mockFileCoordinator = MockFileCoordinator()
+        testCase = PixelTestCase()
+        testCase.layoutCoordinator = mockLayoutCoordinator
+        testCase.testCoordinator = mockTestCoordinator
+        testCase.fileCoordinator = mockFileCoordinator
     }
     
-    func test_doesntCreateBaseDirectory_ifExists() throws {
-        let testCase = MockPixelTestCase()
-        let fileManager = MockFileManager()
-        fileManager.fileExists = true
-        XCTAssertEqual(fileManager.fileExistsCallCount, 0)
-        XCTAssertEqual(fileManager.createDirectoryCallCount, 0)
-        _ = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .diff, layoutStyle: .dynamicWidthHeight, fileManager: fileManager)
-        XCTAssertEqual(fileManager.fileExistsCallCount, 1)
-        XCTAssertEqual(fileManager.createDirectoryCallCount, 0)
-    }
-    
-    func test_fileURL_reference_explicit_dynamicWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(10), imageType: .reference, layoutStyle: .dynamicWidthHeight, fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Reference/PixelTestCaseTests/fileURL_reference_explicit_dynamicWidthHeight_dw_dh@10.0x.png")
-    }
-    
-    func test_fileURL_reference_explicit_dynamicWidth() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(10.1), imageType: .reference, layoutStyle: .dynamicWidth(fixedHeight: 300), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Reference/PixelTestCaseTests/fileURL_reference_explicit_dynamicWidth_dw_300.0@10.1x.png")
-    }
-    
-    func test_fileURL_reference_explicit_dynamicHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(10.2), imageType: .reference, layoutStyle: .dynamicHeight(fixedWidth: 300), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Reference/PixelTestCaseTests/fileURL_reference_explicit_dynamicHeight_300.0_dh@10.2x.png")
-    }
-    
-    func test_fileURL_reference_explicit_fixedWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(10.3), imageType: .reference, layoutStyle: .fixed(width: 10, height: 20), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Reference/PixelTestCaseTests/fileURL_reference_explicit_fixedWidthHeight_10.0_20.0@10.3x.png")
-    }
-    
-    func test_fileURL_diff_explicit_dynamicWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(1), imageType: .diff, layoutStyle: .dynamicWidthHeight, fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Diff/PixelTestCaseTests/fileURL_diff_explicit_dynamicWidthHeight_dw_dh@1.0x.png")
-    }
-    
-    func test_fileURL_diff_explicit_dynamicWidth() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(2), imageType: .diff, layoutStyle: .dynamicWidth(fixedHeight: 1), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Diff/PixelTestCaseTests/fileURL_diff_explicit_dynamicWidth_dw_1.0@2.0x.png")
-    }
-    
-    func test_fileURL_diff_explicit_dynamicHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(3), imageType: .diff, layoutStyle: .dynamicHeight(fixedWidth: 2), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Diff/PixelTestCaseTests/fileURL_diff_explicit_dynamicHeight_2.0_dh@3.0x.png")
-    }
-    
-    func test_fileURL_diff_explicit_fixedWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(4), imageType: .diff, layoutStyle: .fixed(width: 3, height: 4), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Diff/PixelTestCaseTests/fileURL_diff_explicit_fixedWidthHeight_3.0_4.0@4.0x.png")
-    }
-    
-    func test_fileURL_failure_explicit_dynamicWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(100), imageType: .failure, layoutStyle: .dynamicWidthHeight, fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Failure/PixelTestCaseTests/fileURL_failure_explicit_dynamicWidthHeight_dw_dh@100.0x.png")
-    }
-    
-    func test_fileURL_failure_explicit_dynamicWidth() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(200), imageType: .failure, layoutStyle: .dynamicWidth(fixedHeight: 10), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Failure/PixelTestCaseTests/fileURL_failure_explicit_dynamicWidth_dw_10.0@200.0x.png")
-    }
-    
-    func test_fileURL_failure_explicit_dynamicHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(300), imageType: .failure, layoutStyle: .dynamicHeight(fixedWidth: 20), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Failure/PixelTestCaseTests/fileURL_failure_explicit_dynamicHeight_20.0_dh@300.0x.png")
-    }
-    
-    func test_fileURL_failure_explicit_fixedWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .explicit(400), imageType: .failure, layoutStyle: .fixed(width: 30, height: 40), fileManager: fileManager)
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Failure/PixelTestCaseTests/fileURL_failure_explicit_fixedWidthHeight_30.0_40.0@400.0x.png")
-    }
-    
-    func test_fileURL_reference_native_dynamicWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .reference, layoutStyle: .dynamicWidthHeight, fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Reference/PixelTestCaseTests/fileURL_reference_native_dynamicWidthHeight_dw_dh@\(scale)x.png")
-    }
-    
-    func test_fileURL_reference_native_dynamicWidth() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .reference, layoutStyle: .dynamicWidth(fixedHeight: 300), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Reference/PixelTestCaseTests/fileURL_reference_native_dynamicWidth_dw_300.0@\(scale)x.png")
-    }
-    
-    func test_fileURL_reference_native_dynamicHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .reference, layoutStyle: .dynamicHeight(fixedWidth: 300), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Reference/PixelTestCaseTests/fileURL_reference_native_dynamicHeight_300.0_dh@\(scale)x.png")
-    }
-    
-    func test_fileURL_reference_native_fixedWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .reference, layoutStyle: .fixed(width: 10, height: 20), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Reference/PixelTestCaseTests/fileURL_reference_native_fixedWidthHeight_10.0_20.0@\(scale)x.png")
-    }
-    
-    func test_fileURL_diff_native_dynamicWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .diff, layoutStyle: .dynamicWidthHeight, fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Diff/PixelTestCaseTests/fileURL_diff_native_dynamicWidthHeight_dw_dh@\(scale)x.png")
-    }
-    
-    func test_fileURL_diff_native_dynamicWidth() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .diff, layoutStyle: .dynamicWidth(fixedHeight: 1), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Diff/PixelTestCaseTests/fileURL_diff_native_dynamicWidth_dw_1.0@\(scale)x.png")
-    }
-    
-    func test_fileURL_diff_native_dynamicHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .diff, layoutStyle: .dynamicHeight(fixedWidth: 2), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Diff/PixelTestCaseTests/fileURL_diff_native_dynamicHeight_2.0_dh@\(scale)x.png")
-    }
-    
-    func test_fileURL_diff_native_fixedWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .diff, layoutStyle: .fixed(width: 3, height: 4), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Diff/PixelTestCaseTests/fileURL_diff_native_fixedWidthHeight_3.0_4.0@\(scale)x.png")
-    }
-    
-    func test_fileURL_failure_native_dynamicWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .failure, layoutStyle: .dynamicWidthHeight, fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Failure/PixelTestCaseTests/fileURL_failure_native_dynamicWidthHeight_dw_dh@\(scale)x.png")
-    }
-    
-    func test_fileURL_failure_native_dynamicWidth() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .failure, layoutStyle: .dynamicWidth(fixedHeight: 10), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Failure/PixelTestCaseTests/fileURL_failure_native_dynamicWidth_dw_10.0@\(scale)x.png")
-    }
-    
-    func test_fileURL_failure_native_dynamicHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .failure, layoutStyle: .dynamicHeight(fixedWidth: 20), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Failure/PixelTestCaseTests/fileURL_failure_native_dynamicHeight_20.0_dh@\(scale)x.png")
-    }
-    
-    func test_fileURL_failure_native_fixedWidthHeight() throws {
-        let fileManager = MockFileManager()
-        let testCase = MockPixelTestCase()
-        let fileURL = try testCase.fileURL(forFunction: #function, scale: .native, imageType: .failure, layoutStyle: .fixed(width: 30, height: 40), fileManager: fileManager)
-        let scale = UIScreen.main.scale
-        XCTAssertEqual(fileURL.relativePath, baseDir + "/PixelTest_TestsSnapshots/Failure/PixelTestCaseTests/fileURL_failure_native_fixedWidthHeight_30.0_40.0@\(scale)x.png")
+    func test_test_success() {
+        testCase.mode = .test
+        let testView = UIView(frame: .init(x: 0, y: 0, width: 10, height: 10))
+        testCase.verify(testView, layoutStyle: .dynamicWidthHeight)
+        XCTAssertEqual(mockLayoutCoordinator.layOutCallCount, 1)
+        XCTAssertEqual(mockTestCoordinator.testCallCount, 1)
+        XCTAssertEqual(mockFileCoordinator.removeDiffAndFailureImagesCallCount, 1)
+        XCTAssertEqual(mockFileCoordinator.storeDiffImageCallCount, 0)
     }
     
 }
 
-private extension PixelTestCaseTests {
+class MockLayoutCoordinator: LayoutCoordinatorType {
     
-    class MockPixelTestCase: PixelTestCase {
-        
+    var layOutCallCount = 0
+    var onLayOut: ((UIView, LayoutStyle) -> Void)?
+    
+    func layOut(_ view: UIView, with layoutStyle: LayoutStyle) {
+        layOutCallCount += 1
+        onLayOut?(view, layoutStyle)
     }
     
-    class MockFileManager: FileManagerType {
-        
-        var fileExists: Bool = false
-        var fileExistsCallCount = 0
-        
-        func fileExists(atPath path: String) -> Bool {
-            fileExistsCallCount += 1
-            return fileExists
+}
+
+class MockTestCoordinator: TestCoordinatorType {
+    
+    var recordCallCount = 0
+    var onRecord: ((UIView, LayoutStyle, Scale, PixelTestCase, StaticString) -> Void)?
+    var recordReturnValue: Result<UIImage, String> = .success(UIImage())
+    
+    func record(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, testCase: PixelTestCase, function: StaticString) -> Result<UIImage, String> {
+        recordCallCount += 1
+        onRecord?(view, layoutStyle, scale, testCase, function)
+        return recordReturnValue
+    }
+    
+    var testCallCount = 0
+    var onTest: ((UIView, LayoutStyle, Scale, PixelTestCase, StaticString) -> Void)?
+    var testReturnValue: Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> = .success(UIImage())
+    
+    func test(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, testCase: PixelTestCase, function: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
+        testCallCount += 1
+        onTest?(view, layoutStyle, scale, testCase, function)
+        return testReturnValue
+    }
+    
+}
+
+class MockFileCoordinator: FileCoordinatorType {
+    
+    var fileURLCallCount = 0
+    var onFileURL: ((PixelTestCase, StaticString, Scale, ImageType, LayoutStyle) -> Void)?
+    var fileURLReturnValue: URL?
+    
+    func fileURL(for testCase: PixelTestCase, forFunction function: StaticString, scale: Scale, imageType: ImageType, layoutStyle: LayoutStyle) -> URL? {
+        fileURLCallCount += 1
+        onFileURL?(testCase, function, scale, imageType, layoutStyle)
+        return fileURLReturnValue
+    }
+    
+    var writeCallCount = 0
+    var onWrite: ((Data, URL) -> Void)?
+    var writeError: Error?
+    
+    func write(_ data: Data, to url: URL) throws {
+        writeCallCount += 1
+        onWrite?(data, url)
+        if let writeError = writeError {
+            throw writeError
         }
-        
-        var createDirectoryCallCount = 0
-        
-        func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey : Any]?) throws {
-            createDirectoryCallCount += 1
+    }
+    
+    var dataCallCount = 0
+    var onData: ((URL) -> Void)?
+    var dataError: Error?
+    var dataReturnValue: Data = Data()
+    
+    func data(at url: URL) throws -> Data {
+        dataCallCount += 1
+        onData?(url)
+        if let dataError = dataError {
+            throw dataError
         }
-        
+        return dataReturnValue
+    }
+    
+    var storeDiffImageCallCount = 0
+    var onStoreDiffImage: ((UIImage, UIImage, PixelTestCase, StaticString, Scale, LayoutStyle) -> Void)?
+    
+    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+        storeDiffImageCallCount += 1
+        onStoreDiffImage?(diffImage, failedImage, pixelTestCase, function, scale, layoutStyle)
+    }
+    
+    var removeDiffAndFailureImagesCallCount = 0
+    var onRemoveDiffAndFailureImages: ((PixelTestCase, StaticString, Scale, LayoutStyle) -> Void)?
+    
+    func removeDiffAndFailureImages(for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+        removeDiffAndFailureImagesCallCount += 1
+        onRemoveDiffAndFailureImages?(pixelTestCase, function, scale, layoutStyle)
     }
     
 }

@@ -19,19 +19,19 @@ class DynamicTypeViewSnapshotTests: PixelTestCase {
         mode = .test
     }
     
-    func test_standardSize() throws {
+    func test_standardSize() {
         let view: DynamicTypeView = .loadFromNib()
         let viewModel = DynamicTypeViewModel(text: "Hello world")
         let traitCollection = UITraitCollection(preferredContentSizeCategory: .medium)
         view.configure(with: viewModel, traitCollection: traitCollection)
-        try verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
     }
     
-    func test_accessibilityExtraExtraExtraLargeSize() throws {
+    func test_accessibilityExtraExtraExtraLargeSize() {
         let view: DynamicTypeView = .loadFromNib()
         let viewModel = DynamicTypeViewModel(text: "Hello world")
         let traitCollection = UITraitCollection(preferredContentSizeCategory: .accessibilityExtraExtraExtraLarge)
         view.configure(with: viewModel, traitCollection: traitCollection)
-        try verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
     }
 }
