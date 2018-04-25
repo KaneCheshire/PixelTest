@@ -29,15 +29,16 @@ final public class XCConfig {
     /// Initializes the XCConfig reading the content from the file at the given path and parsing it.
     ///
     /// - Parameter path: path where the .xcconfig file is.
+    /// - Parameter projectPath: path where the .xcodeproj is, for resolving project-relative includes.
     /// - Throws: an error if the config file cannot be found or it has an invalid format.
-    public init(path: Path) throws {
+    public init(path: Path, projectPath: Path? = nil) throws {
         if !path.exists { throw XCConfigError.notFound(path: path) }
         let fileLines = try path.read().components(separatedBy: "\n")
         self.includes = fileLines
-            .flatMap(XCConfigParser.configFrom(path: path))
+            .compactMap(XCConfigParser.configFrom(path: path, projectPath: projectPath))
         var buildSettings: [String: String] = [:]
         fileLines
-            .flatMap(XCConfigParser.settingFrom)
+            .compactMap(XCConfigParser.settingFrom)
             .forEach { buildSettings[$0.key] = $0.value }
         self.buildSettings = buildSettings
     }
@@ -49,26 +50,35 @@ final class XCConfigParser {
     /// and returns the include path and the config that the include is pointing to.
     ///
     /// - Parameter path: path of the config file that the line belongs to.
+    /// - Parameter projectPath: path where the .xcodeproj is, for resolving project-relative includes.
     /// - Returns: function that parses the line.
-    static func configFrom(path: Path) -> (String) -> (include: Path, config: XCConfig)? {
+    static func configFrom(path: Path, projectPath: Path?) -> (String) -> (include: Path, config: XCConfig)? {
         return { line in
             return includeRegex.matches(in: line,
                                                  options: NSRegularExpression.MatchingOptions(rawValue: 0),
                                                  range: NSRange(location: 0,
                                                                 length: line.count))
-                .flatMap { (match) -> String? in
+                .compactMap { (match) -> String? in
                     if match.numberOfRanges == 2 {
                         return NSString(string: line).substring(with: match.range(at: 1))
                     }
                     return nil
                 }
-                .flatMap { pathString in
+                .compactMap { pathString in
                     let includePath: Path = Path(pathString)
                     var config: XCConfig?
                     if includePath.isRelative {
-                        config = try? XCConfig(path: path.parent() + includePath)
+                        do {
+                            // first try to load the included xcconfig relative to the current xcconfig
+                            config = try XCConfig(path: path.parent() + includePath, projectPath: projectPath)
+                        } catch (XCConfigError.notFound(_)) where projectPath != nil {
+                            // if that fails, try to load the included xcconfig relative to the project
+                            config = try? XCConfig(path: projectPath!.parent() + includePath, projectPath: projectPath)
+                        } catch {
+                            config = nil
+                        }
                     } else {
-                        config = try? XCConfig(path: includePath)
+                        config = try? XCConfig(path: includePath, projectPath: projectPath)
                     }
                     return config.map { (includePath, $0) }
                 }
@@ -81,7 +91,7 @@ final class XCConfigParser {
                                              options: NSRegularExpression.MatchingOptions(rawValue: 0),
                                              range: NSRange(location: 0,
                                                             length: line.count))
-            .flatMap { (match) -> (key: String, value: String)?  in
+            .compactMap { (match) -> (key: String, value: String)?  in
                 if match.numberOfRanges == 3 {
                     let key: String = NSString(string: line).substring(with: match.range(at: 1))
                     let value: String = NSString(string: line).substring(with: match.range(at: 2))
@@ -104,9 +114,9 @@ extension XCConfig: Equatable {
 
     public static func == (lhs: XCConfig, rhs: XCConfig) -> Bool {
         if lhs.includes.count != rhs.includes.count { return false }
-        for i in 0..<lhs.includes.count {
-            let lhsInclude = lhs.includes[i]
-            let rhsInclude = rhs.includes[i]
+        for index in 0..<lhs.includes.count {
+            let lhsInclude = lhs.includes[index]
+            let rhsInclude = rhs.includes[index]
             if lhsInclude.config != rhsInclude.config || lhsInclude.include != rhsInclude.include {
                 return false
             }

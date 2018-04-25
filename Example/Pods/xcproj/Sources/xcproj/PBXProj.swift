@@ -87,6 +87,11 @@ final public class PBXProj: Decodable {
         ///   - reference: object reference.
         public func addObject(_ object: PBXObject, reference: String) {
             switch object {
+            // subclasses of PBXGroup; must be tested before PBXGroup
+            case let object as PBXVariantGroup: variantGroups.append(object, reference: reference)
+            case let object as XCVersionGroup: versionGroups.append(object, reference: reference)
+
+            // everything else
             case let object as PBXBuildFile: buildFiles.append(object, reference: reference)
             case let object as PBXAggregateTarget: aggregateTargets.append(object, reference: reference)
             case let object as PBXLegacyTarget: legacyTargets.append(object, reference: reference)
@@ -95,7 +100,6 @@ final public class PBXProj: Decodable {
             case let object as PBXGroup: groups.append(object, reference: reference)
             case let object as XCConfigurationList: configurationLists.append(object, reference: reference)
             case let object as XCBuildConfiguration: buildConfigurations.append(object, reference: reference)
-            case let object as PBXVariantGroup: variantGroups.append(object, reference: reference)
             case let object as PBXTargetDependency: targetDependencies.append(object, reference: reference)
             case let object as PBXSourcesBuildPhase: sourcesBuildPhases.append(object, reference: reference)
             case let object as PBXShellScriptBuildPhase: shellScriptBuildPhases.append(object, reference: reference)
@@ -105,7 +109,6 @@ final public class PBXProj: Decodable {
             case let object as PBXNativeTarget: nativeTargets.append(object, reference: reference)
             case let object as PBXFileReference: fileReferences.append(object, reference: reference)
             case let object as PBXProject: projects.append(object, reference: reference)
-            case let object as XCVersionGroup: versionGroups.append(object, reference: reference)
             case let object as PBXReferenceProxy: referenceProxies.append(object, reference: reference)
             case let object as PBXRezBuildPhase: carbonResourcesBuildPhases.append(object, reference: reference)
             case let object as PBXBuildRule: buildRules.append(object, reference: reference)
@@ -120,7 +123,7 @@ final public class PBXProj: Decodable {
         ///   - object: the object to generate the reference for.
         ///   - id: object identifier (e.g. path or name)
         /// - Returns: reference.
-        public func generateReference(_ object: PBXObject, _ id: String) -> String {
+        public func generateReference(_ object: PBXObject, _ identifier: String) -> String {
             var uuid: String = ""
             var counter: UInt = 0
             let characterCount = 16
@@ -128,7 +131,7 @@ final public class PBXProj: Decodable {
                 .replacingOccurrences(of: "PBX", with: "")
                 .replacingOccurrences(of: "XC", with: "")
             let classAcronym = String(className.filter { String($0).lowercased() != String($0) })
-            let stringID = String(abs(id.hashValue).description.prefix(characterCount - classAcronym.count - 2))
+            let stringID = String(abs(identifier.hashValue).description.prefix(characterCount - classAcronym.count - 2))
             repeat {
                 uuid = "\(classAcronym)_\(stringID)\(counter > 0 ? "-\(counter)" : "")"
                 counter += 1
@@ -161,6 +164,7 @@ final public class PBXProj: Decodable {
         ///
         /// - Parameter reference: file reference.
         /// - Returns: object.
+        // swiftlint:disable function_body_length
         public func getReference(_ reference: String) -> PBXObject? {
             // This if-let expression is used because the equivalent chain of `??` separated lookups causes,
             // with Swift 4, this compiler error:
