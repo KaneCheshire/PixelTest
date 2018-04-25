@@ -253,6 +253,28 @@ class FileCoordinatorTests: XCTestCase {
         XCTAssertEqual(mockFileManager.createDirectoryCallCount, 0)
     }
     
+    func test_removingDiffFailureImage() {
+        mockFileManager.removeItemError = CocoaError.error(.featureUnsupported)
+        mockFileManager.onRemoveItem = { url in
+            switch (self.mockFileManager.removeItemCallCount, url) {
+            case (1, URL(string: "file://something/something-else/PixelTestSnapshots/Diff/PixelTestCase/removingDiffFailureImage_dw_dh@\(UIScreen.main.scale)x.png")): XCTPass()
+            case (2, URL(string: "file://something/something-else/PixelTestSnapshots/Failure/PixelTestCase/removingDiffFailureImage_dw_dh@\(UIScreen.main.scale)x.png")): XCTPass()
+            default: XCTFail("Unepected URL \(url) for call \(self.mockFileManager.removeItemCallCount)")
+            }
+        }
+        testCoordinator.removeDiffAndFailureImages(for: mockTestCase, function: #function, scale: .native, layoutStyle: .dynamicWidthHeight)
+        XCTAssertEqual(mockFileManager.removeItemCallCount, 2)
+        XCTAssertEqual(mockFileManager.fileExistsCallCount, 2)
+        XCTAssertEqual(mockTargetBaseDirectoryCoordinator.targetBaseDirectoryCallCount, 2)
+    }
+    
+    func test_storingDiffFailureImage() {
+        testCoordinator.storeDiffImage(UIImage(), failedImage: UIImage(), for: mockTestCase, function: #function, scale: .native, layoutStyle: .dynamicWidthHeight)
+        XCTAssertEqual(mockFileManager.removeItemCallCount, 0)
+        XCTAssertEqual(mockFileManager.fileExistsCallCount, 2)
+        XCTAssertEqual(mockTargetBaseDirectoryCoordinator.targetBaseDirectoryCallCount, 2)
+    }
+    
 }
 
 private extension FileCoordinatorTests {
@@ -312,6 +334,18 @@ private extension FileCoordinatorTests {
             enumeratorCallCount += 1
             onEnumerator?(path)
             return eumeratorReturnValue
+        }
+        
+        var removeItemCallCount = 0
+        var onRemoveItem: ((URL) -> Void)?
+        var removeItemError: Error?
+        
+        func removeItem(at URL: URL) throws {
+            removeItemCallCount += 1
+            onRemoveItem?(URL)
+            if let error = removeItemError {
+                throw error
+            }
         }
         
     }

@@ -87,6 +87,7 @@
 		C17A7168A2C0F39F24882B8485FB1E97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10B2A675545CA1FC73C4B88647D005BE /* UIKit.framework */; };
 		C3441110208F99A200E801E5 /* FileCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344110F208F99A200E801E5 /* FileCoordinatorType.swift */; };
 		C3441112208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441111208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift */; };
+		C3441114208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441113208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift */; };
 		C3F113CD208E95C800D51174 /* TargetBaseDirectoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F113CC208E95C800D51174 /* TargetBaseDirectoryCoordinator.swift */; };
 		C3F113CF208F190D00D51174 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F113CE208F190D00D51174 /* Result.swift */; };
 		C3F113D2208F1A6F00D51174 /* FileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F113D0208F1A6F00D51174 /* FileCoordinator.swift */; };
@@ -320,6 +321,7 @@
 		BED2A8C6CA7C0967D9CA2529C4BC0E87 /* PBXObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PBXObject.swift; path = Sources/xcproj/PBXObject.swift; sourceTree = "<group>"; };
 		C344110F208F99A200E801E5 /* FileCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCoordinatorType.swift; sourceTree = "<group>"; };
 		C3441111208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBaseDirectoryCoordinatorType.swift; sourceTree = "<group>"; };
+		C3441113208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AddAttachmentWithName.swift"; sourceTree = "<group>"; };
 		C3F113CC208E95C800D51174 /* TargetBaseDirectoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBaseDirectoryCoordinator.swift; sourceTree = "<group>"; };
 		C3F113CE208F190D00D51174 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		C3F113D0208F1A6F00D51174 /* FileCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCoordinator.swift; sourceTree = "<group>"; };
@@ -703,6 +705,7 @@
 				8C51B05C979BF79E8CB1A9D054A8ADC4 /* Array+PixelTest.swift */,
 				4CE815D627122EF85216A3A559B31163 /* UIImage+PixelTest.swift */,
 				CB7480EB8D665ED8D9E118DA385F40DB /* UIView+PixelTest.swift */,
+				C3441113208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift */,
 			);
 			name = Extensions;
 			path = PixelTest/Extensions;
@@ -1039,6 +1042,7 @@
 				C3F113CD208E95C800D51174 /* TargetBaseDirectoryCoordinator.swift in Sources */,
 				7E2F96A09BA14B867203BFDD05F774F2 /* FileManagerType.swift in Sources */,
 				C3441112208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift in Sources */,
+				C3441114208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift in Sources */,
 				C3441110208F99A200E801E5 /* FileCoordinatorType.swift in Sources */,
 				C3F113D7208F1A8700D51174 /* TestCoordinator.swift in Sources */,
 				C3F113D6208F1A8700D51174 /* NSObject+Module.swift in Sources */,

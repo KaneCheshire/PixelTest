@@ -69,6 +69,40 @@ struct FileCoordinator: FileCoordinatorType {
         return try Data(contentsOf: url, options: .uncached)
     }
     
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - diffImage: <#diffImage description#>
+    ///   - failedImage: <#failedImage description#>
+    ///   - pixelTestCase: <#pixelTestCase description#>
+    ///   - function: <#function description#>
+    ///   - scale: <#scale description#>
+    ///   - layoutStyle: <#layoutStyle description#>
+    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle), let data = UIImagePNGRepresentation(diffImage) {
+            try? write(data, to: url)
+        }
+        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .failure, layoutStyle: layoutStyle), let data = UIImagePNGRepresentation(failedImage) {
+            try? write(data, to: url)
+        }
+    }
+    
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - pixelTestCase: <#pixelTestCase description#>
+    ///   - function: <#function description#>
+    ///   - scale: <#scale description#>
+    ///   - layoutStyle: <#layoutStyle description#>
+    func removeDiffAndFailureImages(for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle) {
+            try? fileManager.removeItem(at: url)
+        }
+        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .failure, layoutStyle: layoutStyle) {
+            try? fileManager.removeItem(at: url)
+        }
+    }
+    
     // MARK: Private
     
     private func fullFileURL(baseDirectory: URL, for testCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) -> URL? {

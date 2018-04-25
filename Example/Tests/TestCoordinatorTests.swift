@@ -142,6 +142,8 @@ class TestCoordinatorTests: XCTestCase {
         }
     }
     
+    
+    
 }
 
 private extension TestCoordinatorTests {
@@ -182,6 +184,22 @@ private extension TestCoordinatorTests {
                 throw dataError
             }
             return dataReturnValue
+        }
+        
+        var storeDiffImageCallCount = 0
+        var onStoreDiffImage: ((UIImage, UIImage, PixelTestCase, StaticString, Scale, LayoutStyle) -> Void)?
+        
+        func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+            storeDiffImageCallCount += 1
+            onStoreDiffImage?(diffImage, failedImage, pixelTestCase, function, scale, layoutStyle)
+        }
+        
+        var removeDiffAndFailureImagesCallCount = 0
+        var onRemoveDiffAndFailureImages: ((PixelTestCase, StaticString, Scale, LayoutStyle) -> Void)?
+        
+        func removeDiffAndFailureImages(for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+            removeDiffAndFailureImagesCallCount += 1
+            onRemoveDiffAndFailureImages?(pixelTestCase, function, scale, layoutStyle)
         }
         
     }

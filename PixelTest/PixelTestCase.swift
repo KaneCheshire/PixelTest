@@ -66,8 +66,8 @@ extension PixelTestCase {
     private func test(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
         let result = testCoordinator.test(view, layoutStyle: layoutStyle, scale: scale, testCase: self, function: function)
         switch result {
-        case .success(_):
-            removeDiffAndFailureImages(function: function, scale: scale, layoutStyle: layoutStyle)
+        case .success:
+            fileCoordinator.removeDiffAndFailureImages(for: self, function: function, scale: scale, layoutStyle: layoutStyle)
         case .fail(let failed):
             if let testImage = failed.test, let oracleImage = failed.oracle {
                 storeDiffAndFailureImages(from: testImage, recordedImage: oracleImage, function: function, scale: scale, layoutStyle: layoutStyle)
@@ -77,32 +77,11 @@ extension PixelTestCase {
     }
     
     private func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        if let diffImage = failedImage.diff(with: recordedImage), let url = fileCoordinator.fileURL(for: self, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle) {
-            addAttachment(named: "Diff image", image: diffImage)
-            let data = UIImagePNGRepresentation(diffImage)
-            try? data?.write(to: url, options: .atomic)
-        }
-        if let url = fileCoordinator.fileURL(for: self, forFunction: function, scale: scale, imageType: .failure, layoutStyle: layoutStyle) {
-            addAttachment(named: "Failed image", image: failedImage)
-            addAttachment(named: "Original image", image: recordedImage)
-            let data = UIImagePNGRepresentation(failedImage)
-            try? data?.write(to: url, options: .atomic)
-        }
-    }
-    
-    private func addAttachment(named name: String, image: UIImage) {
-        let attachment = XCTAttachment(image: image)
-        attachment.name = name
-        add(attachment)
-    }
-    
-    private func removeDiffAndFailureImages(function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        if let url = fileCoordinator.fileURL(for: self, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle) {
-            try? FileManager.default.removeItem(at: url)
-        }
-        if let url = fileCoordinator.fileURL(for: self, forFunction: function, scale: scale, imageType: .failure, layoutStyle: layoutStyle) {
-            try? FileManager.default.removeItem(at: url)
-        }
+        guard let diffImage = failedImage.diff(with: recordedImage) else { return }
+        fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, for: self, function: function, scale: scale, layoutStyle: layoutStyle)
+        addAttachment(named: "Diff image", image: diffImage)
+        addAttachment(named: "Failed image", image: failedImage)
+        addAttachment(named: "Original image", image: recordedImage)
     }
     
 }
