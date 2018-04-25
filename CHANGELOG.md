@@ -1,8 +1,13 @@
 # Changelog
 
+# 0.7.0
+
+- The `verify()` function no longer `throws`.
+- Significantly better test coverage.
+
 # 0.6.0
 
-- Standardises filenames (which is a breaking change for people already using PixelTest)
+- Standardises filenames (which is a breaking change for people already using PixelTest).
 
 # 0.5.0
 
