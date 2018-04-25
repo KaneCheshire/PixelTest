@@ -88,6 +88,8 @@
 		C3441110208F99A200E801E5 /* FileCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344110F208F99A200E801E5 /* FileCoordinatorType.swift */; };
 		C3441112208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441111208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift */; };
 		C3441114208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441113208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift */; };
+		C34411162090645500E801E5 /* LayoutCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34411152090645500E801E5 /* LayoutCoordinatorType.swift */; };
+		C3441118209064AA00E801E5 /* TestCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441117209064AA00E801E5 /* TestCoordinatorType.swift */; };
 		C3F113CD208E95C800D51174 /* TargetBaseDirectoryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F113CC208E95C800D51174 /* TargetBaseDirectoryCoordinator.swift */; };
 		C3F113CF208F190D00D51174 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F113CE208F190D00D51174 /* Result.swift */; };
 		C3F113D2208F1A6F00D51174 /* FileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F113D0208F1A6F00D51174 /* FileCoordinator.swift */; };
@@ -322,6 +324,8 @@
 		C344110F208F99A200E801E5 /* FileCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCoordinatorType.swift; sourceTree = "<group>"; };
 		C3441111208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBaseDirectoryCoordinatorType.swift; sourceTree = "<group>"; };
 		C3441113208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+AddAttachmentWithName.swift"; sourceTree = "<group>"; };
+		C34411152090645500E801E5 /* LayoutCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutCoordinatorType.swift; sourceTree = "<group>"; };
+		C3441117209064AA00E801E5 /* TestCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoordinatorType.swift; sourceTree = "<group>"; };
 		C3F113CC208E95C800D51174 /* TargetBaseDirectoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBaseDirectoryCoordinator.swift; sourceTree = "<group>"; };
 		C3F113CE208F190D00D51174 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		C3F113D0208F1A6F00D51174 /* FileCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCoordinator.swift; sourceTree = "<group>"; };
@@ -540,6 +544,8 @@
 				8059CD3D5503595F7969B625FA280CAF /* FileManagerType.swift */,
 				C3441111208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift */,
 				C344110F208F99A200E801E5 /* FileCoordinatorType.swift */,
+				C34411152090645500E801E5 /* LayoutCoordinatorType.swift */,
+				C3441117209064AA00E801E5 /* TestCoordinatorType.swift */,
 			);
 			name = Protocols;
 			path = PixelTest/Protocols;
@@ -1043,6 +1049,8 @@
 				7E2F96A09BA14B867203BFDD05F774F2 /* FileManagerType.swift in Sources */,
 				C3441112208F99BC00E801E5 /* TargetBaseDirectoryCoordinatorType.swift in Sources */,
 				C3441114208FA22700E801E5 /* XCTestCase+AddAttachmentWithName.swift in Sources */,
+				C34411162090645500E801E5 /* LayoutCoordinatorType.swift in Sources */,
+				C3441118209064AA00E801E5 /* TestCoordinatorType.swift in Sources */,
 				C3441110208F99A200E801E5 /* FileCoordinatorType.swift in Sources */,
 				C3F113D7208F1A8700D51174 /* TestCoordinator.swift in Sources */,
 				C3F113D6208F1A8700D51174 /* NSObject+Module.swift in Sources */,

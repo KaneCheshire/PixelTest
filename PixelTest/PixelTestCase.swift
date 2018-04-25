@@ -19,9 +19,9 @@ open class PixelTestCase: XCTestCase {
     
     // MARK: Internal
     
-    var layoutCoordinator = LayoutCoordinator()
-    var testCoordinator = TestCoordinator()
-    var fileCoordinator = FileCoordinator()
+    var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
+    var testCoordinator: TestCoordinatorType = TestCoordinator()
+    var fileCoordinator: FileCoordinatorType = FileCoordinator()
     
     // MARK: - Functions -
     
@@ -38,11 +38,13 @@ open class PixelTestCase: XCTestCase {
     open func verify(_ view: UIView, layoutStyle: LayoutStyle,
                      scale: Scale = .native, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
         layoutCoordinator.layOut(view, with: layoutStyle)
-        guard view.bounds.width != 0 else { return XCTFail() }
-        guard view.bounds.height != 0 else { return XCTFail() }
+        XCTAssertTrue(view.bounds.width > 0, "View has no width after layout", file: file, line: line)
+        XCTAssertTrue(view.bounds.height > 0, "View has no height after layout", file: file, line: line)
         switch mode {
-        case .record: record(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
-        case .test: test(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
+        case .record:
+            record(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
+        case .test:
+            test(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
         }
     }
     
@@ -72,7 +74,7 @@ extension PixelTestCase {
             if let testImage = failed.test, let oracleImage = failed.oracle {
                 storeDiffAndFailureImages(from: testImage, recordedImage: oracleImage, function: function, scale: scale, layoutStyle: layoutStyle)
             }
-            XCTFail(failed.message)
+            XCTFail(failed.message, file: file, line: line)
         }
     }
     

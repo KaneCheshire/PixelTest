@@ -8,7 +8,7 @@
 import XCTest
 
 /// Coordinates testing.
-struct TestCoordinator {
+struct TestCoordinator: TestCoordinatorType {
     
     // MARK: - Properties -
     // MARK: Private

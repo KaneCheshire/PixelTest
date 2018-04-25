@@ -21,6 +21,7 @@
 		C302EDA920618B32004BDC29 /* DynamicTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EDA720618B32004BDC29 /* DynamicTypeView.swift */; };
 		C302EDAA20618B32004BDC29 /* DynamicTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C302EDA820618B32004BDC29 /* DynamicTypeView.xib */; };
 		C302EDAC20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */; };
+		C344111A209064EC00E801E5 /* PixelTestCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */; };
 		C347D6042087293700E3BAE5 /* FileCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D602208728BF00E3BAE5 /* FileCoordinatorTests.swift */; };
 		C347D6062087B62200E3BAE5 /* NSObject+ModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D6052087B62200E3BAE5 /* NSObject+ModuleTests.swift */; };
 		C347D6082087B70600E3BAE5 /* ScaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D6072087B70600E3BAE5 /* ScaleTests.swift */; };
@@ -81,6 +82,7 @@
 		C302EDA720618B32004BDC29 /* DynamicTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeView.swift; sourceTree = "<group>"; };
 		C302EDA820618B32004BDC29 /* DynamicTypeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DynamicTypeView.xib; sourceTree = "<group>"; };
 		C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeViewSnapshotTests.swift; sourceTree = "<group>"; };
+		C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 		C347D602208728BF00E3BAE5 /* FileCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCoordinatorTests.swift; sourceTree = "<group>"; };
 		C347D6052087B62200E3BAE5 /* NSObject+ModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ModuleTests.swift"; sourceTree = "<group>"; };
 		C347D6072087B70600E3BAE5 /* ScaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleTests.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				C347D6072087B70600E3BAE5 /* ScaleTests.swift */,
 				C347D60D2088818600E3BAE5 /* TestCoordinatorTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				C347D6042087293700E3BAE5 /* FileCoordinatorTests.swift in Sources */,
 				C347D60C2088807A00E3BAE5 /* LayoutStyleTests.swift in Sources */,
 				C347D6082087B70600E3BAE5 /* ScaleTests.swift in Sources */,
+				C344111A209064EC00E801E5 /* PixelTestCaseTests.swift in Sources */,
 				C347D60E2088818600E3BAE5 /* TestCoordinatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

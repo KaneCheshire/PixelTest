@@ -8,7 +8,7 @@
 import Foundation
 
 /// Coordinates laying out a view.
-struct LayoutCoordinator {
+struct LayoutCoordinator: LayoutCoordinatorType {
     
     // MARK: - Functions -
     // MARK: Internal
