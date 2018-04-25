@@ -1,11 +1,11 @@
 PODS:
-  - AEXML (4.2.2)
-  - PathKit (0.9.0)
+  - AEXML (4.3.0)
+  - PathKit (0.9.1)
   - PixelTest (0.6.0):
-    - xcproj
-  - xcproj (4.1.0):
-    - AEXML (~> 4.1)
-    - PathKit (~> 0.8)
+    - xcproj (>= 4.3.0)
+  - xcproj (4.3.0):
+    - AEXML (~> 4.3)
+    - PathKit (~> 0.9.1)
 
 DEPENDENCIES:
   - PixelTest (from `../`)
@@ -15,10 +15,10 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  AEXML: 5ebafc1b75e0bcf0f1b09b8ca8fed2d5a199479b
-  PathKit: bc177736eb737341ddee2c24413d81ef1abc9ba4
-  PixelTest: 3f5421894a29d096737e3a8960298c17a2028bf3
-  xcproj: cb3da833ccc50105590f37e43f54ec8265b741fd
+  AEXML: bae92c01e0da64132fd72f748721cda07466032b
+  PathKit: 7dcba9f0150afb67e0a520c49707a2cbc8e95937
+  PixelTest: 4d7b34633ff61d0be917b3d2c1006a6df4158c04
+  xcproj: 7a9fe0c5f00617c0fa306b37858f157c786aff42
 
 PODFILE CHECKSUM: 92ac7315d6e43691201e77d257ded9db41bdc651
 

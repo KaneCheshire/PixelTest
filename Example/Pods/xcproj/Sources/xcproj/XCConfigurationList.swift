@@ -32,8 +32,8 @@ final public class XCConfigurationList: PBXObject {
     }
 
     public override func isEqual(to object: PBXObject) -> Bool {
-        guard super.isEqual(to: self),
-            let rhs = object as? XCConfigurationList else {
+        guard let rhs = object as? XCConfigurationList,
+            super.isEqual(to: rhs) else {
                 return false
         }
         let lhs = self
@@ -73,7 +73,7 @@ extension XCConfigurationList: PlistSerializable {
         if let defaultConfigurationName = defaultConfigurationName {
             dictionary["defaultConfigurationName"] = .string(CommentedString(defaultConfigurationName))
         }
-        return (key: CommentedString(reference,comment: plistComment(proj: proj, reference: reference)),
+        return (key: CommentedString(reference, comment: plistComment(proj: proj, reference: reference)),
                 value: .dictionary(dictionary))
     }
     
