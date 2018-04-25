@@ -59,8 +59,8 @@ final public class PBXLegacyTarget: PBXTarget {
     }
     
     public override func isEqual(to object: PBXObject) -> Bool {
-        guard super.isEqual(to: self),
-            let rhs = object as? PBXLegacyTarget else {
+        guard let rhs = object as? PBXLegacyTarget,
+            super.isEqual(to: rhs) else {
                 return false
         }
         let lhs = self
@@ -74,8 +74,8 @@ final public class PBXLegacyTarget: PBXTarget {
         let (key, value) = super.plistValues(proj: proj, isa: PBXLegacyTarget.isa, reference: reference)
         var dict: [CommentedString: PlistValue]!
         switch value {
-        case let .dictionary(_dict):
-            dict = _dict
+        case let .dictionary(dictValue):
+            dict = dictValue
             if let buildToolPath = buildToolPath {
                 dict["buildToolPath"] = PlistValue.string(CommentedString(buildToolPath))
             }
