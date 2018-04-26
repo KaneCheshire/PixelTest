@@ -24,6 +24,12 @@
 		C344111A209064EC00E801E5 /* PixelTestCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */; };
 		C344111C2090F67400E801E5 /* UIImage+EqualToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344111B2090F67400E801E5 /* UIImage+EqualToTests.swift */; };
 		C344111E2090F76A00E801E5 /* UIImage+DiffImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344111D2090F76A00E801E5 /* UIImage+DiffImageTests.swift */; };
+		C34411392091334900E801E5 /* CustomTableViewCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34411382091334900E801E5 /* CustomTableViewCellSnapshotTests.swift */; };
+		C344113E2091A71000E801E5 /* CustomTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C344113D2091A71000E801E5 /* CustomTableViewHeaderView.xib */; };
+		C344113F2091A71700E801E5 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34411332091320300E801E5 /* CustomTableViewCell.swift */; };
+		C34411402091A71C00E801E5 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C34411342091320300E801E5 /* CustomTableViewCell.xib */; };
+		C34411412091A72300E801E5 /* CustomTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344113B209134C200E801E5 /* CustomTableViewHeaderView.swift */; };
+		C34411442091B62400E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34411422091B61800E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift */; };
 		C347D6042087293700E3BAE5 /* FileCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D602208728BF00E3BAE5 /* FileCoordinatorTests.swift */; };
 		C347D6062087B62200E3BAE5 /* NSObject+ModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D6052087B62200E3BAE5 /* NSObject+ModuleTests.swift */; };
 		C347D6082087B70600E3BAE5 /* ScaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D6072087B70600E3BAE5 /* ScaleTests.swift */; };
@@ -87,6 +93,12 @@
 		C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 		C344111B2090F67400E801E5 /* UIImage+EqualToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EqualToTests.swift"; sourceTree = "<group>"; };
 		C344111D2090F76A00E801E5 /* UIImage+DiffImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DiffImageTests.swift"; sourceTree = "<group>"; };
+		C34411332091320300E801E5 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		C34411342091320300E801E5 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
+		C34411382091334900E801E5 /* CustomTableViewCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCellSnapshotTests.swift; sourceTree = "<group>"; };
+		C344113B209134C200E801E5 /* CustomTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewHeaderView.swift; sourceTree = "<group>"; };
+		C344113D2091A71000E801E5 /* CustomTableViewHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewHeaderView.xib; sourceTree = "<group>"; };
+		C34411422091B61800E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		C347D602208728BF00E3BAE5 /* FileCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCoordinatorTests.swift; sourceTree = "<group>"; };
 		C347D6052087B62200E3BAE5 /* NSObject+ModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ModuleTests.swift"; sourceTree = "<group>"; };
 		C347D6072087B70600E3BAE5 /* ScaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleTests.swift; sourceTree = "<group>"; };
@@ -137,11 +149,11 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for PixelTest */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				C302ED982060FDAF004BDC29 /* PixelTestExampleSnapshotTests */,
 				607FACD11AFB9204008FA782 /* Products */,
+				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				DA03C418BE637D5AAE5D9CE7 /* Pods */,
 				3B7FFEF3268DB15950EBC0CA /* Frameworks */,
 			);
@@ -209,6 +221,8 @@
 		C3001DA22060F51A0079F8DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C344113A2091349A00E801E5 /* CustomTableViewHeaderView */,
+				C34411372091320700E801E5 /* CustomTableViewCell */,
 				C302EDA620618ADD004BDC29 /* DynamicTypeView */,
 				C3001DA32060F51A0079F8DA /* SimpleView */,
 			);
@@ -227,9 +241,11 @@
 		C302ED982060FDAF004BDC29 /* PixelTestExampleSnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
-				C302ED992060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift */,
-				C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */,
 				C302ED9B2060FDAF004BDC29 /* Info.plist */,
+				C34411382091334900E801E5 /* CustomTableViewCellSnapshotTests.swift */,
+				C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */,
+				C302ED992060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift */,
+				C34411422091B61800E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift */,
 			);
 			path = PixelTestExampleSnapshotTests;
 			sourceTree = "<group>";
@@ -268,6 +284,24 @@
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		C34411372091320700E801E5 /* CustomTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C34411332091320300E801E5 /* CustomTableViewCell.swift */,
+				C34411342091320300E801E5 /* CustomTableViewCell.xib */,
+			);
+			path = CustomTableViewCell;
+			sourceTree = "<group>";
+		};
+		C344113A2091349A00E801E5 /* CustomTableViewHeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				C344113B209134C200E801E5 /* CustomTableViewHeaderView.swift */,
+				C344113D2091A71000E801E5 /* CustomTableViewHeaderView.xib */,
+			);
+			path = CustomTableViewHeaderView;
 			sourceTree = "<group>";
 		};
 		DA03C418BE637D5AAE5D9CE7 /* Pods */ = {
@@ -358,7 +392,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0930;
-				ORGANIZATIONNAME = CocoaPods;
+				ORGANIZATIONNAME = kane.codes;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -402,6 +436,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C344113E2091A71000E801E5 /* CustomTableViewHeaderView.xib in Resources */,
+				C34411402091A71C00E801E5 /* CustomTableViewCell.xib in Resources */,
 				C302EDA22060FE34004BDC29 /* SimpleView.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				C302EDAA20618B32004BDC29 /* DynamicTypeView.xib in Resources */,
@@ -606,6 +642,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3001DA92060F59E0079F8DA /* SimpleView.swift in Sources */,
+				C344113F2091A71700E801E5 /* CustomTableViewCell.swift in Sources */,
+				C34411412091A72300E801E5 /* CustomTableViewHeaderView.swift in Sources */,
 				C302EDA5206140E1004BDC29 /* UIView+NibLoading.swift in Sources */,
 				C302EDA920618B32004BDC29 /* DynamicTypeView.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
@@ -632,7 +670,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C34411442091B62400E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift in Sources */,
 				C302EDAC20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift in Sources */,
+				C34411392091334900E801E5 /* CustomTableViewCellSnapshotTests.swift in Sources */,
 				C302ED9A2060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

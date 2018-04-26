@@ -112,7 +112,9 @@ This leaves you free to populate your view without having ugly layout code in yo
 
 ## Known limitations
 
-PixelTest might not work properly with reusable views like `UITableViewCell`s and `UITableViewHeaderFooterView`s. If you have any issues and figure out a fix please raise an issue or PR.
+The way UIKit works with reusable views like `UITableViewCell`s and `UITableViewHeaderFooterView`s means that sometimes PixelTest needs to be used in a slightly different way.
+
+The PixelTest example app has examples for how to do it, but with cells specifically you'll need to snapshot test the **`contentView`**, not the cell itself.
 
 ## Requirements
 
