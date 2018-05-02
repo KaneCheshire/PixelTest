@@ -55,8 +55,8 @@ open class PixelTestCase: XCTestCase {
         switch result {
         case .success: XCTAssert(true)
         case .fail(let failed):
-            addAttachment(named: "Failed", image: failed.0)
-            XCTFail(failed.1, file: file, line: line)
+            addAttachment(named: "Failed", image: failed.image)
+            XCTFail(failed.message, file: file, line: line)
         }
     }
     
