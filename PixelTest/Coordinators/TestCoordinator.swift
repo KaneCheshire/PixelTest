@@ -92,14 +92,14 @@ struct TestCoordinator: TestCoordinatorType {
     // TODO: If background is transparent set to white
     // TODO: Output hex color?
     
-    /// <#Description#>
+    /// Verifies that all visible labels have colors that comply with WCAG contrast ratios.
     ///
     /// - Parameters:
-    ///   - view: <#view description#>
-    ///   - file: <#file description#>
-    ///   - line: <#line description#>
-    /// - Returns: <#return value description#>
-    func verifyColourContrast(for view: UIView, standard: WCAGStandard) -> Result<Void, (UIImage, String)> {
+    ///   - view: The view to verify.
+    ///   - standard: The WCAG standard to use for verification.
+    /// - Returns: A result with an image and message on failure.
+    func verifyColourContrast(for view: UIView,
+                              standard: WCAGStandard) -> Result<Void, (image: UIImage, message: String)> {
         let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
         guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
 //        if view.backgroundColor == .clear { // TODO: Y u no work?
