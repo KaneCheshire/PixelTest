@@ -20,12 +20,12 @@ public enum WCAGStandard {
     /// - Returns: The minimum contrast rastio required to pass validation.
     func minContrastRatio(for textSize: WCAGTextSize) -> CGFloat {
         switch (self, textSize) {
-        case (.aa, .normal): return 4.5
         case (.aa, .largeBold),
              (.aa, .largeRegular): return 3.1
-        case (.aaa, .normal): return 7.1
-        case (.aaa, .largeBold),
+        case (.aa, .normal),
+             (.aaa, .largeBold),
              (.aaa, .largeRegular): return 4.5
+        case (.aaa, .normal): return 7.1
         }
     }
     

@@ -21,6 +21,9 @@
 		C302EDA920618B32004BDC29 /* DynamicTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EDA720618B32004BDC29 /* DynamicTypeView.swift */; };
 		C302EDAA20618B32004BDC29 /* DynamicTypeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C302EDA820618B32004BDC29 /* DynamicTypeView.xib */; };
 		C302EDAC20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */; };
+		C31F3C1D209A2EEB007E7809 /* ColorContrastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C19209A2EDE007E7809 /* ColorContrastView.swift */; };
+		C31F3C1E209A2EF2007E7809 /* ColorContrastView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C31F3C1A209A2EDE007E7809 /* ColorContrastView.xib */; };
+		C31F3C20209A5CD9007E7809 /* ColorContrastViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C1F209A5CD9007E7809 /* ColorContrastViewSnapshotTests.swift */; };
 		C344111A209064EC00E801E5 /* PixelTestCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */; };
 		C344111C2090F67400E801E5 /* UIImage+EqualToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344111B2090F67400E801E5 /* UIImage+EqualToTests.swift */; };
 		C344111E2090F76A00E801E5 /* UIImage+DiffImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344111D2090F76A00E801E5 /* UIImage+DiffImageTests.swift */; };
@@ -90,6 +93,9 @@
 		C302EDA720618B32004BDC29 /* DynamicTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeView.swift; sourceTree = "<group>"; };
 		C302EDA820618B32004BDC29 /* DynamicTypeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DynamicTypeView.xib; sourceTree = "<group>"; };
 		C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicTypeViewSnapshotTests.swift; sourceTree = "<group>"; };
+		C31F3C19209A2EDE007E7809 /* ColorContrastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorContrastView.swift; sourceTree = "<group>"; };
+		C31F3C1A209A2EDE007E7809 /* ColorContrastView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorContrastView.xib; sourceTree = "<group>"; };
+		C31F3C1F209A5CD9007E7809 /* ColorContrastViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorContrastViewSnapshotTests.swift; sourceTree = "<group>"; };
 		C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 		C344111B2090F67400E801E5 /* UIImage+EqualToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EqualToTests.swift"; sourceTree = "<group>"; };
 		C344111D2090F76A00E801E5 /* UIImage+DiffImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DiffImageTests.swift"; sourceTree = "<group>"; };
@@ -221,6 +227,7 @@
 		C3001DA22060F51A0079F8DA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C31F3C18209A2EB9007E7809 /* ColorContrastView */,
 				C344113A2091349A00E801E5 /* CustomTableViewHeaderView */,
 				C34411372091320700E801E5 /* CustomTableViewCell */,
 				C302EDA620618ADD004BDC29 /* DynamicTypeView */,
@@ -242,10 +249,11 @@
 			isa = PBXGroup;
 			children = (
 				C302ED9B2060FDAF004BDC29 /* Info.plist */,
+				C31F3C1F209A5CD9007E7809 /* ColorContrastViewSnapshotTests.swift */,
 				C34411382091334900E801E5 /* CustomTableViewCellSnapshotTests.swift */,
+				C34411422091B61800E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift */,
 				C302EDAB20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift */,
 				C302ED992060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift */,
-				C34411422091B61800E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift */,
 			);
 			path = PixelTestExampleSnapshotTests;
 			sourceTree = "<group>";
@@ -284,6 +292,15 @@
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		C31F3C18209A2EB9007E7809 /* ColorContrastView */ = {
+			isa = PBXGroup;
+			children = (
+				C31F3C19209A2EDE007E7809 /* ColorContrastView.swift */,
+				C31F3C1A209A2EDE007E7809 /* ColorContrastView.xib */,
+			);
+			path = ColorContrastView;
 			sourceTree = "<group>";
 		};
 		C34411372091320700E801E5 /* CustomTableViewCell */ = {
@@ -442,6 +459,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				C302EDAA20618B32004BDC29 /* DynamicTypeView.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				C31F3C1E209A2EF2007E7809 /* ColorContrastView.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -646,6 +664,7 @@
 				C34411412091A72300E801E5 /* CustomTableViewHeaderView.swift in Sources */,
 				C302EDA5206140E1004BDC29 /* UIView+NibLoading.swift in Sources */,
 				C302EDA920618B32004BDC29 /* DynamicTypeView.swift in Sources */,
+				C31F3C1D209A2EEB007E7809 /* ColorContrastView.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -674,6 +693,7 @@
 				C302EDAC20618D50004BDC29 /* DynamicTypeViewSnapshotTests.swift in Sources */,
 				C34411392091334900E801E5 /* CustomTableViewCellSnapshotTests.swift in Sources */,
 				C302ED9A2060FDAF004BDC29 /* PixelTestExampleSnapshotTests.swift in Sources */,
+				C31F3C20209A5CD9007E7809 /* ColorContrastViewSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

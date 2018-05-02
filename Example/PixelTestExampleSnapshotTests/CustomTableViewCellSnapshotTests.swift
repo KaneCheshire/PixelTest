@@ -21,7 +21,7 @@ class CustomTableViewCellSnapshotTests: PixelTestCase {
         let viewModel = CustomTableViewCellViewModel(title: "The best title", content: "Some amazing content")
         let view: CustomTableViewCell = .loadFromNib()
         view.configure(with: viewModel)
-        verifyColourContrast(for: view.contentView, layoutStyle: .dynamicHeight320Width, standard: .aa)
+        verify(view.contentView, layoutStyle: .dynamicHeight(fixedWidth: 320))
     }
     
     func test_longData() {

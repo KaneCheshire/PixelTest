@@ -91,6 +91,7 @@ struct TestCoordinator: TestCoordinatorType {
     
     // TODO: If background is transparent set to white
     // TODO: Output hex color?
+    // TODO: Attributed strings?
     
     /// Verifies that all visible labels have colors that comply with WCAG contrast ratios.
     ///

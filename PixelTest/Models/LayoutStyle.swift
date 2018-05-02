@@ -15,8 +15,6 @@ import Foundation
 /// - fixed: The view should have a fixed width and height.
 public enum LayoutStyle {
     
-    public static let dynamicHeight320Width: LayoutStyle = .dynamicHeight(fixedWidth: 320)
-    
     case dynamicWidth(fixedHeight: CGFloat)
     case dynamicHeight(fixedWidth: CGFloat)
     case dynamicWidthHeight
