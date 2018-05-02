@@ -9,6 +9,7 @@
 import PixelTest
 @testable import PixelTest_Example
 
+import XCTest
 class CustomTableViewCellSnapshotTests: PixelTestCase {
     
     override func setUp() {
@@ -20,7 +21,7 @@ class CustomTableViewCellSnapshotTests: PixelTestCase {
         let viewModel = CustomTableViewCellViewModel(title: "The best title", content: "Some amazing content")
         let view: CustomTableViewCell = .loadFromNib()
         view.configure(with: viewModel)
-        verify(view.contentView, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verifyColourContrast(for: view.contentView, layoutStyle: .dynamicHeight320Width, standard: .aa)
     }
     
     func test_longData() {

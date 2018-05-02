@@ -48,6 +48,18 @@ open class PixelTestCase: XCTestCase {
         }
     }
     
+    open func verifyColourContrast(for view: UIView, layoutStyle: LayoutStyle, standard: WCAGStandard,
+                                   file: StaticString = #file, line: UInt = #line) {
+        layoutCoordinator.layOut(view, with: layoutStyle)
+        let result = testCoordinator.verifyColourContrast(for: view, standard: standard)
+        switch result {
+        case .success: XCTAssert(true)
+        case .fail(let failed):
+            addAttachment(named: "Failed", image: failed.0)
+            XCTFail(failed.1, file: file, line: line)
+        }
+    }
+    
 }
 
 extension PixelTestCase {
@@ -84,6 +96,18 @@ extension PixelTestCase {
         addAttachment(named: "Diff image", image: diffImage)
         addAttachment(named: "Failed image", image: failedImage)
         addAttachment(named: "Original image", image: recordedImage)
+    }
+    
+}
+
+extension UIView {
+    
+    var allSubviews: [UIView] {
+        return subviews + subviews.flatMap { $0.allSubviews }
+    }
+    
+    var allLabels: [UILabel] {
+        return allSubviews.compactMap { $0 as? UILabel }
     }
     
 }

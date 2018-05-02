@@ -24,4 +24,22 @@ extension UIView {
         return image
     }
     
+    /// Creates an image of the specified rect in the view, using its layer.
+    ///
+    /// - Parameters:
+    ///   - rect: The rect of the image to create within the view.
+    ///   - scale: The scale of the image to create.
+    /// - Returns: An image, or nil if an image couldn't be created.
+    func image(of rect: CGRect, with scale: Scale) -> UIImage? {
+        guard let imageOfView = image(withScale: scale) else { return nil }
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, scale.explicitOrCoreGraphicsValue)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        context.saveGState()
+        imageOfView.draw(at: CGPoint(x: -rect.origin.x, y: -rect.origin.y))
+        context.restoreGState()
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
 }

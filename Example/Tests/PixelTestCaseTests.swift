@@ -73,6 +73,11 @@ class MockTestCoordinator: TestCoordinatorType {
         return testReturnValue
     }
     
+    func verifyColourContrast(for view: UIView, standard: WCAGStandard) -> Result<Void, (UIImage, String)> {
+        // TODO
+        return .success(())
+    }
+    
 }
 
 class MockFileCoordinator: FileCoordinatorType {

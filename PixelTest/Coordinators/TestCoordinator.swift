@@ -89,4 +89,37 @@ struct TestCoordinator: TestCoordinatorType {
         }
     }
     
+    // TODO: If background is transparent set to white
+    // TODO: Output hex color?
+    
+    /// <#Description#>
+    ///
+    /// - Parameters:
+    ///   - view: <#view description#>
+    ///   - file: <#file description#>
+    ///   - line: <#line description#>
+    /// - Returns: <#return value description#>
+    func verifyColourContrast(for view: UIView, standard: WCAGStandard) -> Result<Void, (UIImage, String)> {
+        let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
+        guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
+//        if view.backgroundColor == .clear { // TODO: Y u no work?
+            view.backgroundColor = .white
+//        }
+        for label in allVisibleLabels {
+            let frame = label.convert(label.bounds, to: view)
+            guard let imageWithLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
+            let alphaBeforeHiding = label.alpha
+            label.alpha = 0
+            guard let imageWithoutLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
+            label.alpha = alphaBeforeHiding
+            guard let backgroundAverageColor = imageWithoutLabel.averageColor() else { fatalError("Unable to determine average color")  }
+            let ratio = label.textColor.wcagContrastRatio(comparedTo: backgroundAverageColor)
+            let textSize = WCAGTextSize(for: label.font)
+            if ratio < standard.minContrastRatio(for: textSize) {
+                return .fail((imageWithLabel, "Color contrast ratio \(ratio):1 for \(textSize) text does not meet WCAG standard \(standard.displayText)"))
+            }
+        }
+        return .success(())
+    }
+    
 }
