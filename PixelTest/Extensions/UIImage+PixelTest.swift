@@ -42,6 +42,7 @@ extension UIImage {
     }
     
     /// Returns the average color of the image.
+    /// Source: https://www.hackingwithswift.com/example-code/media/how-to-read-the-average-color-of-a-uiimage-using-ciareaaverage
     ///
     /// - Returns: The average color of the image, or nil if no color could be determined.
     func averageColor() -> UIColor? {

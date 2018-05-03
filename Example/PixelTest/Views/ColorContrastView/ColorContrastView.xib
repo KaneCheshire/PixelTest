@@ -21,7 +21,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large text: 18pt not bold - AA requires 3.1:1, AAA requires 4.5:1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXf-CL-tTg">
                             <rect key="frame" x="0.0" y="16" width="507" height="22"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" red="0.79607843137254897" green="0.79607843137254897" blue="0.79607843137254897" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -36,17 +36,17 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large text: 14pt bold - AA requires 3.1:1, AAA requires 4.5:1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7b1-Af-Dmo">
                     <rect key="frame" x="95" y="54" width="410" height="17"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" red="0.79578442258883242" green="0.79578442258883242" blue="0.79578442258883242" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Normal text: 13pt not bold - AA requires 4.5:1, AAA requires 7.1:1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFS-qC-XnH">
                     <rect key="frame" x="105.5" y="87" width="389" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" red="0.79578442258883242" green="0.79578442258883242" blue="0.79578442258883242" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.32417909263959388" green="0.32417909263959388" blue="0.32417909263959388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="XFS-qC-XnH" firstAttribute="top" secondItem="7b1-Af-Dmo" secondAttribute="bottom" constant="16" id="DLz-3a-xVt"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ab4-ga-jpJ" secondAttribute="trailing" constant="16" id="H0g-qk-5j9"/>

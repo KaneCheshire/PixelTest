@@ -39,12 +39,12 @@ extension UIColor {
     /// - Parameter color: The color to compare against.
     /// - Returns: The ratio.
     func wcagContrastRatio(comparedTo color: UIColor) -> CGFloat {
-        let luminosity1 = wcagLuminosity()
-        let luminosity2 = color.wcagLuminosity()
+        let luminosity1 = (wcagLuminosity() * 100).rounded(.towardZero) / 100
+        let luminosity2 = (color.wcagLuminosity() * 100).rounded(.towardZero) / 100
         let lightestLuminosity = max(luminosity1, luminosity2)
         let darkestLuminosity = min(luminosity1, luminosity2)
         let ratio = (lightestLuminosity + 0.05) / (darkestLuminosity + 0.05)
-        return (ratio * 10).rounded() / 10
+        return (ratio * 100).rounded() / 100
     }
     
 }

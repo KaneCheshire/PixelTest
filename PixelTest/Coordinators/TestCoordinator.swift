@@ -114,8 +114,9 @@ struct TestCoordinator: TestCoordinatorType {
             guard let backgroundAverageColor = imageWithoutLabel.averageColor() else { fatalError("Unable to determine average color")  }
             let ratio = label.textColor.wcagContrastRatio(comparedTo: backgroundAverageColor)
             let textSize = WCAGTextSize(for: label.font)
-            if ratio < standard.minContrastRatio(for: textSize) {
-                return .fail((imageWithLabel, "Color contrast ratio \(ratio):1 for \(textSize) text does not meet WCAG standard \(standard.displayText)"))
+            let minimumRquiredRatio = standard.minContrastRatio(for: textSize)
+            if ratio < minimumRquiredRatio {
+                return .fail((imageWithLabel, "Color contrast ratio \(ratio):1 for \(textSize) text does not meet \(minimumRquiredRatio):1 for WCAG standard \(standard.displayText)"))
             } else {
                 return .success(())
             }
