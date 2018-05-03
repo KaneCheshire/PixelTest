@@ -48,10 +48,10 @@ open class PixelTestCase: XCTestCase {
         }
     }
     
-    open func verifyColourContrast(for view: UIView, layoutStyle: LayoutStyle, standard: WCAGStandard,
+    open func verifyColorContrast(for view: UIView, layoutStyle: LayoutStyle, standard: WCAGStandard,
                                    file: StaticString = #file, line: UInt = #line) {
         layoutCoordinator.layOut(view, with: layoutStyle)
-        let results = testCoordinator.verifyColourContrast(for: view, standard: standard)
+        let results = testCoordinator.verifyColorContrast(for: view, standard: standard)
         results.forEach { result in
             switch result {
             case .success: XCTAssert(true)

@@ -100,8 +100,8 @@ struct TestCoordinator: TestCoordinatorType {
     ///   - view: The view to verify.
     ///   - standard: The WCAG standard to use for verification.
     /// - Returns: Results with an image and message on failure.
-    func verifyColourContrast(for view: UIView,
-                              standard: WCAGStandard) -> [Result<Void, (image: UIImage, message: String)>] {
+    func verifyColorContrast(for view: UIView,
+                             standard: WCAGStandard) -> [Result<Void, (image: UIImage, message: String)>] {
         let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
         guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
         return allVisibleLabels.map { label in

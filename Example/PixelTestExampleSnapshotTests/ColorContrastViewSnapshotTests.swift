@@ -14,7 +14,7 @@ class ColorContrastViewSnapshotTests: PixelTestCase {
     
     func test_colorContrast() {
         let view: ColorContrastView = .loadFromNib()
-        verifyColourContrast(for: view, layoutStyle: .dynamicWidth(fixedHeight: 320), standard: .aa)
+        verifyColorContrast(for: view, layoutStyle: .dynamicWidth(fixedHeight: 320), standard: .aa)
     }
     
 }
