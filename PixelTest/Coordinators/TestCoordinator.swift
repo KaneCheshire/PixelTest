@@ -89,9 +89,10 @@ struct TestCoordinator: TestCoordinatorType {
         }
     }
     
-    // TODO: If background is transparent set to white
-    // TODO: Output hex color?
+    // TODO: If background is transparent set to white/black. Configurable?
+    // TODO: Output hex colors?
     // TODO: Attributed strings?
+    // TODO: Text colors with alpha < 1?
     
     /// Verifies that all visible labels have colors that comply with WCAG contrast ratios.
     ///
@@ -103,9 +104,6 @@ struct TestCoordinator: TestCoordinatorType {
                               standard: WCAGStandard) -> Result<Void, (image: UIImage, message: String)> {
         let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
         guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
-//        if view.backgroundColor == .clear { // TODO: Y u no work?
-            view.backgroundColor = .white
-//        }
         for label in allVisibleLabels {
             let frame = label.convert(label.bounds, to: view)
             guard let imageWithLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
