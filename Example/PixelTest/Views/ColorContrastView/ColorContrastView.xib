@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ColorContrastView" customModule="PixelTestExampleSnapshotTests" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="151"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="119"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ab4-ga-jpJ">
@@ -33,37 +33,28 @@
                         <constraint firstAttribute="bottom" secondItem="yXf-CL-tTg" secondAttribute="bottom" constant="16" id="bNh-sl-fKe"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large text (14pt bold - AA requires 3.1, AAA requires 4.5)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7b1-Af-Dmo">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Large text (14pt bold - AA requires 3.1, AAA requires 4.5)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7b1-Af-Dmo">
                     <rect key="frame" x="16" y="54" width="568" height="17"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Normal text (13pt not bold - AA requires 4.5, AAA requires 7.1)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFS-qC-XnH">
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Normal text (13pt not bold - AA requires 4.5, AAA requires 7.1)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFS-qC-XnH">
                     <rect key="frame" x="16" y="87" width="568" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Normal text (13pt bold AA requires 4.5, AAA requires 7.1)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUu-YJ-e5y">
-                    <rect key="frame" x="16" y="119" width="568" height="16"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="wUu-YJ-e5y" firstAttribute="trailing" secondItem="XFS-qC-XnH" secondAttribute="trailing" id="5zA-kS-ySk"/>
                 <constraint firstItem="XFS-qC-XnH" firstAttribute="top" secondItem="7b1-Af-Dmo" secondAttribute="bottom" constant="16" id="DLz-3a-xVt"/>
                 <constraint firstAttribute="trailing" secondItem="ab4-ga-jpJ" secondAttribute="trailing" constant="16" id="H0g-qk-5j9"/>
-                <constraint firstItem="wUu-YJ-e5y" firstAttribute="top" secondItem="XFS-qC-XnH" secondAttribute="bottom" constant="16" id="IqS-aA-l06"/>
-                <constraint firstAttribute="bottom" secondItem="wUu-YJ-e5y" secondAttribute="bottom" constant="16" id="Q9T-aX-sWn"/>
+                <constraint firstAttribute="bottom" secondItem="XFS-qC-XnH" secondAttribute="bottom" constant="16" id="PJz-k6-2oi"/>
                 <constraint firstItem="XFS-qC-XnH" firstAttribute="trailing" secondItem="7b1-Af-Dmo" secondAttribute="trailing" id="ZWJ-Qs-LmM"/>
                 <constraint firstItem="7b1-Af-Dmo" firstAttribute="leading" secondItem="yXf-CL-tTg" secondAttribute="leading" id="aV8-2k-vPe"/>
                 <constraint firstItem="XFS-qC-XnH" firstAttribute="leading" secondItem="7b1-Af-Dmo" secondAttribute="leading" id="bCG-b5-Sdh"/>
                 <constraint firstItem="7b1-Af-Dmo" firstAttribute="trailing" secondItem="yXf-CL-tTg" secondAttribute="trailing" id="bhJ-vl-GUA"/>
-                <constraint firstItem="wUu-YJ-e5y" firstAttribute="leading" secondItem="XFS-qC-XnH" secondAttribute="leading" id="bqF-xX-x7i"/>
                 <constraint firstItem="ab4-ga-jpJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="dLo-Ce-yop"/>
                 <constraint firstItem="7b1-Af-Dmo" firstAttribute="top" secondItem="ab4-ga-jpJ" secondAttribute="bottom" id="e9B-D2-OCr"/>
                 <constraint firstItem="ab4-ga-jpJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="myd-QP-SVC"/>
@@ -72,10 +63,9 @@
             <connections>
                 <outlet property="largeBoldTextLabel" destination="7b1-Af-Dmo" id="BHQ-mD-GBO"/>
                 <outlet property="largeTextLabel" destination="yXf-CL-tTg" id="g23-TP-Qfq"/>
-                <outlet property="normalBoldTextLabel" destination="wUu-YJ-e5y" id="lb4-Zf-YCb"/>
                 <outlet property="normalTextLabel" destination="XFS-qC-XnH" id="xa9-7x-UXL"/>
             </connections>
-            <point key="canvasLocation" x="39" y="348.5"/>
+            <point key="canvasLocation" x="39" y="329.5"/>
         </view>
     </objects>
 </document>

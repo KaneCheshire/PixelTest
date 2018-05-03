@@ -13,6 +13,5 @@ final class ColorContrastView: UIView {
     @IBOutlet private var largeTextLabel: UILabel!
     @IBOutlet private var largeBoldTextLabel: UILabel!
     @IBOutlet private var normalTextLabel: UILabel!
-    @IBOutlet private var normalBoldTextLabel: UILabel!
     
 }
