@@ -51,12 +51,14 @@ open class PixelTestCase: XCTestCase {
     open func verifyColourContrast(for view: UIView, layoutStyle: LayoutStyle, standard: WCAGStandard,
                                    file: StaticString = #file, line: UInt = #line) {
         layoutCoordinator.layOut(view, with: layoutStyle)
-        let result = testCoordinator.verifyColourContrast(for: view, standard: standard)
-        switch result {
-        case .success: XCTAssert(true)
-        case .fail(let failed):
-            addAttachment(named: "Failed", image: failed.image)
-            XCTFail(failed.message, file: file, line: line)
+        let results = testCoordinator.verifyColourContrast(for: view, standard: standard)
+        results.forEach { result in
+            switch result {
+            case .success: XCTAssert(true)
+            case .fail(let failed):
+                addAttachment(named: "Failed", image: failed.image)
+                XCTFail(failed.message, file: file, line: line)
+            }            
         }
     }
     

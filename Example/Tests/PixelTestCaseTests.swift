@@ -73,9 +73,9 @@ class MockTestCoordinator: TestCoordinatorType {
         return testReturnValue
     }
     
-    func verifyColourContrast(for view: UIView, standard: WCAGStandard) -> Result<Void, (image: UIImage, message: String)> {
+    func verifyColourContrast(for view: UIView, standard: WCAGStandard) -> [Result<Void, (image: UIImage, message: String)>] {
         // TODO
-        return .success(())
+        return []
     }
     
 }

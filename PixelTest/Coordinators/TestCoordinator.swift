@@ -99,12 +99,12 @@ struct TestCoordinator: TestCoordinatorType {
     /// - Parameters:
     ///   - view: The view to verify.
     ///   - standard: The WCAG standard to use for verification.
-    /// - Returns: A result with an image and message on failure.
+    /// - Returns: Results with an image and message on failure.
     func verifyColourContrast(for view: UIView,
-                              standard: WCAGStandard) -> Result<Void, (image: UIImage, message: String)> {
+                              standard: WCAGStandard) -> [Result<Void, (image: UIImage, message: String)>] {
         let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
         guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
-        for label in allVisibleLabels {
+        return allVisibleLabels.map { label in
             let frame = label.convert(label.bounds, to: view)
             guard let imageWithLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
             let alphaBeforeHiding = label.alpha
@@ -116,9 +116,10 @@ struct TestCoordinator: TestCoordinatorType {
             let textSize = WCAGTextSize(for: label.font)
             if ratio < standard.minContrastRatio(for: textSize) {
                 return .fail((imageWithLabel, "Color contrast ratio \(ratio):1 for \(textSize) text does not meet WCAG standard \(standard.displayText)"))
+            } else {
+                return .success(())
             }
         }
-        return .success(())
     }
     
 }
