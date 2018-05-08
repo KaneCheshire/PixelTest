@@ -12,9 +12,11 @@ import PixelTest
 
 class ColorContrastViewSnapshotTests: PixelTestCase {
     
+    // PixelTest has built-in support for verifying that all visible labels in a view meet WCAG contrast guidelines.
+    
     func test_colorContrast() {
         let view: ColorContrastView = .loadFromNib()
-         verifyColorContrast(for: view, layoutStyle: .dynamicHeight(fixedWidth: 600), standard: .aaa)
+        verifyColorContrast(for: view, layoutStyle: .dynamicHeight(fixedWidth: 600), standard: .aaa)
     }
     
 }

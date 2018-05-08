@@ -9,7 +9,6 @@
 import PixelTest
 @testable import PixelTest_Example
 
-import XCTest
 class CustomTableViewCellSnapshotTests: PixelTestCase {
     
     override func setUp() {

@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ColorContrastView" customModule="PixelTestExampleSnapshotTests" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ColorContrastView" customModule="PixelTest_Example" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="119"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -46,7 +46,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.32417909263959388" green="0.32417909263959388" blue="0.32417909263959388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.23098429568527923" green="0.23098429568527923" blue="0.23098429568527923" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="XFS-qC-XnH" firstAttribute="top" secondItem="7b1-Af-Dmo" secondAttribute="bottom" constant="16" id="DLz-3a-xVt"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ab4-ga-jpJ" secondAttribute="trailing" constant="16" id="H0g-qk-5j9"/>
