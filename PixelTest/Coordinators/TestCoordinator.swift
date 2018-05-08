@@ -101,7 +101,7 @@ struct TestCoordinator: TestCoordinatorType {
     ///   - standard: The WCAG standard to use for verification.
     /// - Returns: Results with an image and message on failure.
     func verifyColorContrast(for view: UIView,
-                             standard: WCAGStandard) -> [Result<Void, (image: UIImage, message: String)>] {
+                             standard: WCAGStandard) -> [Result<Void, ColorContrastFailureResult>] {
         let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
         guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
         return allVisibleLabels.map { label in
@@ -116,11 +116,19 @@ struct TestCoordinator: TestCoordinatorType {
             let textSize = WCAGTextSize(for: label.font)
             let minimumRquiredRatio = standard.minContrastRatio(for: textSize)
             if ratio < minimumRquiredRatio {
-                return .fail((imageWithLabel, "Color contrast ratio \(ratio):1 for \(textSize) text does not meet \(minimumRquiredRatio):1 for WCAG standard \(standard.displayText)"))
+                let message = failureMessage(withFailedRatio: ratio, textSize: textSize, standard: standard)
+                return .fail((imageWithLabel, message, label.textColor, backgroundAverageColor))
             } else {
                 return .success(())
             }
         }
+    }
+    
+    // MARK: Private
+    
+    private func failureMessage(withFailedRatio failedRatio: CGFloat, textSize: WCAGTextSize, standard: WCAGStandard) -> String {
+        let minimumRquiredRatio = standard.minContrastRatio(for: textSize)
+        return "Color contrast ratio \(failedRatio):1 for \(textSize) text does not meet \(minimumRquiredRatio):1 for WCAG standard \(standard.displayText)"
     }
     
 }
