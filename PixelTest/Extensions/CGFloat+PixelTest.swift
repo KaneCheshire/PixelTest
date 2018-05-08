@@ -10,6 +10,7 @@ import Foundation
 extension CGFloat {
     
     /// Adjusts the value according to WCAG guidelines.
+    /// https://www.w3.org/TR/WCAG20/relative-luminance.xml
     func wcagAdjustedValue() -> CGFloat {
         if self <= 0.03928 {
             return self / 12.92

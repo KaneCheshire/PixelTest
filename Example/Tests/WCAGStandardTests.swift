@@ -23,7 +23,7 @@ class WCAGStandardTests: XCTestCase {
         XCTAssertEqual(WCAGStandard.aaa.minContrastRatio(for: .largeRegular), 4.5)
     }
     
-    func test_displayTest() {
+    func test_displayText() {
         XCTAssertEqual(WCAGStandard.aa.displayText, "AA")
         XCTAssertEqual(WCAGStandard.aaa.displayText, "AAA")
     }

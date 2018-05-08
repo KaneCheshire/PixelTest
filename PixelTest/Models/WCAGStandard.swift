@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents one of the WCAG standards (typically AA or AAA)
-/// TODO: Link
+/// https://www.w3.org/TR/2008/REC-WCAG20-20081211/Overview.html#intro-layers-guidance
 public enum WCAGStandard {
     
     case aa

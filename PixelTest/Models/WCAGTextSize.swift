@@ -8,7 +8,7 @@
 import UIKit
 
 /// Represents minimum text sizes defined by WCAG
-/// TODO: Link
+/// https://www.w3.org/TR/2008/REC-WCAG20-20081211/Overview.html#larger-scaledef
 enum WCAGTextSize: CGFloat {
     
     /// A catch all for anything that doesn't fall under largeBold or largeRegular
