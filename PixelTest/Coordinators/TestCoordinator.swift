@@ -93,6 +93,7 @@ struct TestCoordinator: TestCoordinatorType {
     // TODO: Output hex colors?
     // TODO: Attributed strings?
     // TODO: Text colors with alpha < 1?
+    // TODO: Unit test
     
     /// Verifies that all visible labels have colors that comply with WCAG contrast ratios.
     ///

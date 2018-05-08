@@ -21,6 +21,7 @@ enum WCAGTextSize: CGFloat {
     init(for font: UIFont) {
         switch font.pointSize {
         case 0 ..< WCAGTextSize.largeBold.rawValue: self = .normal
+        case WCAGTextSize.largeBold.rawValue ..< WCAGTextSize.largeRegular.rawValue where !font.isBold: self = .normal
         case WCAGTextSize.largeBold.rawValue ..< WCAGTextSize.largeRegular.rawValue where font.isBold: self = .largeBold
         default: self = .largeRegular
         }

@@ -102,15 +102,3 @@ extension PixelTestCase {
     }
     
 }
-
-extension UIView {
-    
-    var allSubviews: [UIView] {
-        return subviews + subviews.flatMap { $0.allSubviews }
-    }
-    
-    var allLabels: [UILabel] {
-        return allSubviews.compactMap { $0 as? UILabel }
-    }
-    
-}

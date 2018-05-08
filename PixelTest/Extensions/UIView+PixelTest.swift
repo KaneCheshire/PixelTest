@@ -42,4 +42,15 @@ extension UIView {
         return image
     }
     
+    /// Returns all subviews, including subviews of subviews, recursively.
+    var allSubviews: [UIView] {
+        return subviews + subviews.flatMap { $0.allSubviews }
+    }
+    
+    /// Returns all subviews that are labels, including subviews of subviews, recursively.
+    var allLabels: [UILabel] {
+        return allSubviews.compactMap { $0 as? UILabel }
+    }
+    
+    
 }

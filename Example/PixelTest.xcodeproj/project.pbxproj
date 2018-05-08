@@ -24,6 +24,11 @@
 		C31F3C1D209A2EEB007E7809 /* ColorContrastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C19209A2EDE007E7809 /* ColorContrastView.swift */; };
 		C31F3C1E209A2EF2007E7809 /* ColorContrastView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C31F3C1A209A2EDE007E7809 /* ColorContrastView.xib */; };
 		C31F3C20209A5CD9007E7809 /* ColorContrastViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C1F209A5CD9007E7809 /* ColorContrastViewSnapshotTests.swift */; };
+		C31F3C2420A18D95007E7809 /* UIColor+PixelTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C2320A18D95007E7809 /* UIColor+PixelTestTests.swift */; };
+		C31F3C2620A22311007E7809 /* UIFont+PixelTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C2520A22311007E7809 /* UIFont+PixelTestTests.swift */; };
+		C31F3C2820A22CDC007E7809 /* WCAGStandardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C2720A22CDC007E7809 /* WCAGStandardTests.swift */; };
+		C31F3C2A20A24A12007E7809 /* WCAGTextSizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C2920A24A12007E7809 /* WCAGTextSizeTests.swift */; };
+		C31F3C2C20A24C37007E7809 /* UIView+PixelTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31F3C2B20A24C37007E7809 /* UIView+PixelTestTests.swift */; };
 		C344111A209064EC00E801E5 /* PixelTestCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */; };
 		C344111C2090F67400E801E5 /* UIImage+EqualToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344111B2090F67400E801E5 /* UIImage+EqualToTests.swift */; };
 		C344111E2090F76A00E801E5 /* UIImage+DiffImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344111D2090F76A00E801E5 /* UIImage+DiffImageTests.swift */; };
@@ -96,6 +101,11 @@
 		C31F3C19209A2EDE007E7809 /* ColorContrastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorContrastView.swift; sourceTree = "<group>"; };
 		C31F3C1A209A2EDE007E7809 /* ColorContrastView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorContrastView.xib; sourceTree = "<group>"; };
 		C31F3C1F209A5CD9007E7809 /* ColorContrastViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorContrastViewSnapshotTests.swift; sourceTree = "<group>"; };
+		C31F3C2320A18D95007E7809 /* UIColor+PixelTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PixelTestTests.swift"; sourceTree = "<group>"; };
+		C31F3C2520A22311007E7809 /* UIFont+PixelTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+PixelTestTests.swift"; sourceTree = "<group>"; };
+		C31F3C2720A22CDC007E7809 /* WCAGStandardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCAGStandardTests.swift; sourceTree = "<group>"; };
+		C31F3C2920A24A12007E7809 /* WCAGTextSizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCAGTextSizeTests.swift; sourceTree = "<group>"; };
+		C31F3C2B20A24C37007E7809 /* UIView+PixelTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+PixelTestTests.swift"; sourceTree = "<group>"; };
 		C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestCaseTests.swift; sourceTree = "<group>"; };
 		C344111B2090F67400E801E5 /* UIImage+EqualToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+EqualToTests.swift"; sourceTree = "<group>"; };
 		C344111D2090F76A00E801E5 /* UIImage+DiffImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DiffImageTests.swift"; sourceTree = "<group>"; };
@@ -199,6 +209,11 @@
 				C347D60D2088818600E3BAE5 /* TestCoordinatorTests.swift */,
 				C344111B2090F67400E801E5 /* UIImage+EqualToTests.swift */,
 				C344111D2090F76A00E801E5 /* UIImage+DiffImageTests.swift */,
+				C31F3C2320A18D95007E7809 /* UIColor+PixelTestTests.swift */,
+				C31F3C2520A22311007E7809 /* UIFont+PixelTestTests.swift */,
+				C31F3C2720A22CDC007E7809 /* WCAGStandardTests.swift */,
+				C31F3C2920A24A12007E7809 /* WCAGTextSizeTests.swift */,
+				C31F3C2B20A24C37007E7809 /* UIView+PixelTestTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -673,15 +688,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C31F3C2820A22CDC007E7809 /* WCAGStandardTests.swift in Sources */,
+				C31F3C2620A22311007E7809 /* UIFont+PixelTestTests.swift in Sources */,
 				C347D60A2087B81000E3BAE5 /* LayoutCoordinatorTests.swift in Sources */,
 				C347D6062087B62200E3BAE5 /* NSObject+ModuleTests.swift in Sources */,
 				C347D6042087293700E3BAE5 /* FileCoordinatorTests.swift in Sources */,
 				C347D60C2088807A00E3BAE5 /* LayoutStyleTests.swift in Sources */,
 				C347D6082087B70600E3BAE5 /* ScaleTests.swift in Sources */,
+				C31F3C2C20A24C37007E7809 /* UIView+PixelTestTests.swift in Sources */,
 				C344111A209064EC00E801E5 /* PixelTestCaseTests.swift in Sources */,
+				C31F3C2420A18D95007E7809 /* UIColor+PixelTestTests.swift in Sources */,
 				C347D60E2088818600E3BAE5 /* TestCoordinatorTests.swift in Sources */,
 				C344111E2090F76A00E801E5 /* UIImage+DiffImageTests.swift in Sources */,
 				C344111C2090F67400E801E5 /* UIImage+EqualToTests.swift in Sources */,
+				C31F3C2A20A24A12007E7809 /* WCAGTextSizeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
