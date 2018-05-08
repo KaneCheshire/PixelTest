@@ -37,6 +37,24 @@ class PixelTestCaseTests: XCTestCase {
         XCTAssertEqual(mockFileCoordinator.storeDiffImageCallCount, 0)
     }
     
+    func test_colorContrast_success() {
+        let testView = UIView()
+        mockLayoutCoordinator.onLayOut = { view, style in
+            guard case .dynamicWidthHeight = style else { return XCTFail("Incorrect layout style") }
+            XCTAssertEqual(testView, view)
+        }
+        mockTestCoordinator.onVerifyColorContrast = { view, standard in
+            XCTAssertEqual(standard, .aa)
+            XCTAssertEqual(testView, view)
+        }
+        mockTestCoordinator.verifyColorContrastReturnValue = [.success(())]
+        XCTAssertEqual(mockLayoutCoordinator.layOutCallCount, 0)
+        XCTAssertEqual(mockTestCoordinator.verifyColorContrastCallCount, 0)
+        testCase.verifyColorContrast(for: testView, layoutStyle: .dynamicWidthHeight, standard: .aa)
+        XCTAssertEqual(mockLayoutCoordinator.layOutCallCount, 1)
+        XCTAssertEqual(mockTestCoordinator.verifyColorContrastCallCount, 1)
+    }
+    
 }
 
 class MockLayoutCoordinator: LayoutCoordinatorType {
@@ -73,9 +91,14 @@ class MockTestCoordinator: TestCoordinatorType {
         return testReturnValue
     }
     
+    var verifyColorContrastCallCount = 0
+    var onVerifyColorContrast: ((UIView, WCAGStandard) -> Void)?
+    var verifyColorContrastReturnValue: [Result<Void, ColorContrastFailureResult>] = []
+    
     func verifyColorContrast(for view: UIView, standard: WCAGStandard) -> [Result<Void, ColorContrastFailureResult>] {
-        // TODO
-        return []
+        verifyColorContrastCallCount += 1
+        onVerifyColorContrast?(view, standard)
+        return verifyColorContrastReturnValue
     }
     
 }

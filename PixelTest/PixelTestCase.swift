@@ -52,6 +52,7 @@ open class PixelTestCase: XCTestCase {
                                    file: StaticString = #file, line: UInt = #line) {
         layoutCoordinator.layOut(view, with: layoutStyle)
         let results = testCoordinator.verifyColorContrast(for: view, standard: standard)
+        guard !results.isEmpty else { fatalError("Results should never be empty") }
         results.forEach { result in
             switch result {
             case .success: XCTAssert(true)
