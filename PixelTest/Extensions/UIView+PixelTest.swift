@@ -9,6 +9,16 @@ import UIKit
 
 extension UIView {
     
+    /// Returns all subviews, including subviews of subviews, recursively.
+    var allSubviews: [UIView] {
+        return subviews + subviews.flatMap { $0.allSubviews }
+    }
+    
+    /// Returns all subviews that are labels, including subviews of subviews, recursively.
+    var allLabels: [UILabel] {
+        return allSubviews.compactMap { $0 as? UILabel }
+    }
+    
     /// Creates an image from the view's contents, using its layer.
     ///
     /// - Parameter scale: The scale of the image to create.
@@ -42,15 +52,19 @@ extension UIView {
         return image
     }
     
-    /// Returns all subviews, including subviews of subviews, recursively.
-    var allSubviews: [UIView] {
-        return subviews + subviews.flatMap { $0.allSubviews }
+    /// Normalizes the background color by removing transparency.
+    /// If the background color is nil or completely transparent, the fallback color is used.
+    ///
+    /// - Parameter fallbackColor: The fallback color to use if the background color is nil or completely transparent.
+    /// - Returns: The original, un-manipulated background color.
+    func normalizedBackgroundColor(with fallbackColor: UIColor) -> UIColor? {
+        let originalBackgroundColor = backgroundColor
+        let originalBackgroundColorAlpha = originalBackgroundColor?.rgbaValues().alpha ?? 0
+        if originalBackgroundColorAlpha == 0 {
+            backgroundColor = fallbackColor
+        } else if originalBackgroundColorAlpha < 1 {
+            backgroundColor = originalBackgroundColor?.withAlphaComponent(1)
+        }
+        return originalBackgroundColor
     }
-    
-    /// Returns all subviews that are labels, including subviews of subviews, recursively.
-    var allLabels: [UILabel] {
-        return allSubviews.compactMap { $0 as? UILabel }
-    }
-    
-    
 }

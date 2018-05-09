@@ -89,7 +89,6 @@ struct TestCoordinator: TestCoordinatorType {
         }
     }
     
-    // TODO: Partially transparent bsckgrounds?
     // TODO: Partially transparent text colors?
     // TODO: Attributed strings?
     // TODO: Unit test
@@ -105,13 +104,11 @@ struct TestCoordinator: TestCoordinatorType {
                              fallbackBackgoundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
         let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
         guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
-        let originalBackgroundColor = view.backgroundColor
-        if (originalBackgroundColor?.rgbaValues().alpha ?? 0) == 0 {
-            view.backgroundColor = fallbackBackgoundColor
+        let originalBackgroundColor = view.normalizedBackgroundColor(with: fallbackBackgoundColor)
+        defer {
+            view.backgroundColor = originalBackgroundColor
         }
-        let results = allVisibleLabels.map { colorContrastResult(for: $0, in: view, with: standard) }
-        view.backgroundColor = originalBackgroundColor
-        return results
+        return allVisibleLabels.map { colorContrastResult(for: $0, in: view, with: standard) }
     }
     
 }
