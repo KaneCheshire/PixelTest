@@ -48,15 +48,16 @@ open class PixelTestCase: XCTestCase {
         }
     }
     
-    /// Verifies the color contrast of all visible labels within the view.
+    /// Verifies the color contrast, according to WCAG guidelines, of all visible labels within the view.
+    /// PixelTest automatically determines the **average** color from the content behind the label, and automatically determines whether a font is bold.
+    ///
+    /// It is an error to verify a view that has no visible labels.
     ///
     /// - Parameters:
-    ///   - view: <#view description#>
-    ///   - layoutStyle: <#layoutStyle description#>
-    ///   - standard: <#standard description#>
-    ///   - fallbackBackgoundColor: <#fallbackBackgoundColor description#>
-    ///   - file: <#file description#>
-    ///   - line: <#line description#>
+    ///   - view: The view the verify.
+    ///   - layoutStyle: The layout style to verify the view with.
+    ///   - standard: The WCAG standard to verify against. AA is more lenient than AAA.
+    ///   - fallbackBackgoundColor: A color to use as a fallback if there is no background color on the view. Defaults to white.
     open func verifyColorContrast(for view: UIView, layoutStyle: LayoutStyle, standard: WCAGStandard,
                                   fallbackBackgoundColor: UIColor = .white, file: StaticString = #file, line: UInt = #line) {
         layoutCoordinator.layOut(view, with: layoutStyle)
