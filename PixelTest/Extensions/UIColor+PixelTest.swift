@@ -22,7 +22,7 @@ extension UIColor {
     }
     
     /// Returns the RGB values adjusted according to WCAG guidelines.
-    /// TODO: Link
+    /// https://www.w3.org/TR/WCAG20/relative-luminance.xml
     func wcagAdjustedRGBA() -> RGBA {
         let rgb = rgbaValues()
         return RGBA(rgb.red.wcagAdjustedValue(), rgb.green.wcagAdjustedValue(), rgb.blue.wcagAdjustedValue(), rgb.alpha)

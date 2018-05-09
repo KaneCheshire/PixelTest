@@ -91,7 +91,6 @@ struct TestCoordinator: TestCoordinatorType {
     
     // TODO: Partially transparent text colors?
     // TODO: Attributed strings?
-    // TODO: Unit test
     
     /// Verifies that all visible labels have colors that comply with WCAG contrast ratios.
     ///
