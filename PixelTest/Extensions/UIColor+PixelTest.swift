@@ -9,28 +9,29 @@ import UIKit
 
 extension UIColor {
     
-    typealias RGB = (r: CGFloat, g: CGFloat, b: CGFloat)
+    typealias RGBA = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
     
     /// Returns the RGB values.
-    func rgbValues() -> RGB {
+    func rgbaValues() -> RGBA {
         var r: CGFloat = 0
         var b: CGFloat = 0
         var g: CGFloat = 0
-        getRed(&r, green: &g, blue: &b, alpha: nil)
-        return (r, g, b)
+        var a: CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        return RGBA(r, g, b, a)
     }
     
     /// Returns the RGB values adjusted according to WCAG guidelines.
     /// TODO: Link
-    func wcagAdjustedRGB() -> RGB {
-        let rgb = rgbValues()
-        return RGB(rgb.r.wcagAdjustedValue(), rgb.g.wcagAdjustedValue(), rgb.b.wcagAdjustedValue())
+    func wcagAdjustedRGBA() -> RGBA {
+        let rgb = rgbaValues()
+        return RGBA(rgb.red.wcagAdjustedValue(), rgb.green.wcagAdjustedValue(), rgb.blue.wcagAdjustedValue(), rgb.alpha)
     }
     
     /// Returns the relative luminosity of the color according to WCAG guidelines.
     func wcagLuminosity() -> CGFloat {
-        let adjustedRGB = wcagAdjustedRGB()
-        return (0.2126 * adjustedRGB.r) + (0.7152 * adjustedRGB.g) + (0.0722 * adjustedRGB.b)
+        let adjustedRGB = wcagAdjustedRGBA()
+        return (0.2126 * adjustedRGB.red) + (0.7152 * adjustedRGB.green) + (0.0722 * adjustedRGB.blue)
     }
     
     /// Returns the contrast ratio compared to another color according to WCAG guidelines.

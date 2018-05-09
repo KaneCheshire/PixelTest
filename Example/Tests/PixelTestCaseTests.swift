@@ -43,9 +43,10 @@ class PixelTestCaseTests: XCTestCase {
             guard case .dynamicWidthHeight = style else { return XCTFail("Incorrect layout style") }
             XCTAssertEqual(testView, view)
         }
-        mockTestCoordinator.onVerifyColorContrast = { view, standard in
+        mockTestCoordinator.onVerifyColorContrast = { view, standard, fallbackBackgroundColor in
             XCTAssertEqual(standard, .aa)
             XCTAssertEqual(testView, view)
+            XCTAssertEqual(fallbackBackgroundColor, .white)
         }
         mockTestCoordinator.verifyColorContrastReturnValue = [.success(())]
         XCTAssertEqual(mockLayoutCoordinator.layOutCallCount, 0)
@@ -92,12 +93,12 @@ class MockTestCoordinator: TestCoordinatorType {
     }
     
     var verifyColorContrastCallCount = 0
-    var onVerifyColorContrast: ((UIView, WCAGStandard) -> Void)?
+    var onVerifyColorContrast: ((UIView, WCAGStandard, UIColor) -> Void)?
     var verifyColorContrastReturnValue: [Result<Void, ColorContrastFailureResult>] = []
     
-    func verifyColorContrast(for view: UIView, standard: WCAGStandard) -> [Result<Void, ColorContrastFailureResult>] {
+    func verifyColorContrast(for view: UIView, standard: WCAGStandard, fallbackBackgoundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
         verifyColorContrastCallCount += 1
-        onVerifyColorContrast?(view, standard)
+        onVerifyColorContrast?(view, standard, fallbackBackgoundColor)
         return verifyColorContrastReturnValue
     }
     

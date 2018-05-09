@@ -48,10 +48,19 @@ open class PixelTestCase: XCTestCase {
         }
     }
     
+    /// Verifies the color contrast of all visible labels within the view.
+    ///
+    /// - Parameters:
+    ///   - view: <#view description#>
+    ///   - layoutStyle: <#layoutStyle description#>
+    ///   - standard: <#standard description#>
+    ///   - fallbackBackgoundColor: <#fallbackBackgoundColor description#>
+    ///   - file: <#file description#>
+    ///   - line: <#line description#>
     open func verifyColorContrast(for view: UIView, layoutStyle: LayoutStyle, standard: WCAGStandard,
-                                   file: StaticString = #file, line: UInt = #line) {
+                                  fallbackBackgoundColor: UIColor = .white, file: StaticString = #file, line: UInt = #line) {
         layoutCoordinator.layOut(view, with: layoutStyle)
-        let results = testCoordinator.verifyColorContrast(for: view, standard: standard)
+        let results = testCoordinator.verifyColorContrast(for: view, standard: standard, fallbackBackgoundColor: fallbackBackgoundColor)
         guard !results.isEmpty else { fatalError("Results should never be empty") }
         results.forEach { result in
             switch result {

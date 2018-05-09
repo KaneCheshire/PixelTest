@@ -11,11 +11,12 @@ import XCTest
 
 class UIColor_PixelTestTests: XCTestCase {
     
-    func test_rgbValues() {
-        let color = UIColor(red: 0.5, green: 0.6, blue: 0.7, alpha: 0)
-        XCTAssertEqual(color.rgbValues().r, 0.5)
-        XCTAssertEqual(color.rgbValues().g, 0.6)
-        XCTAssertEqual(color.rgbValues().b, 0.7)
+    func test_rgbaValues() {
+        let color = UIColor(red: 0.5, green: 0.6, blue: 0.7, alpha: 0.01)
+        XCTAssertEqual(color.rgbaValues().red, 0.5)
+        XCTAssertEqual(color.rgbaValues().green, 0.6)
+        XCTAssertEqual(color.rgbaValues().blue, 0.7)
+        XCTAssertEqual(color.rgbaValues().alpha, 0.01)
     }
     
 }

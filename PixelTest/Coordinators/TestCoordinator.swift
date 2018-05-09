@@ -93,6 +93,7 @@ struct TestCoordinator: TestCoordinatorType {
     // TODO: Output hex colors?
     // TODO: Attributed strings?
     // TODO: Text colors with alpha < 1?
+    
     // TODO: Unit test
     
     /// Verifies that all visible labels have colors that comply with WCAG contrast ratios.
@@ -102,27 +103,17 @@ struct TestCoordinator: TestCoordinatorType {
     ///   - standard: The WCAG standard to use for verification.
     /// - Returns: Results with an image and message on failure.
     func verifyColorContrast(for view: UIView,
-                             standard: WCAGStandard) -> [Result<Void, ColorContrastFailureResult>] {
+                             standard: WCAGStandard,
+                             fallbackBackgoundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
         let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
         guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
-        return allVisibleLabels.map { label in
-            let frame = label.convert(label.bounds, to: view)
-            guard let imageWithLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
-            let alphaBeforeHiding = label.alpha
-            label.alpha = 0
-            guard let imageWithoutLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
-            label.alpha = alphaBeforeHiding
-            guard let backgroundAverageColor = imageWithoutLabel.averageColor() else { fatalError("Unable to determine average color")  }
-            let ratio = label.textColor.wcagContrastRatio(comparedTo: backgroundAverageColor)
-            let textSize = WCAGTextSize(for: label.font)
-            let minimumRquiredRatio = standard.minContrastRatio(for: textSize)
-            if ratio < minimumRquiredRatio {
-                let message = failureMessage(withFailedRatio: ratio, textSize: textSize, standard: standard)
-                return .fail((imageWithLabel, message, label.textColor, backgroundAverageColor))
-            } else {
-                return .success(())
-            }
+        let originalBackgroundColor = view.backgroundColor
+        if (originalBackgroundColor?.rgbaValues().alpha ?? 0) == 0 {
+            view.backgroundColor = fallbackBackgoundColor
         }
+        let results = allVisibleLabels.map { colorContrastResult(for: $0, in: view, with: standard) }
+        view.backgroundColor = originalBackgroundColor
+        return results
     }
     
     // MARK: Private
@@ -130,6 +121,25 @@ struct TestCoordinator: TestCoordinatorType {
     private func failureMessage(withFailedRatio failedRatio: CGFloat, textSize: WCAGTextSize, standard: WCAGStandard) -> String {
         let minimumRquiredRatio = standard.minContrastRatio(for: textSize)
         return "Color contrast ratio \(failedRatio):1 for \(textSize) text does not meet \(minimumRquiredRatio):1 for WCAG standard \(standard.displayText)"
+    }
+    
+    private func colorContrastResult(for label: UILabel, in view: UIView, with standard: WCAGStandard) -> Result<Void, ColorContrastFailureResult> {
+        let frame = label.convert(label.bounds, to: view)
+        guard let imageWithLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
+        let alphaBeforeHiding = label.alpha
+        label.alpha = 0
+        guard let imageWithoutLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
+        label.alpha = alphaBeforeHiding
+        guard let backgroundAverageColor = imageWithoutLabel.averageColor() else { fatalError("Unable to determine average color")  }
+        let ratio = label.textColor.wcagContrastRatio(comparedTo: backgroundAverageColor)
+        let textSize = WCAGTextSize(for: label.font)
+        let minimumRquiredRatio = standard.minContrastRatio(for: textSize)
+        if ratio < minimumRquiredRatio {
+            let message = failureMessage(withFailedRatio: ratio, textSize: textSize, standard: standard)
+            return .fail((imageWithLabel, message, label.textColor, backgroundAverageColor))
+        } else {
+            return .success(())
+        }
     }
     
 }
