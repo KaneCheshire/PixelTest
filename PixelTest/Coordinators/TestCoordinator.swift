@@ -89,11 +89,9 @@ struct TestCoordinator: TestCoordinatorType {
         }
     }
     
-    // TODO: If background is transparent set to white/black. Configurable?
-    // TODO: Output hex colors?
+    // TODO: Partially transparent bsckgrounds?
+    // TODO: Partially transparent text colors?
     // TODO: Attributed strings?
-    // TODO: Text colors with alpha < 1?
-    
     // TODO: Unit test
     
     /// Verifies that all visible labels have colors that comply with WCAG contrast ratios.
@@ -116,20 +114,18 @@ struct TestCoordinator: TestCoordinatorType {
         return results
     }
     
-    // MARK: Private
+}
+
+private extension TestCoordinator {
     
-    private func failureMessage(withFailedRatio failedRatio: CGFloat, textSize: WCAGTextSize, standard: WCAGStandard) -> String {
-        let minimumRquiredRatio = standard.minContrastRatio(for: textSize)
-        return "Color contrast ratio \(failedRatio):1 for \(textSize) text does not meet \(minimumRquiredRatio):1 for WCAG standard \(standard.displayText)"
-    }
+    // MARK: Private
     
     private func colorContrastResult(for label: UILabel, in view: UIView, with standard: WCAGStandard) -> Result<Void, ColorContrastFailureResult> {
         let frame = label.convert(label.bounds, to: view)
         guard let imageWithLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
-        let alphaBeforeHiding = label.alpha
-        label.alpha = 0
+        label.isHidden = true
         guard let imageWithoutLabel = view.image(of: frame, with: .native) else { fatalError("Unable to create image") }
-        label.alpha = alphaBeforeHiding
+        label.isHidden = false
         guard let backgroundAverageColor = imageWithoutLabel.averageColor() else { fatalError("Unable to determine average color")  }
         let ratio = label.textColor.wcagContrastRatio(comparedTo: backgroundAverageColor)
         let textSize = WCAGTextSize(for: label.font)
@@ -140,6 +136,11 @@ struct TestCoordinator: TestCoordinatorType {
         } else {
             return .success(())
         }
+    }
+    
+    private func failureMessage(withFailedRatio failedRatio: CGFloat, textSize: WCAGTextSize, standard: WCAGStandard) -> String {
+        let minimumRquiredRatio = standard.minContrastRatio(for: textSize)
+        return "Color contrast ratio \(failedRatio):1 for \(textSize) text does not meet \(minimumRquiredRatio):1 for WCAG standard \(standard.displayText)"
     }
     
 }
