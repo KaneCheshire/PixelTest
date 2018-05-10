@@ -46,7 +46,7 @@ open class PixelTestCase: XCTestCase {
         case .test:
             test(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
         }
-        layoutCoordinator.unembed(view: view) // TODO: Test
+        layoutCoordinator.unembed(view)
     }
     
     /// Verifies the color contrast, according to WCAG guidelines, of all visible labels within the view.
@@ -72,7 +72,7 @@ open class PixelTestCase: XCTestCase {
                 XCTFail(failed.message, file: file, line: line)
             }            
         }
-        layoutCoordinator.unembed(view: view)
+        layoutCoordinator.unembed(view)
     }
     
 }

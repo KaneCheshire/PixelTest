@@ -23,36 +23,43 @@ class LayoutCoordinatorTests: XCTestCase {
     func test_dynamicWidth() {
         XCTAssertTrue(view.translatesAutoresizingMaskIntoConstraints)
         XCTAssertTrue(view.constraints.isEmpty)
+        XCTAssertNil(view.superview)
         testLayoutCoordinator.layOut(view, with: .dynamicWidth(fixedHeight: 100))
         XCTAssertFalse(view.translatesAutoresizingMaskIntoConstraints)
         XCTAssertEqual(view.constraints.count, 1)
         XCTAssertEqual(view.constraints.first?.firstAnchor, view.heightAnchor)
         XCTAssertEqual(view.constraints.first?.constant, 100)
         XCTAssertNil(view.constraints.first?.secondAnchor)
+        XCTAssertNotNil(view.superview)
     }
     
     func test_dynamicHeight() {
         XCTAssertTrue(view.translatesAutoresizingMaskIntoConstraints)
         XCTAssertTrue(view.constraints.isEmpty)
+        XCTAssertNil(view.superview)
         testLayoutCoordinator.layOut(view, with: .dynamicHeight(fixedWidth: 0.5))
         XCTAssertFalse(view.translatesAutoresizingMaskIntoConstraints)
         XCTAssertEqual(view.constraints.count, 1)
         XCTAssertEqual(view.constraints.first?.firstAnchor, view.widthAnchor)
         XCTAssertEqual(view.constraints.first?.constant, 0.5)
         XCTAssertNil(view.constraints.first?.secondAnchor)
+        XCTAssertNotNil(view.superview)
     }
     
     func test_dynamicWidthHeight() {
         XCTAssertTrue(view.translatesAutoresizingMaskIntoConstraints)
         XCTAssertTrue(view.constraints.isEmpty)
+        XCTAssertNil(view.superview)
         testLayoutCoordinator.layOut(view, with: .dynamicWidthHeight)
         XCTAssertFalse(view.translatesAutoresizingMaskIntoConstraints)
         XCTAssertEqual(view.constraints.count, 0)
+        XCTAssertNotNil(view.superview)
     }
     
     func test_fixedWidthAndHeight() {
         XCTAssertTrue(view.translatesAutoresizingMaskIntoConstraints)
         XCTAssertTrue(view.constraints.isEmpty)
+        XCTAssertNil(view.superview)
         testLayoutCoordinator.layOut(view, with: .fixed(width: 10, height: 320))
         XCTAssertFalse(view.translatesAutoresizingMaskIntoConstraints)
         XCTAssertEqual(view.constraints.count, 2)
@@ -62,6 +69,15 @@ class LayoutCoordinatorTests: XCTestCase {
         XCTAssertEqual(view.constraints.last?.firstAnchor, view.heightAnchor)
         XCTAssertEqual(view.constraints.last?.constant, 320)
         XCTAssertNil(view.constraints.last?.secondAnchor)
+        XCTAssertNotNil(view.superview)
+    }
+    
+    func test_unembedView() {
+        XCTAssertNil(view.superview)
+        testLayoutCoordinator.layOut(view, with: .dynamicWidthHeight)
+        XCTAssertNotNil(view.superview)
+        testLayoutCoordinator.unembed(view)
+        XCTAssertNil(view.superview)
     }
     
 }

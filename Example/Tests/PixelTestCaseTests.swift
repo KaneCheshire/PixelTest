@@ -28,8 +28,21 @@ class PixelTestCaseTests: XCTestCase {
     }
     
     func test_test_success() {
-        testCase.mode = .test
         let testView = UIView(frame: .init(x: 0, y: 0, width: 10, height: 10))
+        mockLayoutCoordinator.onLayOut = { view, style in
+            guard case .dynamicWidthHeight = style else { return XCTFail("Incorrect layout style") }
+            XCTAssertEqual(testView, view)
+        }
+        mockTestCoordinator.onTest = { view, layoutStyle, scale, testCase, function in
+            guard case .dynamicWidthHeight = layoutStyle else { return XCTFail("Incorrect layout style") }
+            guard case .native = scale else { return XCTFail("Incorrect scale") }
+            XCTAssertEqual(view, testView)
+            XCTAssertEqual(function.description, "test_test_success()")
+        }
+        mockLayoutCoordinator.onUnembed = { view in
+            XCTAssertEqual(view, testView)
+        }
+        testCase.mode = .test
         testCase.verify(testView, layoutStyle: .dynamicWidthHeight)
         XCTAssertEqual(mockLayoutCoordinator.layOutCallCount, 1)
         XCTAssertEqual(mockTestCoordinator.testCallCount, 1)
@@ -47,6 +60,9 @@ class PixelTestCaseTests: XCTestCase {
             XCTAssertEqual(standard, .aa)
             XCTAssertEqual(testView, view)
             XCTAssertEqual(fallbackBackgroundColor, .white)
+        }
+        mockLayoutCoordinator.onUnembed = { view in
+            XCTAssertEqual(view, testView)
         }
         mockTestCoordinator.verifyColorContrastReturnValue = [.success(())]
         XCTAssertEqual(mockLayoutCoordinator.layOutCallCount, 0)
@@ -66,6 +82,14 @@ class MockLayoutCoordinator: LayoutCoordinatorType {
     func layOut(_ view: UIView, with layoutStyle: LayoutStyle) {
         layOutCallCount += 1
         onLayOut?(view, layoutStyle)
+    }
+    
+    var unembedCallCount = 0
+    var onUnembed: ((UIView) -> Void)?
+    
+    func unembed(_ view: UIView) {
+        unembedCallCount += 1
+        onUnembed?(view)
     }
     
 }
@@ -96,9 +120,9 @@ class MockTestCoordinator: TestCoordinatorType {
     var onVerifyColorContrast: ((UIView, WCAGStandard, UIColor) -> Void)?
     var verifyColorContrastReturnValue: [Result<Void, ColorContrastFailureResult>] = []
     
-    func verifyColorContrast(for view: UIView, standard: WCAGStandard, fallbackBackgroundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
+    func verifyColorContrast(for view: UIView, standard: WCAGStandard, transparencyNormalizingBackgroundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
         verifyColorContrastCallCount += 1
-        onVerifyColorContrast?(view, standard, fallbackBackgroundColor)
+        onVerifyColorContrast?(view, standard, transparencyNormalizingBackgroundColor)
         return verifyColorContrastReturnValue
     }
     

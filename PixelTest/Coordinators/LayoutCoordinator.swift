@@ -36,7 +36,7 @@ final class LayoutCoordinator: LayoutCoordinatorType {
         embed(view)
     }
     
-    func unembed(view: UIView) {
+    func unembed(_ view: UIView) {
         view.removeFromSuperview()
         parentViews[view] = nil
     }
