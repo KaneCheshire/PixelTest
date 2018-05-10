@@ -46,6 +46,7 @@ open class PixelTestCase: XCTestCase {
         case .test:
             test(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
         }
+        layoutCoordinator.unembed(view: view) // TODO: Test
     }
     
     /// Verifies the color contrast, according to WCAG guidelines, of all visible labels within the view.
@@ -57,11 +58,11 @@ open class PixelTestCase: XCTestCase {
     ///   - view: The view the verify.
     ///   - layoutStyle: The layout style to verify the view with.
     ///   - standard: The WCAG standard to verify against. AA is more lenient than AAA.
-    ///   - fallbackBackgoundColor: A color to use as a fallback if there is no background color on the view. Defaults to white.
+    ///   - transparencyNormalizingBackgroundColor: A color to use as a fallback if there is a transparent background color on the view. Defaults to white, override if your app uses a dark theme, for example.
     open func verifyColorContrast(for view: UIView, layoutStyle: LayoutStyle, standard: WCAGStandard,
-                                  fallbackBackgoundColor: UIColor = .white, file: StaticString = #file, line: UInt = #line) {
+                                  transparencyNormalizingBackgroundColor: UIColor = .white, file: StaticString = #file, line: UInt = #line) {
         layoutCoordinator.layOut(view, with: layoutStyle)
-        let results = testCoordinator.verifyColorContrast(for: view, standard: standard, fallbackBackgoundColor: fallbackBackgoundColor)
+        let results = testCoordinator.verifyColorContrast(for: view, standard: standard, transparencyNormalizingBackgroundColor: transparencyNormalizingBackgroundColor)
         guard !results.isEmpty else { fatalError("Results should never be empty") }
         results.forEach { result in
             switch result {
@@ -71,6 +72,7 @@ open class PixelTestCase: XCTestCase {
                 XCTFail(failed.message, file: file, line: line)
             }            
         }
+        layoutCoordinator.unembed(view: view)
     }
     
 }

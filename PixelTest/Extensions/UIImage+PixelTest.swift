@@ -20,7 +20,7 @@ extension UIImage {
     
     /// Creates a diff image betweeh the view and another image.
     ///
-    /// - Parameter image: The other image
+    /// - Parameter image: The other image.
     /// - Returns: A new image representing a diff of the two images, or nil if an image couldn't be created.
     func diff(with image: UIImage) -> UIImage? { // TODO: split this up
         let maxWidth = max(size.width, image.size.width)

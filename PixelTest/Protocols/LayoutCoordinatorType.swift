@@ -10,5 +10,6 @@ import Foundation
 protocol LayoutCoordinatorType {
     
     func layOut(_ view: UIView, with layoutStyle: LayoutStyle)
+    func unembed(view: UIView)
     
 }

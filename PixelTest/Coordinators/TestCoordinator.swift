@@ -91,23 +91,23 @@ struct TestCoordinator: TestCoordinatorType {
     
     // TODO: Partially transparent text colors?
     // TODO: Attributed strings?
+    // TODO: Add white behind view to work better with transparency.
     
     /// Verifies that all visible labels have colors that comply with WCAG contrast ratios.
     ///
     /// - Parameters:
     ///   - view: The view to verify.
     ///   - standard: The WCAG standard to use for verification.
+    ///   - transparencyNormalizingBackgroundColor: The color to use to normalize transparent background colors.
     /// - Returns: Results with an image and message on failure.
     func verifyColorContrast(for view: UIView,
                              standard: WCAGStandard,
-                             fallbackBackgoundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
+                             transparencyNormalizingBackgroundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
         let allVisibleLabels = view.allLabels.filter { !$0.isHidden && $0.alpha > 0 }
         guard !allVisibleLabels.isEmpty else { fatalError("View does not contain visible labels") }
-        let originalBackgroundColor = view.normalizedBackgroundColor(with: fallbackBackgoundColor)
-        defer {
-            view.backgroundColor = originalBackgroundColor
-        }
-        return allVisibleLabels.map { colorContrastResult(for: $0, in: view, with: standard) }
+        guard let superview = view.superview else { fatalError("View must have a superview for normalizing transparent background colors") }
+        superview.backgroundColor = transparencyNormalizingBackgroundColor
+        return allVisibleLabels.map { colorContrastResult(for: $0, in: superview, with: standard) }
     }
     
 }

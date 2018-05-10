@@ -52,19 +52,4 @@ extension UIView {
         return image
     }
     
-    /// Normalizes the background color by removing transparency.
-    /// If the background color is nil or completely transparent, the fallback color is used.
-    ///
-    /// - Parameter fallbackColor: The fallback color to use if the background color is nil or completely transparent.
-    /// - Returns: The original, un-manipulated background color.
-    func normalizedBackgroundColor(with fallbackColor: UIColor) -> UIColor? {
-        let originalBackgroundColor = backgroundColor
-        let originalBackgroundColorAlpha = originalBackgroundColor?.rgbaValues().alpha ?? 0
-        if originalBackgroundColorAlpha == 0 {
-            backgroundColor = fallbackColor
-        } else if originalBackgroundColorAlpha < 1 {
-            backgroundColor = originalBackgroundColor?.withAlphaComponent(1)
-        }
-        return originalBackgroundColor
-    }
 }

@@ -96,9 +96,9 @@ class MockTestCoordinator: TestCoordinatorType {
     var onVerifyColorContrast: ((UIView, WCAGStandard, UIColor) -> Void)?
     var verifyColorContrastReturnValue: [Result<Void, ColorContrastFailureResult>] = []
     
-    func verifyColorContrast(for view: UIView, standard: WCAGStandard, fallbackBackgoundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
+    func verifyColorContrast(for view: UIView, standard: WCAGStandard, fallbackBackgroundColor: UIColor) -> [Result<Void, ColorContrastFailureResult>] {
         verifyColorContrastCallCount += 1
-        onVerifyColorContrast?(view, standard, fallbackBackgoundColor)
+        onVerifyColorContrast?(view, standard, fallbackBackgroundColor)
         return verifyColorContrastReturnValue
     }
     

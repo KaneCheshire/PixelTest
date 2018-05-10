@@ -8,7 +8,9 @@
 import Foundation
 
 /// Coordinates laying out a view.
-struct LayoutCoordinator: LayoutCoordinatorType {
+final class LayoutCoordinator: LayoutCoordinatorType {
+    
+    private var parentViews: [UIView: UIView] = [:]
     
     // MARK: - Functions -
     // MARK: Internal
@@ -34,6 +36,11 @@ struct LayoutCoordinator: LayoutCoordinatorType {
         embed(view)
     }
     
+    func unembed(view: UIView) {
+        view.removeFromSuperview()
+        parentViews[view] = nil
+    }
+    
     // MARK: Private
     
     private func embed(_ view: UIView) {
@@ -48,6 +55,7 @@ struct LayoutCoordinator: LayoutCoordinatorType {
             ])
         parentView.setNeedsLayout()
         parentView.layoutIfNeeded()
+        self.parentViews[view] = parentView
     }
     
 }
