@@ -17,14 +17,14 @@ class CustomTableViewCellSnapshotTests: PixelTestCase {
     }
     
     func test_regularData() {
-        let viewModel = CustomTableViewCellViewModel(title: "The best title", content: "Some amazing content")
+        let viewModel = CustomTableViewCellViewModel(title: "A The best title", content: "Some amazing content")
         let view: CustomTableViewCell = .loadFromNib()
         view.configure(with: viewModel)
         verify(view.contentView, layoutStyle: .dynamicHeight(fixedWidth: 320))
     }
     
     func test_longData() {
-        let viewModel = CustomTableViewCellViewModel(title: "The best title The best title The best title The best title The best title The best title", content: "Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content")
+        let viewModel = CustomTableViewCellViewModel(title: "AThe best title The best title The best title The best title The best title The best title", content: "Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content")
         let view: CustomTableViewCell = .loadFromNib()
         view.configure(with: viewModel)
         verify(view.contentView, layoutStyle: .dynamicHeight(fixedWidth: 320))

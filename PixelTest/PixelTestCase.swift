@@ -16,12 +16,20 @@ open class PixelTestCase: XCTestCase {
     // MARK: Open
     
     open var mode: Mode = .test
+    override open class var defaultTestSuite: XCTestSuite {
+        _ = resultsCoordinator
+        return super.defaultTestSuite
+    }
     
     // MARK: Internal
     
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
     var testCoordinator: TestCoordinatorType = TestCoordinator()
     var fileCoordinator: FileCoordinatorType = FileCoordinator()
+    
+    // MARK: Private
+    
+    static private let resultsCoordinator = ResultsCoordinator()
     
     // MARK: - Functions -
     
