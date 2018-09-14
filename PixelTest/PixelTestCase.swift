@@ -15,12 +15,19 @@ open class PixelTestCase: XCTestCase {
     // MARK: - Properties -
     // MARK: Open
     
+    /// <#Description#>
     open var mode: Mode = .test
+    /// <#Description#>
     override open class var defaultTestSuite: XCTestSuite {
         _ = resultsCoordinator
         return super.defaultTestSuite
     }
     
+    // MARK: Public
+    
+    /// <#Description#>
+    public static var failureHTMLFilename: String = "results"
+ 
     // MARK: Internal
     
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
