@@ -66,41 +66,23 @@ extension ResultsCoordinator {
             let referencePath = diffPath.replacingOccurrences(of: "Diff", with: "Reference")
             let heading = diffURL.pathComponents.reversed()[..<2].reversed().joined(separator: "   ")
             return """
-            <h2>\(heading)</h2>
-            <p>
-            <div>
-            <div style='width: 33vw; display:inline-block;'>
+            <section style='border-radius:5pt;background:#f1f1f1;margin:64pt 32pt;padding:0pt 16pt 16pt;'>
+            <h2 style='padding:16pt;background:#f1f1f1;position:sticky;position: -webkit-sticky;top:0;'>\(heading)</h2>
+            <div style='width: 33%; display:inline-block;vertical-align:top;'>
                 <img src=\(failurePath) width='100%' />
             </div>
-            <div style='width: 33vw; display:inline-block;'>
+            <div style='width: 33%; display:inline-block;vertical-align:top;'>
                 <img src=\(referencePath) width='100%' />
             </div>
-            <div style='width: 33vw; display:inline-block;'>
-                <img src=\(diffPath) width='100%' />
-            </div>
-            </p>
-            <br />
+            <div onmousemove="mouseMoved(event, this)" style='width:33%; display:inline-block; position:relative;vertical-align:top;'>
+                <img src=\(referencePath) width='100%' />
+            <div class='split-overlay' style='position:absolute; top:0; left:0; width: 50%; height:100%; overflow:hidden; pointer-events:none;'>
+                <img src=\(failurePath) style='width:33vw;max-height:100%;' />
+                </div>
+                <div class='separator' style='position:absolute;left:50%;top:0; height:100%;width:1px;background:red;pointer-events:none;'></div>
+            </section>
             """
             }.joined()
-//        return diffURLs.map { diffURL in
-//            let diffPath = diffURL.path
-//            let failurePath = diffPath.replacingOccurrences(of: "Diff", with: "Failure")
-//            let referencePath = diffPath.replacingOccurrences(of: "Diff", with: "Reference")
-//            let heading = diffURL.pathComponents.reversed()[..<2].reversed().joined(separator: "   ")
-//            return """
-//            <h2>\(heading)</h2>
-//            <p>
-//            <div onmousemove="mouseMoved(event, this)" class='split-container' style='width:auto;height:auto;position:relative;'>
-//            <img src=\(failurePath) style='width:50vw' />
-//                <div class='split-overlay' style='position:absolute; top:0; left:0; width: 50%; overflow:hidden; background:white; pointer-events:none;'>
-//                <img src=\(referencePath) style='width:50vw' />
-//                </div>
-//                <div class='separator' style='position:absolute;left:50%;top:0; height:100%;width:1px;background:red;pointer-events:none;'></div>
-//            </div>
-//            </p>
-//            <br />
-//            """
-//        }.joined()
     }
     
     private func generateHTMLBodyString(withBody body: String) -> String {
@@ -115,7 +97,7 @@ extension ResultsCoordinator {
                     }
                 </script>
                 </head>
-            <body style='background-color:#f1f1f1; margin:0; padding:0;'>
+            <body style='background-color:white; margin:0; padding:0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;'>
                 \(body)
             </body>
         </html>

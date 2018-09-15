@@ -46,7 +46,7 @@ struct FileCoordinator: FileCoordinatorType {
                  scale: Scale,
                  imageType: ImageType,
                  layoutStyle: LayoutStyle) -> URL? {
-        guard !pixelTestBaseDirectory.isEmpty else { fatalError("Please set `PIXELTEST_BASE_DIR` as an environment variable") }
+        guard !pixelTestBaseDirectory.isEmpty else { fatalError("Please set `PIXELTEST_BASE_DIR` as an environment variable. See README.md for more info.") }
         let baseDirectory = baseDirectoryURL(with: imageType, for: testCase, pixelTestBaseDirectory: pixelTestBaseDirectory)
         try? createBaseDirectoryIfNecessary(baseDirectory)
         return fullFileURL(baseDirectory: baseDirectory, for: testCase, function: function, scale: scale, layoutStyle: layoutStyle)
