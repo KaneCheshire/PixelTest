@@ -10,6 +10,7 @@ import XCTest
 final class ResultsCoordinator: NSObject {
 
     private var failures: [PixelTestCase] = []
+    private var htmlStrings: [String] = []
     private let targetBaseCoordinator = TargetBaseDirectoryCoordinator()
     private let fileCoordinator = FileCoordinator()
     private let pixelTestBaseDir = ProcessInfo.processInfo.environment["PIXELTEST_BASE_DIR"] ?? ""
@@ -22,6 +23,10 @@ final class ResultsCoordinator: NSObject {
 }
 
 extension ResultsCoordinator: XCTestObservation {
+    
+    func testSuiteWillStart(_ testSuite: XCTestSuite) {
+        htmlStrings = []
+    }
     
     func testBundleWillStart(_ testBundle: Bundle) {
         failures = []
@@ -37,9 +42,15 @@ extension ResultsCoordinator: XCTestObservation {
     
     func testBundleDidFinish(_ testBundle: Bundle) { // TODO: Clean up if no failures
         guard let firstTestCase = failures.first, let htmlDir = snapshotsDirectory(for: firstTestCase) else { return }
+        let headerHTML = "<h1 style='padding:32pt 32pt 0;'>\(firstTestCase.moduleName)</h1>"
         let htmlStrings: [String] = failures.compactMap { generateHTMLString(for: $0) }
-        let htmlBody = generateHTMLBodyString(withBody: htmlStrings.joined())
+        let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
+        let htmlBody = generateHTMLBodyString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
         try? fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
+    }
+    
+    func testSuiteDidFinish(_ testSuite: XCTestSuite) {
+        print("Test suite finished", testSuite)
     }
     
 }
@@ -66,20 +77,21 @@ extension ResultsCoordinator {
             let referencePath = diffPath.replacingOccurrences(of: "Diff", with: "Reference")
             let heading = diffURL.pathComponents.reversed()[..<2].reversed().joined(separator: "   ")
             return """
-            <section style='border-radius:5pt;background:#f1f1f1;margin:64pt 32pt;padding:0pt 16pt 16pt;'>
-            <h2 style='padding:16pt;background:#f1f1f1;position:sticky;position: -webkit-sticky;top:0;'>\(heading)</h2>
-            <div style='width: 33%; display:inline-block;vertical-align:top;'>
+            <section style='border-radius:5pt;background:#f1f1f1;margin:64pt 32pt;padding:0pt 16pt 0pt;'>
+            <h2 style='padding:16pt;position:-webkit-sticky;background:rgba(241,241,241,0.9);;top:0;-webkit-backdrop-filter: blur(2px); z-index:100;'>\(heading)</h2>
+            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;position:-webkit-sticky;top:0;'>Failed</h3>
+            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;position:-webkit-sticky;top:0;'>Original</h3>
+            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;position:-webkit-sticky;top:0;'>Overlay split</h3>
+            <div style='width: 33%; display:inline-block;vertical-align:top;margin:0pt 0pt 16pt;'>
                 <img src=\(failurePath) width='100%' />
             </div>
-            <div style='width: 33%; display:inline-block;vertical-align:top;'>
+            <div style='width: 33%; display:inline-block;vertical-align:top;margin:0pt 0pt 16pt;'>
                 <img src=\(referencePath) width='100%' />
             </div>
-            <div onmousemove="mouseMoved(event, this)" style='width:33%; display:inline-block; position:relative;vertical-align:top;'>
-                <img src=\(referencePath) width='100%' />
-            <div class='split-overlay' style='position:absolute; top:0; left:0; width: 50%; height:100%; overflow:hidden; pointer-events:none;'>
-                <img src=\(failurePath) style='width:33vw;max-height:100%;' />
+            <div onmousemove="mouseMoved(event, this)" style='width:33%; display:inline-block; position:relative;vertical-align:top;margin:0pt 0pt 16pt;'><img src=\(referencePath) width='100%' /><div class='split-overlay' style='position:absolute; top:0; left:0; width: 50%; height:100%; overflow:hidden; pointer-events:none;'>
+                    <img src=\(failurePath) style='width:calc(33vw - 32pt);max-height:100%;' />
                 </div>
-                <div class='separator' style='position:absolute;left:50%;top:0; height:100%;width:1px;background:red;pointer-events:none;'></div>
+            <div class='separator' style='margin-left:-1pt;position:absolute;left:50%;top:0; height:100%;width:1pt;background:red;pointer-events:none;'></div>
             </section>
             """
             }.joined()
