@@ -43,6 +43,7 @@ extension ResultsCoordinator: XCTestObservation {
         let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
         let htmlBody = generateHTMLBodyString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
         do {
+            print("Writing failure HTML file to URL:", htmlDir)
             try fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
         } catch {
             print("Unable to create failure HTML file", error)
@@ -57,9 +58,9 @@ extension ResultsCoordinator {
         guard let enumerator = FileManager.default.enumerator(atPath: pixelTestBaseDir) else { return }
         let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: "\(pixelTestBaseDir)/\($0)") }
         htmlFiles.forEach { htmlFile in
+            print("Removing HTML file at URL:", htmlFile)
             try? FileManager.default.removeItem(at: htmlFile)
         }
-        
     }
     
     private func snapshotsDirectory(for testCase: PixelTestCase) -> URL? {
