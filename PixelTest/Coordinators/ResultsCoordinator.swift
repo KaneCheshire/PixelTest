@@ -10,7 +10,6 @@ import XCTest
 final class ResultsCoordinator: NSObject {
 
     private var failures: [PixelTestCase] = []
-    private var htmlStrings: [String] = []
     private let targetBaseCoordinator = TargetBaseDirectoryCoordinator()
     private let fileCoordinator = FileCoordinator()
     private let pixelTestBaseDir = ProcessInfo.processInfo.environment["PIXELTEST_BASE_DIR"] ?? ""
@@ -23,10 +22,6 @@ final class ResultsCoordinator: NSObject {
 }
 
 extension ResultsCoordinator: XCTestObservation {
-    
-    func testSuiteWillStart(_ testSuite: XCTestSuite) {
-        htmlStrings = []
-    }
     
     func testBundleWillStart(_ testBundle: Bundle) {
         failures = []
@@ -47,10 +42,6 @@ extension ResultsCoordinator: XCTestObservation {
         let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
         let htmlBody = generateHTMLBodyString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
         try? fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
-    }
-    
-    func testSuiteDidFinish(_ testSuite: XCTestSuite) {
-        print("Test suite finished", testSuite)
     }
     
 }
