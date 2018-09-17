@@ -12,7 +12,7 @@ class SimpleView: UILabel {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.text = "This is a failing test"
+        self.text = "This is a simple view in a custom module"
         self.backgroundColor = .black
         self.textColor = .white
     }

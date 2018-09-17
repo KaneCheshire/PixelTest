@@ -21,7 +21,6 @@ class DynamicTypeViewSnapshotTests: PixelTestCase {
     
     func test_standardSize() {
         let view: DynamicTypeView = .loadFromNib()
-        view.backgroundColor = .blue
         let viewModel = DynamicTypeViewModel(text: "Hello world")
         let traitCollection = UITraitCollection(preferredContentSizeCategory: .medium)
         view.configure(with: viewModel, traitCollection: traitCollection)

@@ -58,7 +58,7 @@ Ut vulputate venenatis ex non condimentum. Aliquam vulputate venenatis efficitur
         let model = SimpleViewModel(title: "Aliquam ullamcorper gravida erat, ornare bibendum metus efficitur ac. Quisque sed felis ornare leo fermentum elementum. Suspendisse sagittis maximus erat vel bibendum.",
                                     subtitle: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at est quis orci porta cursus ut nec metus. Praesent lorem orci, elementum vel diam id, volutpat lacinia sem. Duis eget dictum ex, sit amet rutrum diam. Suspendisse potenti. Vestibulum quis neque malesuada ante malesuada tempus. Donec venenatis egestas sapien vel maximus. Suspendisse aliquet, est sed auctor pretium, ex urna iaculis magna, sit amet accumsan sem turpis et massa. Praesent augue elit, faucibus sit amet velit id, scelerisque fermentum nibh.")
         view.configure(with: model)
-        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320)) // TODO: Conflicting constraints
+        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
         verify(view, layoutStyle: .dynamicHeight(fixedWidth: 375))
         verify(view, layoutStyle: .dynamicHeight(fixedWidth: 414))
     }
