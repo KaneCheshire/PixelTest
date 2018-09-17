@@ -29,8 +29,8 @@ extension ResultsCoordinator: XCTestObservation {
     
     func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
         guard let testCase = testCase as? PixelTestCase, testCase.mode != .record else { return }
-        let alreadyRecordedTestCase = failures.contains { $0.className == testCase.className }
-        if !alreadyRecordedTestCase {
+        let alreadyStoredTestCase = failures.contains { $0.className == testCase.className }
+        if !alreadyStoredTestCase {
             failures.append(testCase)
         }
     }
