@@ -13,20 +13,24 @@ import XCTest
 open class PixelTestCase: XCTestCase {
     
     // MARK: - Properties -
-    // MARK: Open
+    // MARK: Overrides
     
-    /// <#Description#>
-    open var mode: Mode = .test
-    /// <#Description#>
     override open class var defaultTestSuite: XCTestSuite {
-        _ = resultsCoordinator
+        _ = resultsCoordinator // `static let`s are lazily loaded, this is the best place to create the observers.
         return super.defaultTestSuite
     }
     
+    // MARK: Open
+    
+    /// The current mode of the test case. Set to `.record` when setting up or recording tests.
+    /// Defaults to `.test`.
+    open var mode: Mode = .test
+    
     // MARK: Public
     
-    /// <#Description#>
-    public static var failureHTMLFilename: String = "results"
+    /// The name of the HTML file PixelTets auto-generates
+    /// You might want to change this to something specific for your project or Fastlane setup, for example.
+    public static var failureHTMLFilename: String = "pixeltest_failures"
  
     // MARK: Internal
     
@@ -39,6 +43,7 @@ open class PixelTestCase: XCTestCase {
     static private let resultsCoordinator = ResultsCoordinator()
     
     // MARK: - Functions -
+    // MARK: Open
     
     /// Verifies a view.
     /// If this is called while in record mode, a new snapshot are recorded, overwriting any existing recorded snapshot.

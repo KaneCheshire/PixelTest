@@ -16,6 +16,7 @@ final class ResultsCoordinator: NSObject {
     
     override init() {
         super.init()
+        removeExistingHTMLFiles()
         XCTestObservationCenter.shared.addTestObserver(self)
     }
     
@@ -35,18 +36,31 @@ extension ResultsCoordinator: XCTestObservation {
         }
     }
     
-    func testBundleDidFinish(_ testBundle: Bundle) { // TODO: Clean up if no failures
+    func testBundleDidFinish(_ testBundle: Bundle) {
         guard let firstTestCase = failures.first, let htmlDir = snapshotsDirectory(for: firstTestCase) else { return }
-        let headerHTML = "<h1 style='padding:32pt 32pt 0;'>\(firstTestCase.moduleName)</h1>"
+        let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(firstTestCase.moduleName)</h1>"
         let htmlStrings: [String] = failures.compactMap { generateHTMLString(for: $0) }
         let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
         let htmlBody = generateHTMLBodyString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
-        try? fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
+        do {
+            try fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
+        } catch {
+            print("Unable to create failure HTML file", error)
+        }
     }
     
 }
 
 extension ResultsCoordinator {
+    
+    private func removeExistingHTMLFiles() {
+        guard let enumerator = FileManager.default.enumerator(atPath: pixelTestBaseDir) else { return }
+        let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: "\(pixelTestBaseDir)/\($0)") }
+        htmlFiles.forEach { htmlFile in
+            try? FileManager.default.removeItem(at: htmlFile)
+        }
+        
+    }
     
     private func snapshotsDirectory(for testCase: PixelTestCase) -> URL? {
         guard let baseDir = targetBaseCoordinator.targetBaseDirectory(for: testCase, pixelTestBaseDirectory: pixelTestBaseDir) else { return nil }
@@ -66,17 +80,17 @@ extension ResultsCoordinator {
             let diffPath = diffURL.path
             let failurePath = diffPath.replacingOccurrences(of: "Diff", with: "Failure")
             let referencePath = diffPath.replacingOccurrences(of: "Diff", with: "Reference")
-            let heading = diffURL.pathComponents.reversed()[..<2].reversed().joined(separator: "   ")
+            let heading = diffURL.pathComponents.reversed()[..<2].reversed().joined(separator: ": ")
             return """
-            <section style='border-radius:5pt;background:#f1f1f1;margin:64pt 32pt;padding:0pt 16pt 0pt;'>
-            <h2 style='padding:16pt;position:-webkit-sticky;background:rgba(241,241,241,0.9);;top:0;-webkit-backdrop-filter: blur(2px); z-index:100;'>\(heading)</h2>
-            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;position:-webkit-sticky;top:0;'>Failed</h3>
-            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;position:-webkit-sticky;top:0;'>Original</h3>
-            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;position:-webkit-sticky;top:0;'>Overlay split</h3>
-            <div style='width: 33%; display:inline-block;vertical-align:top;margin:0pt 0pt 16pt;'>
+            <section style='border-radius:5pt;background:rgba(245,245,245,0.9);margin:32pt 32pt;padding:0pt 16pt 0pt;'>
+            <h2 style='padding:16pt 0;position:-webkit-sticky;background:rgba(245,245,245,0.9);top:0;-webkit-backdrop-filter: blur(2px); z-index:100;'>\(heading)</h2>
+            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;'>Failed</h3>
+            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;'>Original</h3>
+            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;'>Overlay split</h3>
+            <div style='width:33%; display:inline-block;vertical-align:top;margin:0pt 0pt 16pt;'>
                 <img src=\(failurePath) width='100%' />
             </div>
-            <div style='width: 33%; display:inline-block;vertical-align:top;margin:0pt 0pt 16pt;'>
+            <div style='width:33%; display:inline-block;vertical-align:top;margin:0pt 0pt 16pt;'>
                 <img src=\(referencePath) width='100%' />
             </div>
             <div onmousemove="mouseMoved(event, this)" style='width:33%; display:inline-block; position:relative;vertical-align:top;margin:0pt 0pt 16pt;'><img src=\(referencePath) width='100%' /><div class='split-overlay' style='position:absolute; top:0; left:0; width: 50%; height:100%; overflow:hidden; pointer-events:none;'>
