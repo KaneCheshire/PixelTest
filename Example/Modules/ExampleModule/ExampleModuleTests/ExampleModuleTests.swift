@@ -20,7 +20,7 @@ class ExampleModuleTests: PixelTestCase {
     func test_simpleView() {
         let view = SimpleView(frame: .zero)
         view.sizeToFit()
-        verify(view, layoutStyle: .fixed(width: view.frame.width, height: view.frame.height))
+        verify(view, layoutStyle: .fixed(width: 310, height: 21))
     }
     
 }
