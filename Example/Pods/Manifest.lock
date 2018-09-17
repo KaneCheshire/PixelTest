@@ -1,7 +1,7 @@
 PODS:
   - AEXML (4.3.0)
   - PathKit (0.9.1)
-  - PixelTest (0.6.0):
+  - PixelTest (1.0.0):
     - xcproj (>= 4.3.0)
   - xcproj (4.3.0):
     - AEXML (~> 4.3)
@@ -10,16 +10,22 @@ PODS:
 DEPENDENCIES:
   - PixelTest (from `../`)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AEXML
+    - PathKit
+    - xcproj
+
 EXTERNAL SOURCES:
   PixelTest:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   AEXML: bae92c01e0da64132fd72f748721cda07466032b
   PathKit: 7dcba9f0150afb67e0a520c49707a2cbc8e95937
-  PixelTest: 4d7b34633ff61d0be917b3d2c1006a6df4158c04
+  PixelTest: c3f573518e7d3c8a368ae5a9057d7e342632c3f1
   xcproj: 7a9fe0c5f00617c0fa306b37858f157c786aff42
 
-PODFILE CHECKSUM: 92ac7315d6e43691201e77d257ded9db41bdc651
+PODFILE CHECKSUM: 75338079f2d40b3ac69d0a632849653caf0765ad
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

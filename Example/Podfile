@@ -1,15 +1,28 @@
 use_frameworks!
-
 platform :ios, '11.2'
+workspace 'PixelTest'
 
 target 'PixelTest_Example' do
-  target 'PixelTest_Tests' do
-    inherit! :complete
-    pod 'PixelTest', :path => '../'
-  end
-  
-  target 'PixelTestExampleSnapshotTests' do
-      inherit! :complete
-      pod 'PixelTest', :path => '../'
-  end
+    project 'PixelTest'
+    
+    target 'PixelTest_Tests' do
+        inherit! :complete
+        pod 'PixelTest', :path => '../'
+    end
+    
+    target 'PixelTestExampleSnapshotTests' do
+        inherit! :complete
+        pod 'PixelTest', :path => '../'
+    end
+end
+
+target 'ExampleModule' do
+    
+    project 'Modules/ExampleModule/ExampleModule'
+    
+    target 'ExampleModuleTests' do
+        inherit! :complete
+        pod 'PixelTest', :path => '../'
+    end
+    
 end
