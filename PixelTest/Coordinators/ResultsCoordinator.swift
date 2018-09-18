@@ -7,12 +7,23 @@
 
 import XCTest
 
+/// Coordinates handling results and turning them into something useful, like a web page.
 final class ResultsCoordinator: NSObject {
 
+    // MARK: - Properties -
+    // MARK: Internal
+    
+    static let shared = ResultsCoordinator()
+    
+    // MARK: Private
+    
     private var failures: [PixelTestCase] = []
     private let targetBaseCoordinator = TargetBaseDirectoryCoordinator()
     private let fileCoordinator = FileCoordinator()
     private let pixelTestBaseDir = ProcessInfo.processInfo.environment["PIXELTEST_BASE_DIR"] ?? ""
+    
+    // MARK: - Init -
+    // MARK: Overrides
     
     override init() {
         super.init()
@@ -30,14 +41,15 @@ extension ResultsCoordinator: XCTestObservation {
     
     func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
         guard let testCase = testCase as? PixelTestCase, testCase.mode != .record else { return }
-        let alreadyStoredTestCase = failures.contains { $0.className == testCase.className }
-        if !alreadyStoredTestCase {
+        let hasAlreadyStoredTestCaseClass = failures.contains { $0.className == testCase.className }
+        if !hasAlreadyStoredTestCaseClass {
             failures.append(testCase)
         }
     }
     
     func testBundleDidFinish(_ testBundle: Bundle) {
-        guard let firstTestCase = failures.first, let htmlDir = snapshotsDirectory(for: firstTestCase) else { return }
+        guard let firstTestCase = failures.first else { return }
+        let htmlDir = fileCoordinator.snapshotsDirectory(for: firstTestCase)
         let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(firstTestCase.moduleName)</h1>"
         let htmlStrings: [String] = failures.compactMap { generateHTMLString(for: $0) }
         let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
@@ -63,16 +75,10 @@ extension ResultsCoordinator {
         }
     }
     
-    private func snapshotsDirectory(for testCase: PixelTestCase) -> URL? {
-        guard let baseDir = targetBaseCoordinator.targetBaseDirectory(for: testCase, pixelTestBaseDirectory: pixelTestBaseDir) else { return nil }
-        return baseDir.appendingPathComponent("\(testCase.moduleName)Snapshots")
-    }
-    
     private func generateHTMLString(for testCase: PixelTestCase) -> String? {
-        guard let snapshotsDir = snapshotsDirectory(for: testCase) else { return nil }
-        let diffDir = snapshotsDir.appendingPathComponent("Diff").appendingPathComponent(testCase.className).path
-        let enumerator = FileManager.default.enumerator(atPath: diffDir)
-        let diffURLs = enumerator?.compactMap { $0 as? String }.compactMap { URL(string: "\(diffDir)/\($0)") } ?? []
+        let diffDir = fileCoordinator.baseDirectoryURL(with: .diff, for: testCase)
+        let enumerator = FileManager.default.enumerator(atPath: diffDir.path)
+        let diffURLs = enumerator?.compactMap { $0 as? String }.compactMap { URL(string: "\(diffDir.path)/\($0)") } ?? []
         return generateHTMLString(for: diffURLs)
     }
     

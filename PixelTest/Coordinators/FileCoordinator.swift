@@ -46,10 +46,34 @@ struct FileCoordinator: FileCoordinatorType {
                  scale: Scale,
                  imageType: ImageType,
                  layoutStyle: LayoutStyle) -> URL? {
-        guard !pixelTestBaseDirectory.isEmpty else { fatalError("Please set `PIXELTEST_BASE_DIR` as an environment variable. See README.md for more info.") }
-        let baseDirectory = baseDirectoryURL(with: imageType, for: testCase, pixelTestBaseDirectory: pixelTestBaseDirectory)
-        try? createBaseDirectoryIfNecessary(baseDirectory)
+        let baseDirectory = baseDirectoryURL(with: imageType, for: testCase)
         return fullFileURL(baseDirectory: baseDirectory, for: testCase, function: function, scale: scale, layoutStyle: layoutStyle)
+    }
+    
+    /// Returns the base directory for a test case and specific image type, creating the directory if needed.
+    ///
+    /// - Parameters:
+    ///   - imageType: The image type of the directory to return.
+    ///   - testCase: The test case for the directory to return.
+    /// - Returns: The base directory for the image type and test case.
+    func baseDirectoryURL(with imageType: ImageType, for testCase: PixelTestCase) -> URL {
+        let url = snapshotsDirectory(for: testCase).appendingPathComponent(imageType.rawValue).appendingPathComponent(testCase.className)
+        createDirectoryIfNecessary(url)
+        return url
+    }
+    
+    /// Returns the snapshots directory for a test case.
+    ///
+    /// - Parameter testCase: The test case to find the snapshots directory.
+    /// - Returns: The snapshots directory for the test case.
+    func snapshotsDirectory(for testCase: PixelTestCase) -> URL {
+        guard !pixelTestBaseDirectory.isEmpty else {
+            fatalError("Please set `PIXELTEST_BASE_DIR` as an environment variable. See README.md for more info.")
+        }
+        guard let baseURL = targetBaseDirectoryCoordinator.targetBaseDirectory(for: testCase, pixelTestBaseDirectory: pixelTestBaseDirectory) else {
+            fatalError("Could not find base URL for test target")
+        }
+        return baseURL.appendingPathComponent("\(testCase.moduleName)Snapshots")
     }
     
     /// Writes data to a file URL.
@@ -115,14 +139,9 @@ struct FileCoordinator: FileCoordinatorType {
         return baseDirectory.appendingPathComponent("\(functionWithParenthesisRemoved)_\(layoutStyle.fileValue)@\(scale.explicitOrScreenNativeValue)x.png")
     }
     
-    private func baseDirectoryURL(with imageType: ImageType, for testCase: PixelTestCase, pixelTestBaseDirectory: String) -> URL {
-        guard let baseURL = targetBaseDirectoryCoordinator.targetBaseDirectory(for: testCase, pixelTestBaseDirectory: pixelTestBaseDirectory) else { fatalError("Could not find base URL for test target") }
-        return baseURL.appendingPathComponent("\(testCase.moduleName)Snapshots").appendingPathComponent(imageType.rawValue).appendingPathComponent(testCase.className)
-    }
-    
-    private func createBaseDirectoryIfNecessary(_ baseDirectoryURL: URL) throws {
-        guard !fileManager.fileExists(atPath: baseDirectoryURL.absoluteString) else { return }
-        try fileManager.createDirectory(at: baseDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+    private func createDirectoryIfNecessary(_ url: URL) {
+        guard !fileManager.fileExists(atPath: url.absoluteString) else { return }
+        try? fileManager.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
     }
     
 }
