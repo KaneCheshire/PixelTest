@@ -94,7 +94,7 @@
 		BF2898428AE2FDC881F9F1AE8AAA7DD5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45C21E0287453B6D5DC2D61C4A9A5474 /* Foundation.framework */; };
 		BF4179BDD439C196A5982C6E47F9A068 /* PBXContainerItemProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE9389D8EE16F0DC8C1786E34C8DA2A /* PBXContainerItemProxy.swift */; };
 		C32AC6782152D663000B9B32 /* Bundle+PrincipleClassModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32AC6762152D65E000B9B32 /* Bundle+PrincipleClassModule.swift */; };
-		C32AC67A2152DA20000B9B32 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32AC6792152DA20000B9B32 /* Module.swift */; };
+		C32AC67B2152DB06000B9B32 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32AC6792152DA20000B9B32 /* Module.swift */; };
 		C7A8E55F4C9E02C92CE44BB21C3C8228 /* XCWorkspaceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D8699EAD8E5C0731185F3FB32A120D /* XCWorkspaceData.swift */; };
 		C7AC70AC9C81342B0588ACA27E1B6FDE /* Dictionary+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11417E6521939D5C3C9AFAA2C920E5C4 /* Dictionary+Extras.swift */; };
 		C947EE98E990A1821EF40DB85890C2CF /* KeyedDecodingContainer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFA5DB2954C5944188B652C1672142E /* KeyedDecodingContainer+Additions.swift */; };
@@ -1249,7 +1249,6 @@
 				6E4E7C06A1B9C35408BECAEFEA3C3AD5 /* Document.swift in Sources */,
 				14C6239F686582508AEA4A58F5F66E56 /* Element.swift in Sources */,
 				20D84C143269E60FBCDFCC30FFB2D6DB /* Error.swift in Sources */,
-				C32AC67A2152DA20000B9B32 /* Module.swift in Sources */,
 				2758CD107D81A4B5951A58608D939FEF /* Options.swift in Sources */,
 				3F32E4E755ACB30B8701F53C3B8917B5 /* Parser.swift in Sources */,
 			);
@@ -1333,6 +1332,7 @@
 				E9A3CE77BB34D61F8DC303ABBF9494ED /* FileCoordinatorType.swift in Sources */,
 				A0DB927CEA35BDFE505C1CDE30404191 /* FileManagerType.swift in Sources */,
 				E394E5379E7E91D141D21089FB0FA533 /* ImageType.swift in Sources */,
+				C32AC67B2152DB06000B9B32 /* Module.swift in Sources */,
 				1DA069CD7E279F120843D9A8BC085E75 /* LayoutCoordinator.swift in Sources */,
 				BD7AB0864A2B405C6008FE277F331E6B /* LayoutCoordinatorType.swift in Sources */,
 				24724994B446120CC63DAD525BD79EA8 /* LayoutStyle.swift in Sources */,
