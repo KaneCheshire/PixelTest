@@ -29,11 +29,15 @@ PixelTest is an excellent alternative to other options because PixelTest:
 - Handles laying out your views for you, leaving your project free of ugly layout code.
 - Supports multiple subprojects/modules in your workspace, finding the right directory to store snapshots automatically.
 - Helps you by showing you the diff image of failed tests directly in the test logs, with no need to leave Xcode.
-- Automatically cleans up after itself by removing failed/diff images stored on disk when the corresponding test is fixed and passes.
+- If tests fail, PixelTest automatically creates HTML files with interactive split overlays to see what went wrong.
+- Automatically cleans up after itself by removing failed/diff images and HTML files stored on disk when the corresponding test is fixed and passes.
+
 
 ## Why snapshot test?
 
-Snapshot tests are an excellent (and super fast) way to ensure that your layout never breaks. We cover logic with unit tests, and behaviour with automation/UI tests, and snapshot tests cover how the app actually looks. It ensures that complex layouts aren't broken from the start, which means less time going back and forth running the app, but also means you or anyone else is free to refactor a view without fear of breaking the way it looks.
+Snapshot tests are an excellent (and super fast) way to ensure that your layout never breaks.
+
+ Logic is covered with unit tests, behaviour with automation/UI tests, and snapshot tests cover how the app actually looks. It ensures that complex layouts aren't broken from the start, which means less time going back and forth running the app, but also means you or anyone else is free to refactor a view without fear of breaking the way it looks.
 
 ## Installation
 
@@ -128,4 +132,4 @@ PixelTest currently [only works in iOS projects](https://github.com/KaneCheshire
 
 PixelTest is available under the MIT license. See the LICENSE file for more info.
 
-The original idea for snapshot testing was FBSnapshotTest which was deprecated and later inherited by Uber. PixelTest is a much Swiftier alternative, with less overhead and easier to follow open-source code.
+The original idea for snapshot testing was FBSnapshotTest which was deprecated and later inherited by Uber. PixelTest is a much Swiftier alternative, with more features, less code to write and easier to follow open-source code.

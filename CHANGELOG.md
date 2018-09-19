@@ -1,5 +1,11 @@
 # Changelog
 
+# 1.1.0
+
+- PixelTest now auto-creates HTML files for failures.
+- Fixes constraint warning when calling `verify()` repeatedly in the same test.
+- Disables Bitcode at the podspec level.
+
 # 1.0.0
 
 - The `verify()` function no longer `throws`.
@@ -7,8 +13,8 @@
 
 # 0.7.0
 
-- Changes naming of `Option` to `LayoutStyle`
-- Adds the recorded snapshot as an `XCTAttachment`
+- Changes naming of `Option` to `LayoutStyle`.
+- Adds the recorded snapshot as an `XCTAttachment`.
 
 # 0.6.0
 
