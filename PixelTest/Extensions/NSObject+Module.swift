@@ -12,9 +12,9 @@ extension NSObject {
     // MARK: - Properties -
     // MARK: Internal
     
-    /// The name of the module the object belongs to.
-    var moduleName: String {
-        return typeComponents[safe: 0] ?? "Unknown"
+    /// The module the object belongs to.
+    var module: Module {
+        return Module(name: typeComponents[safe: 0] ?? "Unknown")
     }
     
     /// The class of the object.

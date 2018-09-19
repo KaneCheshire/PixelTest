@@ -9,6 +9,6 @@ import Foundation
 
 protocol TargetBaseDirectoryCoordinatorType {
     
-    func targetBaseDirectory(for testCase: PixelTestCase, pixelTestBaseDirectory: String) -> URL?
+    func targetBaseDirectory(for module: Module, pixelTestBaseDirectory: String) -> URL?
     
 }

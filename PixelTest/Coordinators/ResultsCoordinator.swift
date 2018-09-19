@@ -18,16 +18,13 @@ final class ResultsCoordinator: NSObject {
     // MARK: Private
     
     private var failures: [PixelTestCase] = []
-    private let targetBaseCoordinator = TargetBaseDirectoryCoordinator()
     private let fileCoordinator = FileCoordinator()
-    private let pixelTestBaseDir = ProcessInfo.processInfo.environment["PIXELTEST_BASE_DIR"] ?? ""
     
     // MARK: - Init -
     // MARK: Overrides
     
     override init() {
         super.init()
-        removeExistingHTMLFiles()
         XCTestObservationCenter.shared.addTestObserver(self)
     }
     
@@ -36,10 +33,35 @@ final class ResultsCoordinator: NSObject {
 extension ResultsCoordinator: XCTestObservation {
     
     func testBundleWillStart(_ testBundle: Bundle) {
-        failures = []
+        handleTestBundleWillStart(testBundle)
     }
     
     func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
+        handleTestCaseFailed(testCase)
+    }
+    
+    func testBundleDidFinish(_ testBundle: Bundle) {
+        handleTestBundleFinished()
+    }
+    
+}
+
+extension ResultsCoordinator {
+    
+    private func handleTestBundleWillStart(_ testBundle: Bundle) {
+        failures = []
+        removeExistingHTML(for: testBundle)
+    }
+    
+    private func removeExistingHTML(for testBundle: Bundle) {
+        guard let module = testBundle.moduleForPrincipleClass else { return }
+        let htmlDir = fileCoordinator.snapshotsDirectory(for: module)
+        guard let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
+        let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: htmlDir.appendingPathComponent($0).path ) }
+        htmlFiles.forEach { try? FileManager.default.removeItem(at: $0) }
+    }
+    
+    private func handleTestCaseFailed(_ testCase: XCTestCase) {
         guard let testCase = testCase as? PixelTestCase, testCase.mode != .record else { return }
         let hasAlreadyStoredTestCaseClass = failures.contains { $0.className == testCase.className }
         if !hasAlreadyStoredTestCaseClass {
@@ -47,32 +69,14 @@ extension ResultsCoordinator: XCTestObservation {
         }
     }
     
-    func testBundleDidFinish(_ testBundle: Bundle) {
-        guard let firstTestCase = failures.first else { return }
-        let htmlDir = fileCoordinator.snapshotsDirectory(for: firstTestCase)
-        let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(firstTestCase.moduleName)</h1>"
-        let htmlStrings: [String] = failures.compactMap { generateHTMLString(for: $0) }
+    private func handleTestBundleFinished() {
+        guard let module = failures.first?.module else { return }
+        let htmlDir = fileCoordinator.snapshotsDirectory(for: module)
+        let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(module.name)</h1>"
+        let htmlStrings = failures.compactMap { generateHTMLString(for: $0) }
         let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
-        let htmlBody = generateHTMLBodyString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
-        do {
-            print("Writing failure HTML file to URL:", htmlDir)
-            try fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
-        } catch {
-            print("Unable to create failure HTML file", error)
-        }
-    }
-    
-}
-
-extension ResultsCoordinator {
-    
-    private func removeExistingHTMLFiles() {
-        guard let enumerator = FileManager.default.enumerator(atPath: pixelTestBaseDir) else { return }
-        let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: "\(pixelTestBaseDir)/\($0)") }
-        htmlFiles.forEach { htmlFile in
-            print("Removing HTML file at URL:", htmlFile)
-            try? FileManager.default.removeItem(at: htmlFile)
-        }
+        let htmlBody = generateHTMLFileString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
+        try? fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
     }
     
     private func generateHTMLString(for testCase: PixelTestCase) -> String? {
@@ -85,8 +89,8 @@ extension ResultsCoordinator {
     private func generateHTMLString(for diffURLs: [URL]) -> String {
         return diffURLs.map { diffURL in
             let diffPath = diffURL.path
-            let failurePath = diffPath.replacingOccurrences(of: "Diff", with: "Failure")
-            let referencePath = diffPath.replacingOccurrences(of: "Diff", with: "Reference")
+            let failurePath = diffPath.replacingOccurrences(of: ImageType.diff.rawValue, with: ImageType.failure.rawValue)
+            let referencePath = diffPath.replacingOccurrences(of: ImageType.diff.rawValue, with: ImageType.reference.rawValue)
             let heading = diffURL.pathComponents.reversed()[..<2].reversed().joined(separator: ": ")
             return """
             <section style='border-radius:5pt;background:rgba(245,245,245,0.9);margin:32pt 32pt;padding:0pt 16pt 0pt;'>
@@ -109,7 +113,7 @@ extension ResultsCoordinator {
             }.joined()
     }
     
-    private func generateHTMLBodyString(withBody body: String) -> String {
+    private func generateHTMLFileString(withBody body: String) -> String {
         return """
         <html>
             <head>
