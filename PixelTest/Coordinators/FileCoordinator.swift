@@ -62,6 +62,10 @@ struct FileCoordinator: FileCoordinatorType {
         return url
     }
     
+    /// Returns the directory snapshots are stored for the module.
+    ///
+    /// - Parameter module: The module whose snapshots directory you want to return.
+    /// - Returns: The directory snapshots are stored for the module.
     func snapshotsDirectory(for module: Module) -> URL {
         guard !pixelTestBaseDirectory.isEmpty else {
             fatalError("Please set `PIXELTEST_BASE_DIR` as an environment variable. See README.md for more info.")

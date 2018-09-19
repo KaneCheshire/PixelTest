@@ -27,12 +27,12 @@ struct TargetBaseDirectoryCoordinator: TargetBaseDirectoryCoordinatorType {
     // MARK: - Functions -
     // MARK: Internal
     
-    /// <#Description#>
+    /// Finds the base directory for the module.
     ///
     /// - Parameters:
-    ///   - module: <#module description#>
-    ///   - pixelTestBaseDirectory: <#pixelTestBaseDirectory description#>
-    /// - Returns: <#return value description#>
+    ///   - module: The module to find the base directory for.
+    ///   - pixelTestBaseDirectory: The base directory for PixelTest.
+    /// - Returns: The URL representing the base directory for the module.
     func targetBaseDirectory(for module: Module, pixelTestBaseDirectory: String) -> URL? {
         guard let enumerator = fileManager.enumerator(atPath: pixelTestBaseDirectory) else { return nil }
         for fileOrDir in enumerator.compactMap({ $0 as? String }) {

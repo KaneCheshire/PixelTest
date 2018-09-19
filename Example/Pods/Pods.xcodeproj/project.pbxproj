@@ -596,11 +596,11 @@
 			isa = PBXGroup;
 			children = (
 				D6EDBEDC2EB77055E8D5F7E0FEEBA74F /* Array+PixelTest.swift */,
+				C32AC6762152D65E000B9B32 /* Bundle+PrincipleClassModule.swift */,
 				ED7ABE1396E0D02BA9A02D311E740C00 /* NSObject+Module.swift */,
 				B00137B28D25BBAFF2D32407C0F5EB97 /* UIImage+PixelTest.swift */,
 				76D46A2A11A469D0F6F72193CD9358F6 /* UIView+PixelTest.swift */,
 				CF33A4C4D46CDFABDC8E4F9B7E499738 /* XCTestCase+AddAttachmentWithName.swift */,
-				C32AC6762152D65E000B9B32 /* Bundle+PrincipleClassModule.swift */,
 			);
 			name = Extensions;
 			path = PixelTest/Extensions;
