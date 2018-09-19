@@ -280,9 +280,9 @@ class FileCoordinatorTests: XCTestCase {
 private extension FileCoordinatorTests {
     
     func observeDefaultTargetBaseDirectoryCalls(line: UInt = #line, file: StaticString = #file) {
-        mockTargetBaseDirectoryCoordinator.onTargetBaseDirectory = { pixelTestCase, pixelTestBasePath in
-            switch (self.mockTargetBaseDirectoryCoordinator.targetBaseDirectoryCallCount, pixelTestCase, pixelTestBasePath) {
-            case (1, self.mockTestCase, "file://dummy"): XCTPass()
+        mockTargetBaseDirectoryCoordinator.onTargetBaseDirectory = { module, pixelTestBasePath in
+            switch (self.mockTargetBaseDirectoryCoordinator.targetBaseDirectoryCallCount, module.name, pixelTestBasePath) {
+            case (1, self.mockTestCase.module.name, "file://dummy"): XCTPass()
             default: XCTFail("Unexpected call configuration", file: file, line: line)
             }
         }
@@ -353,12 +353,12 @@ private extension FileCoordinatorTests {
     class MockTargetBaseDirectoryCoordinator: TargetBaseDirectoryCoordinatorType {
         
         var targetBaseDirectoryCallCount = 0
-        var onTargetBaseDirectory: ((PixelTestCase, String) -> Void)?
+        var onTargetBaseDirectory: ((Module, String) -> Void)?
         var targetBaseDirectoryReturnValue: URL?
         
-        func targetBaseDirectory(for testCase: PixelTestCase, pixelTestBaseDirectory: String) -> URL? {
+        func targetBaseDirectory(for module: Module, pixelTestBaseDirectory: String) -> URL? {
             targetBaseDirectoryCallCount += 1
-            onTargetBaseDirectory?(testCase, pixelTestBaseDirectory)
+            onTargetBaseDirectory?(module, pixelTestBaseDirectory)
             return targetBaseDirectoryReturnValue
         }
         

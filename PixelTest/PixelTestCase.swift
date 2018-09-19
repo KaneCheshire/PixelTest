@@ -15,15 +15,28 @@ open class PixelTestCase: XCTestCase {
     // MARK: - Properties -
     // MARK: Open
     
+    /// The current mode of the test case. Set to `.record` when setting up or recording tests.
+    /// Defaults to `.test`.
     open var mode: Mode = .test
     
+    // MARK: Public
+    
+    /// The name of the HTML file PixelTets auto-generates
+    /// You might want to change this to something specific for your project or Fastlane setup, for example.
+    public static var failureHTMLFilename: String = "pixeltest_failures"
+ 
     // MARK: Internal
     
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
     var testCoordinator: TestCoordinatorType = TestCoordinator()
     var fileCoordinator: FileCoordinatorType = FileCoordinator()
     
+    // MARK: Private
+    
+    private let resultsCoordinator = ResultsCoordinator.shared
+    
     // MARK: - Functions -
+    // MARK: Open
     
     /// Verifies a view.
     /// If this is called while in record mode, a new snapshot are recorded, overwriting any existing recorded snapshot.
