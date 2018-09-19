@@ -12,8 +12,8 @@ import XCTest
 class NSObject_ModuleTests: XCTestCase {
     
     func test_moduleName() {
-        XCTAssertEqual(PixelTestCase().moduleName, "PixelTest")
-        XCTAssertEqual(self.moduleName, "PixelTest_Tests")
+        XCTAssertEqual(PixelTestCase().module.name, "PixelTest")
+        XCTAssertEqual(self.module.name, "PixelTest_Tests")
     }
     
     func test_className() {

@@ -67,6 +67,16 @@
                ReferencedContainer = "container:PixelTest.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C31327DA214F909100168334"
+               BuildableName = "ExampleModuleTests.xctest"
+               BlueprintName = "ExampleModuleTests"
+               ReferencedContainer = "container:Modules/ExampleModule/ExampleModule.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
