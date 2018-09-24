@@ -8,7 +8,7 @@
 import XCTest
 
 /// Coordinates handling results and turning them into something useful, like a web page.
-final class ResultsCoordinator: NSObject {
+final class ResultsCoordinator: NSObject { // TODO: Test with parallel tests
 
     // MARK: - Properties -
     // MARK: Internal
@@ -32,31 +32,30 @@ final class ResultsCoordinator: NSObject {
 
 extension ResultsCoordinator: XCTestObservation {
     
-    func testBundleWillStart(_ testBundle: Bundle) {
-        handleTestBundleWillStart(testBundle)
+    func testSuiteWillStart(_ testSuite: XCTestSuite) {
+        handleTestSuiteStarted(testSuite)
     }
     
     func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
         handleTestCaseFailed(testCase)
     }
     
-    func testBundleDidFinish(_ testBundle: Bundle) {
-        handleTestBundleFinished()
+    func testSuiteDidFinish(_ testSuite: XCTestSuite) {
+        handleTestSuiteFinished()
     }
     
 }
 
 extension ResultsCoordinator {
     
-    private func handleTestBundleWillStart(_ testBundle: Bundle) {
-        failures = []
-        removeExistingHTML(for: testBundle)
+    private func handleTestSuiteStarted(_ testSuite: XCTestSuite) {
+        if failures.isEmpty, let module = testSuite.tests.first?.module {
+            removeExistingHTML(for: module)
+        }
     }
     
-    private func removeExistingHTML(for testBundle: Bundle) {
-        guard let module = testBundle.moduleForPrincipleClass else { return }
-        let htmlDir = fileCoordinator.snapshotsDirectory(for: module)
-        guard let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
+    private func removeExistingHTML(for module: Module) {
+        guard let htmlDir = fileCoordinator.snapshotsDirectory(for: module), let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
         let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: htmlDir.appendingPathComponent($0).path ) }
         htmlFiles.forEach { try? FileManager.default.removeItem(at: $0) }
     }
@@ -69,9 +68,8 @@ extension ResultsCoordinator {
         }
     }
     
-    private func handleTestBundleFinished() {
-        guard let module = failures.first?.module else { return }
-        let htmlDir = fileCoordinator.snapshotsDirectory(for: module)
+    private func handleTestSuiteFinished() {
+        guard let module = failures.first?.module, let htmlDir = fileCoordinator.snapshotsDirectory(for: module) else { return }
         let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(module.name)</h1>"
         let htmlStrings = failures.compactMap { generateHTMLString(for: $0) }
         let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"

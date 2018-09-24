@@ -45,7 +45,7 @@ struct TestCoordinator: TestCoordinatorType {
         guard let image = view.image(withScale: scale) else {
             return .fail("Unable to create snapshot")
         }
-        guard let data = UIImagePNGRepresentation(image) else {
+        guard let data = image.pngData() else {
             return .fail("Unable to create image data")
         }
         do {
