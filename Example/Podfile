@@ -15,14 +15,3 @@ target 'PixelTest_Example' do
         pod 'PixelTest', :path => '../'
     end
 end
-
-target 'Submodule' do
-    
-    project 'Modules/Submodule/Submodule'
-    
-    target 'SubmoduleTests' do
-        inherit! :complete
-        pod 'PixelTest', :path => '../'
-    end
-    
-end
