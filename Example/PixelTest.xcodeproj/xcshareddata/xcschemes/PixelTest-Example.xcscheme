@@ -67,16 +67,6 @@
                ReferencedContainer = "container:PixelTest.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C3DB18C82159674700D48F55"
-               BuildableName = "SubmoduleTests.xctest"
-               BlueprintName = "SubmoduleTests"
-               ReferencedContainer = "container:Modules/Submodule/Submodule.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
