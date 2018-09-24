@@ -11,6 +11,11 @@ import XCTest
 
 /// Subclass `PixelTestCase` after `import PixelTest`
 open class PixelTestCase: XCTestCase {
+
+    open override class var defaultTestSuite: XCTestSuite {
+        _ = ResultsCoordinator.shared
+        return super.defaultTestSuite
+    }
     
     // MARK: - Properties -
     // MARK: Open
@@ -30,10 +35,6 @@ open class PixelTestCase: XCTestCase {
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
     var testCoordinator: TestCoordinatorType = TestCoordinator()
     var fileCoordinator: FileCoordinatorType = FileCoordinator()
-    
-    // MARK: Private
-    
-    private let resultsCoordinator = ResultsCoordinator.shared
     
     // MARK: - Functions -
     // MARK: Open

@@ -32,15 +32,17 @@ final class ResultsCoordinator: NSObject {
 
 extension ResultsCoordinator: XCTestObservation {
     
-    func testBundleWillStart(_ testBundle: Bundle) {
-        handleTestBundleWillStart(testBundle)
+    func testSuiteWillStart(_ testSuite: XCTestSuite) {
+        if failures.isEmpty, let module = testSuite.tests.first?.module {
+            removeExistingHTML(for: module)
+        }
     }
     
     func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
         handleTestCaseFailed(testCase)
     }
     
-    func testBundleDidFinish(_ testBundle: Bundle) {
+    func testSuiteDidFinish(_ testSuite: XCTestSuite) {
         handleTestBundleFinished()
     }
     
@@ -48,13 +50,7 @@ extension ResultsCoordinator: XCTestObservation {
 
 extension ResultsCoordinator {
     
-    private func handleTestBundleWillStart(_ testBundle: Bundle) {
-        failures = []
-        removeExistingHTML(for: testBundle)
-    }
-    
-    private func removeExistingHTML(for testBundle: Bundle) {
-        guard let module = testBundle.moduleForPrincipleClass else { return }
+    private func removeExistingHTML(for module: Module) {
         let htmlDir = fileCoordinator.snapshotsDirectory(for: module)
         guard let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
         let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: htmlDir.appendingPathComponent($0).path ) }

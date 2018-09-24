@@ -1,8 +1,8 @@
 PODS:
   - AEXML (4.3.0)
   - PathKit (0.9.1)
-  - PixelTest (1.0.0):
-    - xcproj (>= 4.3.0)
+  - PixelTest (1.1.0):
+    - xcproj (= 4.3.0)
   - xcproj (4.3.0):
     - AEXML (~> 4.3)
     - PathKit (~> 0.9.1)
@@ -23,7 +23,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AEXML: bae92c01e0da64132fd72f748721cda07466032b
   PathKit: 7dcba9f0150afb67e0a520c49707a2cbc8e95937
-  PixelTest: c3f573518e7d3c8a368ae5a9057d7e342632c3f1
+  PixelTest: 36c15cac3196ce4d5098f0aaa07439ffe8126f32
   xcproj: 7a9fe0c5f00617c0fa306b37858f157c786aff42
 
 PODFILE CHECKSUM: 75338079f2d40b3ac69d0a632849653caf0765ad
