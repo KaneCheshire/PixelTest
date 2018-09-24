@@ -33,9 +33,7 @@ final class ResultsCoordinator: NSObject { // TODO: Test with parallel tests
 extension ResultsCoordinator: XCTestObservation {
     
     func testSuiteWillStart(_ testSuite: XCTestSuite) {
-        if failures.isEmpty, let module = testSuite.tests.first?.module {
-            removeExistingHTML(for: module)
-        }
+        handleTestSuiteStarted(testSuite)
     }
     
     func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
@@ -43,16 +41,21 @@ extension ResultsCoordinator: XCTestObservation {
     }
     
     func testSuiteDidFinish(_ testSuite: XCTestSuite) {
-        handleTestBundleFinished()
+        handleTestSuiteFinished()
     }
     
 }
 
 extension ResultsCoordinator {
     
+    private func handleTestSuiteStarted(_ testSuite: XCTestSuite) {
+        if failures.isEmpty, let module = testSuite.tests.first?.module {
+            removeExistingHTML(for: module)
+        }
+    }
+    
     private func removeExistingHTML(for module: Module) {
-        let htmlDir = fileCoordinator.snapshotsDirectory(for: module)
-        guard let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
+        guard let htmlDir = fileCoordinator.snapshotsDirectory(for: module), let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
         let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: htmlDir.appendingPathComponent($0).path ) }
         htmlFiles.forEach { try? FileManager.default.removeItem(at: $0) }
     }
@@ -65,9 +68,8 @@ extension ResultsCoordinator {
         }
     }
     
-    private func handleTestBundleFinished() {
-        guard let module = failures.first?.module else { return }
-        let htmlDir = fileCoordinator.snapshotsDirectory(for: module)
+    private func handleTestSuiteFinished() {
+        guard let module = failures.first?.module, let htmlDir = fileCoordinator.snapshotsDirectory(for: module) else { return }
         let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(module.name)</h1>"
         let htmlStrings = failures.compactMap { generateHTMLString(for: $0) }
         let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"

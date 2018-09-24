@@ -57,7 +57,9 @@ struct FileCoordinator: FileCoordinatorType {
     ///   - testCase: The test case for the directory to return.
     /// - Returns: The base directory for the image type and test case.
     func baseDirectoryURL(with imageType: ImageType, for testCase: PixelTestCase) -> URL {
-        let url = snapshotsDirectory(for: testCase.module).appendingPathComponent(imageType.rawValue).appendingPathComponent(testCase.className)
+        guard let url = snapshotsDirectory(for: testCase.module)?.appendingPathComponent(imageType.rawValue).appendingPathComponent(testCase.className) else {
+            fatalError("Unable to compose snapshots directory for test case: \(testCase)")
+        }
         createDirectoryIfNecessary(url)
         return url
     }
@@ -66,14 +68,12 @@ struct FileCoordinator: FileCoordinatorType {
     ///
     /// - Parameter module: The module whose snapshots directory you want to return.
     /// - Returns: The directory snapshots are stored for the module.
-    func snapshotsDirectory(for module: Module) -> URL {
+    func snapshotsDirectory(for module: Module) -> URL? {
         guard !pixelTestBaseDirectory.isEmpty else {
             fatalError("Please set `PIXELTEST_BASE_DIR` as an environment variable. See README.md for more info.")
         }
-        guard let baseURL = targetBaseDirectoryCoordinator.targetBaseDirectory(for: module, pixelTestBaseDirectory: pixelTestBaseDirectory) else {
-            fatalError("Could not find base URL for test target")
-        }
-        return baseURL.appendingPathComponent("\(module.name)Snapshots")
+        let baseURL = targetBaseDirectoryCoordinator.targetBaseDirectory(for: module, pixelTestBaseDirectory: pixelTestBaseDirectory)
+        return baseURL?.appendingPathComponent("\(module.name)Snapshots")
     }
     
     /// Writes data to a file URL.
