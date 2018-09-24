@@ -8,7 +8,7 @@
 import XCTest
 
 /// Coordinates handling results and turning them into something useful, like a web page.
-final class ResultsCoordinator: NSObject {
+final class ResultsCoordinator: NSObject { // TODO: Test with parallel tests
 
     // MARK: - Properties -
     // MARK: Internal
