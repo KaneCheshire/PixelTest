@@ -103,10 +103,10 @@ struct FileCoordinator: FileCoordinatorType {
     ///   - scale: The scale the images were created with.
     ///   - layoutStyle: The style of layout the images were created with.
     func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle), let data = UIImagePNGRepresentation(diffImage) {
+        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle), let data = diffImage.pngData() {
             try? write(data, to: url)
         }
-        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .failure, layoutStyle: layoutStyle), let data = UIImagePNGRepresentation(failedImage) {
+        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .failure, layoutStyle: layoutStyle), let data = failedImage.pngData() {
             try? write(data, to: url)
         }
     }

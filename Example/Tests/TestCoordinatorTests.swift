@@ -117,7 +117,7 @@ class TestCoordinatorTests: XCTestCase {
     func test_test_mismatch() {
         mockFileCoordinator.fileURLReturnValue = URL(string: "file://something")
         let mockRecordedImage = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 11)).image(withScale: .native)!
-        mockFileCoordinator.dataReturnValue = UIImagePNGRepresentation(mockRecordedImage)!
+        mockFileCoordinator.dataReturnValue = mockRecordedImage.pngData()!
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
         switch result {
@@ -132,7 +132,7 @@ class TestCoordinatorTests: XCTestCase {
     func test_test_success() {
         mockFileCoordinator.fileURLReturnValue = URL(string: "file://something")
         let mockRecordedImage = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)).image(withScale: .native)!
-        mockFileCoordinator.dataReturnValue = UIImagePNGRepresentation(mockRecordedImage)!
+        mockFileCoordinator.dataReturnValue = mockRecordedImage.pngData()!
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
         switch result {
