@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1000"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -65,16 +65,6 @@
                BuildableName = "PixelTestExampleSnapshotTests.xctest"
                BlueprintName = "PixelTestExampleSnapshotTests"
                ReferencedContainer = "container:PixelTest.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C31327DA214F909100168334"
-               BuildableName = "ExampleModuleTests.xctest"
-               BlueprintName = "ExampleModuleTests"
-               ReferencedContainer = "container:Modules/ExampleModule/ExampleModule.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

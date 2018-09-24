@@ -1,8 +1,8 @@
 PODS:
-  - AEXML (4.3.0)
-  - PathKit (0.9.1)
-  - PixelTest (1.0.0):
-    - xcproj (>= 4.3.0)
+  - AEXML (4.3.3)
+  - PathKit (0.9.2)
+  - PixelTest (1.2.0):
+    - xcproj (= 4.3.0)
   - xcproj (4.3.0):
     - AEXML (~> 4.3)
     - PathKit (~> 0.9.1)
@@ -21,11 +21,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AEXML: bae92c01e0da64132fd72f748721cda07466032b
-  PathKit: 7dcba9f0150afb67e0a520c49707a2cbc8e95937
-  PixelTest: c3f573518e7d3c8a368ae5a9057d7e342632c3f1
+  AEXML: 601f41fcaa7bda7605cad153b0f43db9ec006c0f
+  PathKit: 273f59a38e3218eb95abd9f6a61730a8bcfd2f06
+  PixelTest: 9a573b8721dd3de86ea1a331264ba9ca2cb42ecb
   xcproj: 7a9fe0c5f00617c0fa306b37858f157c786aff42
 
-PODFILE CHECKSUM: 75338079f2d40b3ac69d0a632849653caf0765ad
+PODFILE CHECKSUM: ee8e81689c5f86d11924d14936cc64e4ccdc6033
 
 COCOAPODS: 1.5.3

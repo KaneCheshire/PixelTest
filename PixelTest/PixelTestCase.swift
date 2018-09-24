@@ -33,7 +33,7 @@ open class PixelTestCase: XCTestCase {
     
     // MARK: Private
     
-    private let resultsCoordinator = ResultsCoordinator.shared
+    private let resultCoordinator = ResultsCoordinator.shared
     
     // MARK: - Functions -
     // MARK: Open
