@@ -1,5 +1,9 @@
 # Changelog
 
+# 1.2.0
+
+- Xcode 10 and Swift 4.2 support
+
 # 1.1.0
 
 - PixelTest now auto-creates HTML files for failures.

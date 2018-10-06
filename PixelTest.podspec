@@ -20,7 +20,9 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '9.0'
   s.source_files = 'PixelTest/**/*.swift'
+  s.exclude_files = 'PixelTest/**/*.plist'
   s.frameworks = 'UIKit', 'XCTest'
-  s.dependency 'xcproj', '4.3.0'
+  s.dependency 'xcproj'
+  s.swift_version = '4.2'
   s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
 end
