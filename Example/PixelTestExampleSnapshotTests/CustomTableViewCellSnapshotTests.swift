@@ -30,4 +30,11 @@ class CustomTableViewCellSnapshotTests: PixelTestCase {
         verify(view.contentView, layoutStyle: .dynamicHeight(fixedWidth: 320))
     }
     
+    func test_something() {
+        let viewModel = CustomTableViewCellViewModel(title: "The bes title The best title The best title The best title The best title The best title", content: "Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content Some amazing content")
+        let view: CustomTableViewCell = .loadFromNib()
+        view.configure(with: viewModel)
+        verify(view.contentView, layoutStyle: .dynamicHeight(fixedWidth: 320))
+    }
+    
 }

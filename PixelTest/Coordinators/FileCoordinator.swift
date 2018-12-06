@@ -14,18 +14,12 @@ struct FileCoordinator: FileCoordinatorType {
     // MARK: Private
     
     private let fileManager: FileManagerType
-    private let targetBaseDirectoryCoordinator: TargetBaseDirectoryCoordinatorType
-    private let pixelTestBaseDirectory: String
     
     // MARK: - Initializers -
     // MARK: Internal
     
-    init(fileManager: FileManagerType = FileManager.default,
-         targetBaseDirectoryCoordinator: TargetBaseDirectoryCoordinatorType = TargetBaseDirectoryCoordinator(),
-         pixelTestBaseDirectory: String = ProcessInfo.processInfo.environment["PIXELTEST_BASE_DIR"] ?? "") {
+    init(fileManager: FileManagerType = FileManager.default) {
         self.fileManager = fileManager
-        self.targetBaseDirectoryCoordinator = targetBaseDirectoryCoordinator
-        self.pixelTestBaseDirectory = pixelTestBaseDirectory
     }
     
     // MARK: - Functions -
@@ -41,39 +35,22 @@ struct FileCoordinator: FileCoordinatorType {
     ///   - imageType: The image type used to construct the file URL.
     ///   - layoutStyle: The layout style used to construct the file URL.
     /// - Returns: A full file URL, or nil if a URL could not be created.
-    func fileURL(for testCase: PixelTestCase,
-                 forFunction function: StaticString,
+    func fileURL(for function: StaticString,
+                 file: StaticString,
                  scale: Scale,
                  imageType: ImageType,
-                 layoutStyle: LayoutStyle) -> URL? {
-        let baseDirectory = baseDirectoryURL(with: imageType, for: testCase)
-        return fullFileURL(baseDirectory: baseDirectory, for: testCase, function: function, scale: scale, layoutStyle: layoutStyle)
-    }
-    
-    /// Returns the base directory for a test case and specific image type, creating the directory if needed.
-    ///
-    /// - Parameters:
-    ///   - imageType: The image type of the directory to return.
-    ///   - testCase: The test case for the directory to return.
-    /// - Returns: The base directory for the image type and test case.
-    func baseDirectoryURL(with imageType: ImageType, for testCase: PixelTestCase) -> URL {
-        guard let url = snapshotsDirectory(for: testCase.module)?.appendingPathComponent(imageType.rawValue).appendingPathComponent(testCase.className) else {
-            fatalError("Unable to compose snapshots directory for test case: \(testCase)")
-        }
+                 layoutStyle: LayoutStyle) -> URL? { // TODO: No need for optional
+        var alphaNumericFunctionName = "\(function)".strippingNonAlphaNumerics
+        alphaNumericFunctionName.remove(firstOccurenceOf: "test_")
+        alphaNumericFunctionName.remove(firstOccurenceOf: "test")
+        let url = URL(fileURLWithPath: "\(file)")
+            .deletingLastPathComponent()
+            .appendingPathComponent(".pixeltest")
+            .appendingPathComponent("snapshots")
+            .appendingPathComponent(alphaNumericFunctionName)
+            .appendingPathComponent(imageType.rawValue)
         createDirectoryIfNecessary(url)
-        return url
-    }
-    
-    /// Returns the directory snapshots are stored for the module.
-    ///
-    /// - Parameter module: The module whose snapshots directory you want to return.
-    /// - Returns: The directory snapshots are stored for the module.
-    func snapshotsDirectory(for module: Module) -> URL? {
-        guard !pixelTestBaseDirectory.isEmpty else {
-            fatalError("Please set `PIXELTEST_BASE_DIR` as an environment variable. See README.md for more info.")
-        }
-        let baseURL = targetBaseDirectoryCoordinator.targetBaseDirectory(for: module, pixelTestBaseDirectory: pixelTestBaseDirectory)
-        return baseURL?.appendingPathComponent("\(module.name)Snapshots")
+        return url.appendingPathComponent("\(layoutStyle.fileValue)@\(scale.explicitOrScreenNativeValue)x.png") // TODO: Use native name?
     }
     
     /// Writes data to a file URL.
@@ -102,11 +79,11 @@ struct FileCoordinator: FileCoordinatorType {
     ///   - function: The function the images were created with.
     ///   - scale: The scale the images were created with.
     ///   - layoutStyle: The style of layout the images were created with.
-    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle), let data = diffImage.pngData() {
+    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+        if let url = fileURL(for: function, file: file, scale: scale, imageType: .diff, layoutStyle: layoutStyle), let data = diffImage.pngData() {
             try? write(data, to: url)
         }
-        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .failure, layoutStyle: layoutStyle), let data = failedImage.pngData() {
+        if let url = fileURL(for: function, file: file, scale: scale, imageType: .failure, layoutStyle: layoutStyle), let data = failedImage.pngData() {
             try? write(data, to: url)
         }
     }
@@ -114,34 +91,37 @@ struct FileCoordinator: FileCoordinatorType {
     /// Removes diff and failure images from disk (if they exist).
     ///
     /// - Parameters:
-    ///   - pixelTestCase: The test case requesting the removal.
+    ///   - pixelTestCase: The test case requesting the removal. // TODO: Update docs
     ///   - function: The function the diff and failure images were originally for.
     ///   - scale: The scale the diff and failure images were originally created in.
     ///   - layoutStyle: The style of layout the images were created with.
-    func removeDiffAndFailureImages(for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .diff, layoutStyle: layoutStyle) {
+    func removeDiffAndFailureImages(function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+        if let url = fileURL(for: function, file: file, scale: scale, imageType: .diff, layoutStyle: layoutStyle) {
             try? fileManager.removeItem(at: url)
         }
-        if let url = fileURL(for: pixelTestCase, forFunction: function, scale: scale, imageType: .failure, layoutStyle: layoutStyle) {
+        if let url = fileURL(for: function, file: file, scale: scale, imageType: .failure, layoutStyle: layoutStyle) {
             try? fileManager.removeItem(at: url)
         }
     }
     
     // MARK: Private
     
-    private func fullFileURL(baseDirectory: URL, for testCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) -> URL? {
-        var functionWithParenthesisRemoved = "\(function)".trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        if let range = functionWithParenthesisRemoved.range(of: "test_") {
-            functionWithParenthesisRemoved.removeSubrange(range)
-        } else if let range = functionWithParenthesisRemoved.range(of: "test") {
-            functionWithParenthesisRemoved.removeSubrange(range)
-        }
-        return baseDirectory.appendingPathComponent("\(functionWithParenthesisRemoved)_\(layoutStyle.fileValue)@\(scale.explicitOrScreenNativeValue)x.png")
-    }
-    
     private func createDirectoryIfNecessary(_ url: URL) {
         guard !fileManager.fileExists(atPath: url.absoluteString) else { return }
-        try? fileManager.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+        try? fileManager.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil) // TODO: Catch error somewhere?
+    }
+    
+}
+
+private extension String {
+    
+    var strippingNonAlphaNumerics: String {
+        return replacingOccurrences(of: "\\W+", with: "", options: .regularExpression)
+    }
+    
+    mutating func remove(firstOccurenceOf string: String) {
+        guard let range = range(of: string) else { return }
+        return removeSubrange(range)
     }
     
 }

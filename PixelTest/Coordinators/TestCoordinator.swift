@@ -38,8 +38,9 @@ struct TestCoordinator: TestCoordinatorType {
                 layoutStyle: LayoutStyle,
                 scale: Scale,
                 testCase: PixelTestCase,
-                function: StaticString) -> Result<UIImage, String> {
-        guard let url = fileCoordinator.fileURL(for: testCase, forFunction: function, scale: scale, imageType: .reference, layoutStyle: layoutStyle) else {
+                function: StaticString,
+                file: StaticString) -> Result<UIImage, String> {
+        guard let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle) else {
             return .fail("Unable to get URL")
         }
         guard let image = view.image(withScale: scale) else {
@@ -69,8 +70,9 @@ struct TestCoordinator: TestCoordinatorType {
               layoutStyle: LayoutStyle,
               scale: Scale,
               testCase: PixelTestCase,
-              function: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
-        guard let url = fileCoordinator.fileURL(for: testCase, forFunction: function, scale: scale, imageType: .reference, layoutStyle: layoutStyle) else {
+              function: StaticString,
+              file: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
+        guard let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle) else {
             return .fail((nil, nil, "Unable to get URL"))
         }
         guard let testImage = view.image(withScale: scale) else {

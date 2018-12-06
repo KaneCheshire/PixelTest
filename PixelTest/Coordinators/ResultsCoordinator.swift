@@ -55,9 +55,9 @@ extension ResultsCoordinator {
     }
     
     private func removeExistingHTML(for module: Module) {
-        guard let htmlDir = fileCoordinator.snapshotsDirectory(for: module), let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
-        let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: htmlDir.appendingPathComponent($0).path ) }
-        htmlFiles.forEach { try? FileManager.default.removeItem(at: $0) }
+//        guard let htmlDir = fileCoordinator.snapshotsDirectory(for: module), let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
+//        let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: htmlDir.appendingPathComponent($0).path ) }
+//        htmlFiles.forEach { try? FileManager.default.removeItem(at: $0) }
     }
     
     private func handleTestCaseFailed(_ testCase: XCTestCase) {
@@ -69,19 +69,20 @@ extension ResultsCoordinator {
     }
     
     private func handleTestSuiteFinished() {
-        guard let module = failures.first?.module, let htmlDir = fileCoordinator.snapshotsDirectory(for: module) else { return }
-        let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(module.name)</h1>"
-        let htmlStrings = failures.compactMap { generateHTMLString(for: $0) }
-        let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
-        let htmlBody = generateHTMLFileString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
-        try? fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
+//        guard let module = failures.first?.module, let htmlDir = fileCoordinator.snapshotsDirectory(for: module) else { return }
+//        let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(module.name)</h1>"
+//        let htmlStrings = failures.compactMap { generateHTMLString(for: $0) }
+//        let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
+//        let htmlBody = generateHTMLFileString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
+//        try? fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
     }
     
     private func generateHTMLString(for testCase: PixelTestCase) -> String? {
-        let diffDir = fileCoordinator.baseDirectoryURL(with: .diff, for: testCase)
-        let enumerator = FileManager.default.enumerator(atPath: diffDir.path)
-        let diffURLs = enumerator?.compactMap { $0 as? String }.compactMap { URL(string: "\(diffDir.path)/\($0)") } ?? []
-        return generateHTMLString(for: diffURLs)
+        fatalError()
+//        let diffDir = fileCoordinator.baseDirectoryURL(with: .diff, for: testCase)
+//        let enumerator = FileManager.default.enumerator(atPath: diffDir.path)
+//        let diffURLs = enumerator?.compactMap { $0 as? String }.compactMap { URL(string: "\(diffDir.path)/\($0)") } ?? []
+//        return generateHTMLString(for: diffURLs)
     }
     
     private func generateHTMLString(for diffURLs: [URL]) -> String {
