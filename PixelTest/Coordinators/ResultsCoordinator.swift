@@ -36,12 +36,13 @@ extension ResultsCoordinator: XCTestObservation {
         guard let filePath = filePath, let testCase = testCase as? PixelTestCase, testCase.mode != .record else { return }
         failingFiles.insert(filePath)
     }
+    
     func testBundleDidFinish(_ testBundle: Bundle) {
         guard !failingFiles.isEmpty else { return }
         let failedURLs = Set(failingFiles.map { URL(fileURLWithPath: $0).deletingLastPathComponent() })
         guard let commonPath = fileCoordinator.commonPath(from: failedURLs) else { return }
         let htmlDir = URL(fileURLWithPath: commonPath)
-        let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
+        let footerHTML = "<footer><a href='https://github.com/KaneCheshire/PixelTest' target='_blank'>PixelTest</a> by <a href='https://twitter.com/kanecheshire' target='_blank'>Kane Cheshire</a></footer>"
         let allHTML = generateHTMLFileString(withBody: htmlStrings(forFailedURLs: failedURLs, htmlDir: htmlDir).joined() + footerHTML)
         try? fileCoordinator.write(Data(allHTML.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
         failingFiles.removeAll()
@@ -70,23 +71,25 @@ extension ResultsCoordinator {
             let failurePath = diffPath.replacingOccurrences(of: ImageType.diff.rawValue, with: ImageType.failure.rawValue)
             let referencePath = diffPath.replacingOccurrences(of: ImageType.diff.rawValue, with: ImageType.reference.rawValue)
             let pixelTestComponentComponent = diffURL.pathComponents.firstIndex(where: { $0 == ".pixeltest" })!
-            let heading = diffURL.pathComponents.dropFirst(pixelTestComponentComponent + 1).joined(separator: " ").replacingOccurrences(of: "/\(ImageType.diff.rawValue)", with: "")
+            let heading = diffURL.pathComponents.dropFirst(pixelTestComponentComponent + 1).joined(separator: "/").replacingOccurrences(of: "/\(ImageType.diff.rawValue)", with: "")
             return """
-            <section style='border-radius:5pt;background:rgba(245,245,245,0.9);margin:32pt 32pt;padding:0pt 16pt 0pt;'>
-            <h2 style='padding:16pt 0;position:-webkit-sticky;background:rgba(245,245,245,0.9);top:0;-webkit-backdrop-filter: blur(2px); z-index:100;'>\(heading)</h2>
-            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;'>Failed</h3>
-            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;'>Original</h3>
-            <h3 style='width:33%;display:inline-block;margin:0 0 16pt;'>Overlay split</h3>
-            <div style='width:33%; display:inline-block;vertical-align:top;margin:0pt 0pt 16pt;'>
+            <section>
+            <h2>\(heading)</h2>
+            <h3>Failed</h3>
+            <h3'>Original</h3>
+            <h3>Overlay split</h3>
+            <div class='snapshot-container'>
                 <img src=\(failurePath) width='100%' />
             </div>
-            <div style='width:33%; display:inline-block;vertical-align:top;margin:0pt 0pt 16pt;'>
+            <div class='snapshot-container'>
                 <img src=\(referencePath) width='100%' />
             </div>
-            <div onmousemove="mouseMoved(event, this)" style='width:33%; display:inline-block; position:relative;vertical-align:top;margin:0pt 0pt 16pt;'><img src=\(referencePath) width='100%' /><div class='split-overlay' style='position:absolute; top:0; left:0; width: 50%; height:100%; overflow:hidden; pointer-events:none;'>
-                    <img src=\(failurePath) style='width:calc(33vw - 32pt);max-height:100%;' />
+            <div class='snapshot-container' onmousemove="mouseMoved(event, this)">
+                <img src=\(referencePath) width='100%' />
+                <div class='split-overlay'>
+                    <img src=\(failurePath) />
                 </div>
-            <div class='separator' style='margin-left:-1pt;position:absolute;left:50%;top:0; height:100%;width:0.5pt;background:red;pointer-events:none;'></div>
+            <div class='separator'></div>
             </section>
             """
             }.joined()
@@ -103,7 +106,66 @@ extension ResultsCoordinator {
                         e.offsetX, element.children[2].style["left"] = (e.offsetX + 1) + "px"
                     }
                 </script>
-                </head>
+                <style>
+                    a {
+                        color: grey;
+                    }
+                    section {
+                        border-radius: 5pt;
+                        background: rgba(245,245,245,0.9);
+                        margin: 32pt;
+                        padding: 0pt 16pt 0pt;
+                    }
+                    h2 {
+                        padding: 16pt 0;
+                        position: -webkit-sticky;
+                        background: rgba(245,245,245,0.9);
+                        top: 0;
+                        -webkit-backdrop-filter: blur(2px);
+                        z-index: 100;
+                    }
+                    .snapshot-container {
+                        width: 33%;
+                        display: inline-block;
+                        vertical-align: top;
+                        margin: 0pt 0pt 16pt;
+                        position:relative;
+                    }
+                    h3 {
+                        width: 33%;
+                        display: inline-block;
+                        margin: 0 0 16pt;
+                    }
+                    .split-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 50%;
+                        height: 100%;
+                        overflow: hidden;
+                        pointer-events: none;
+                    }
+                    .split-overlay > img {
+                        width: calc(33vw - 32pt);
+                        max-height: 100%;
+                    }
+                    .separator {
+                        margin-left: -1pt;
+                        position: absolute;
+                        left: 50%;
+                        top: 0;
+                        height: 100%;
+                        width: 0.1pt;
+                        background: red;
+                        pointer-events: none;
+                    }
+                    footer {
+                        color: grey;
+                        text-align: center;
+                        padding: 0 32pt 32pt;
+                    }
+                </style>
+            </head>
             <body style='background-color:white; margin:0; padding:0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;'>
                 \(body)
             </body>

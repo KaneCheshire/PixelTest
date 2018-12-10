@@ -13,13 +13,6 @@ import XCTest
 open class PixelTestCase: XCTestCase {
     
     // MARK: - Properties -
-    // MARK: Overrides
-    
-    override open class var defaultTestSuite: XCTestSuite {
-        _ = ResultsCoordinator.shared
-        return super.defaultTestSuite
-    }
-    
     // MARK: Open
     
     /// The current mode of the test case. Set to `.record` when setting up or recording tests.
@@ -37,6 +30,10 @@ open class PixelTestCase: XCTestCase {
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
     var testCoordinator: TestCoordinatorType = TestCoordinator()
     var fileCoordinator: FileCoordinatorType = FileCoordinator()
+    
+    // MARK: Private
+    
+    private let resultsCoordinator = ResultsCoordinator.shared
     
     // MARK: - Functions -
     // MARK: Open
