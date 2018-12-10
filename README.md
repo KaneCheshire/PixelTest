@@ -10,6 +10,7 @@
 - [Installation](#installation)
 - [Quick start](#quick-start)
 - [Options](#options)
+- [Accessibility](#accessibility)
 - [Known limitations](#known-limitations)
 
 PixelTest is a modern, Swift-first snapshot testing tool.
