@@ -20,18 +20,8 @@ class TestCoordinatorTests: XCTestCase {
         testCoordinator = TestCoordinator(fileCoordinator: mockFileCoordinator)
     }
     
-    func test_record_noURL() {
-        let result = testCoordinator.record(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed): XCTAssertEqual(failed, "Unable to get URL")
-        }
-    }
-    
     func test_record_noSnapshot() {
-        let url = URL(string: "file://something")
-        mockFileCoordinator.fileURLReturnValue = url
-        let result = testCoordinator.record(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
+        let result = testCoordinator.record(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
         case .fail(let failed): XCTAssertEqual(failed, "Unable to create snapshot")
@@ -43,7 +33,7 @@ class TestCoordinatorTests: XCTestCase {
         mockFileCoordinator.fileURLReturnValue = url
         mockFileCoordinator.writeError = CocoaError.error(.fileWriteUnknown)
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
+        let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
         case .fail(let failed): XCTAssertEqual(failed, "Unable to write image data to disk")
@@ -54,28 +44,15 @@ class TestCoordinatorTests: XCTestCase {
         let url = URL(string: "file://something")
         mockFileCoordinator.fileURLReturnValue = url
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
+        let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success(let image): XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))
         case .fail: XCTFail("Incorrect result: \(result)")
         }
     }
     
-    func test_test_noURL() {
-        let result = testCoordinator.test(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, testCase: .init(), function: #function)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Unable to get URL")
-            XCTAssertNil(failed.oracle)
-            XCTAssertNil(failed.test)
-        }
-    }
-    
     func test_test_noSnapshot() {
-        let url = URL(string: "file://something")
-        mockFileCoordinator.fileURLReturnValue = url
-        let result = testCoordinator.test(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
+        let result = testCoordinator.test(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
         case .fail(let failed):
@@ -90,7 +67,7 @@ class TestCoordinatorTests: XCTestCase {
         mockFileCoordinator.fileURLReturnValue = url
         mockFileCoordinator.dataError = CocoaError.error(.fileReadUnknown)
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
+        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
         case .fail(let failed):
@@ -104,7 +81,7 @@ class TestCoordinatorTests: XCTestCase {
         let url = URL(string: "file://something")
         mockFileCoordinator.fileURLReturnValue = url
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
+        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
         case .fail(let failed):
@@ -119,7 +96,7 @@ class TestCoordinatorTests: XCTestCase {
         let mockRecordedImage = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 11)).image(withScale: .native)!
         mockFileCoordinator.dataReturnValue = mockRecordedImage.pngData()!
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
+        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
         case .fail(let failed):
@@ -134,7 +111,7 @@ class TestCoordinatorTests: XCTestCase {
         let mockRecordedImage = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)).image(withScale: .native)!
         mockFileCoordinator.dataReturnValue = mockRecordedImage.pngData()!
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function)
+        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success(let image):
             XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))

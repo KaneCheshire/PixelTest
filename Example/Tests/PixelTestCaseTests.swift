@@ -54,22 +54,22 @@ class MockLayoutCoordinator: LayoutCoordinatorType {
 class MockTestCoordinator: TestCoordinatorType {
     
     var recordCallCount = 0
-    var onRecord: ((UIView, LayoutStyle, Scale, PixelTestCase, StaticString) -> Void)?
+    var onRecord: ((UIView, LayoutStyle, Scale, StaticString) -> Void)?
     var recordReturnValue: Result<UIImage, String> = .success(UIImage())
     
-    func record(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, testCase: PixelTestCase, function: StaticString) -> Result<UIImage, String> {
+    func record(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, String> {
         recordCallCount += 1
-        onRecord?(view, layoutStyle, scale, testCase, function)
+        onRecord?(view, layoutStyle, scale, function)
         return recordReturnValue
     }
     
     var testCallCount = 0
-    var onTest: ((UIView, LayoutStyle, Scale, PixelTestCase, StaticString) -> Void)?
+    var onTest: ((UIView, LayoutStyle, Scale, StaticString) -> Void)?
     var testReturnValue: Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> = .success(UIImage())
     
-    func test(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, testCase: PixelTestCase, function: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
+    func test(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
         testCallCount += 1
-        onTest?(view, layoutStyle, scale, testCase, function)
+        onTest?(view, layoutStyle, scale, function)
         return testReturnValue
     }
     
@@ -78,12 +78,12 @@ class MockTestCoordinator: TestCoordinatorType {
 class MockFileCoordinator: FileCoordinatorType {
     
     var fileURLCallCount = 0
-    var onFileURL: ((PixelTestCase, StaticString, Scale, ImageType, LayoutStyle) -> Void)?
-    var fileURLReturnValue: URL?
+    var onFileURL: ((StaticString, Scale, ImageType, LayoutStyle) -> Void)?
+    var fileURLReturnValue: URL!
     
-    func fileURL(for testCase: PixelTestCase, forFunction function: StaticString, scale: Scale, imageType: ImageType, layoutStyle: LayoutStyle) -> URL? {
+    func fileURL(for function: StaticString, file: StaticString, scale: Scale, imageType: ImageType, layoutStyle: LayoutStyle) -> URL {
         fileURLCallCount += 1
-        onFileURL?(testCase, function, scale, imageType, layoutStyle)
+        onFileURL?(function, scale, imageType, layoutStyle)
         return fileURLReturnValue
     }
     
@@ -114,19 +114,19 @@ class MockFileCoordinator: FileCoordinatorType {
     }
     
     var storeDiffImageCallCount = 0
-    var onStoreDiffImage: ((UIImage, UIImage, PixelTestCase, StaticString, Scale, LayoutStyle) -> Void)?
+    var onStoreDiffImage: ((UIImage, UIImage, StaticString, Scale, LayoutStyle) -> Void)?
     
-    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
         storeDiffImageCallCount += 1
-        onStoreDiffImage?(diffImage, failedImage, pixelTestCase, function, scale, layoutStyle)
+        onStoreDiffImage?(diffImage, failedImage, function, scale, layoutStyle)
     }
     
     var removeDiffAndFailureImagesCallCount = 0
-    var onRemoveDiffAndFailureImages: ((PixelTestCase, StaticString, Scale, LayoutStyle) -> Void)?
+    var onRemoveDiffAndFailureImages: ((StaticString, Scale, LayoutStyle) -> Void)?
     
-    func removeDiffAndFailureImages(for pixelTestCase: PixelTestCase, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+    func removeDiffAndFailureImages(function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
         removeDiffAndFailureImagesCallCount += 1
-        onRemoveDiffAndFailureImages?(pixelTestCase, function, scale, layoutStyle)
+        onRemoveDiffAndFailureImages?(function, scale, layoutStyle)
     }
     
 }
