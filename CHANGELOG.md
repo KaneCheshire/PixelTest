@@ -1,5 +1,11 @@
 # Changelog
 
+# Pending
+
+- Removed requirement for the `PIXELTEST_BASE_DIR` environment variable.
+  - Snapshots are now stored in a directory relative to the test file, but this means a breaking change for existing PixelTest users.
+- Removed dependency on xcproj, meaning PixelTest has no dependencies now!
+
 # 1.2.0
 
 - Xcode 10 and Swift 4.2 support
