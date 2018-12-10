@@ -29,7 +29,6 @@ struct FileCoordinator: FileCoordinatorType {
     /// Ensure PIXELTEST_BASE_DIR is set in your scheme before calling this function.
     ///
     /// - Parameters:
-    ///   - testCase: The test case used to construct the file URL.
     ///   - function: The function used to construct the file URL.
     ///   - scale: The scale used to to construct the file URL.
     ///   - imageType: The image type used to construct the file URL.
@@ -77,7 +76,6 @@ struct FileCoordinator: FileCoordinatorType {
     /// - Parameters:
     ///   - diffImage: The diff image to store.
     ///   - failedImage: The failed image to store.
-    ///   - pixelTestCase: The test case requesting the store.
     ///   - function: The function the images were created with.
     ///   - scale: The scale the images were created with.
     ///   - layoutStyle: The style of layout the images were created with.
@@ -95,7 +93,6 @@ struct FileCoordinator: FileCoordinatorType {
     /// Removes diff and failure images from disk (if they exist).
     ///
     /// - Parameters:
-    ///   - pixelTestCase: The test case requesting the removal. // TODO: Update docs
     ///   - function: The function the diff and failure images were originally for.
     ///   - scale: The scale the diff and failure images were originally created in.
     ///   - layoutStyle: The style of layout the images were created with.

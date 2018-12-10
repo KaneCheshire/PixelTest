@@ -12,18 +12,14 @@ import XCTest
 /// Subclass `PixelTestCase` after `import PixelTest`
 open class PixelTestCase: XCTestCase {
     
+    // MARK: - Properties -
+    // MARK: Overrides
+    
     override open class var defaultTestSuite: XCTestSuite {
-        print("default ts")
-        let resultCoordinator = ResultsCoordinator.shared
+        _ = ResultsCoordinator.shared
         return super.defaultTestSuite
     }
     
-    open override var testRunClass: AnyClass? {
-        print("run class")
-        return super.testRunClass
-    }
-    
-    // MARK: - Properties -
     // MARK: Open
     
     /// The current mode of the test case. Set to `.record` when setting up or recording tests.
@@ -41,10 +37,6 @@ open class PixelTestCase: XCTestCase {
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
     var testCoordinator: TestCoordinatorType = TestCoordinator()
     var fileCoordinator: FileCoordinatorType = FileCoordinator()
-    
-    // MARK: Private
-    
-    
     
     // MARK: - Functions -
     // MARK: Open
@@ -79,7 +71,7 @@ extension PixelTestCase {
     // MARK: Private
     
     private func record(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
-        let result = testCoordinator.record(view, layoutStyle: layoutStyle, scale: scale, testCase: self, function: function, file: file)
+        let result = testCoordinator.record(view, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
         switch result {
         case .success(let image):
             addAttachment(named: "Recorded image", image: image)
@@ -90,7 +82,7 @@ extension PixelTestCase {
     }
     
     private func test(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
-        let result = testCoordinator.test(view, layoutStyle: layoutStyle, scale: scale, testCase: self, function: function, file: file)
+        let result = testCoordinator.test(view, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
         switch result {
         case .success:
             fileCoordinator.removeDiffAndFailureImages(function: function, file: file, scale: scale, layoutStyle: layoutStyle)
@@ -103,11 +95,11 @@ extension PixelTestCase {
     }
     
     private func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+        addAttachment(named: "Failed image", image: failedImage)
+        addAttachment(named: "Original image", image: recordedImage)
         guard let diffImage = failedImage.diff(with: recordedImage) else { return }
         fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
         addAttachment(named: "Diff image", image: diffImage)
-        addAttachment(named: "Failed image", image: failedImage)
-        addAttachment(named: "Original image", image: recordedImage)
     }
     
 }
