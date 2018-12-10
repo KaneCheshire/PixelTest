@@ -1,6 +1,6 @@
 # Changelog
 
-# Pending
+# 2.0.0
 
 - Removed requirement for the `PIXELTEST_BASE_DIR` environment variable.
   - Snapshots are now stored in a directory relative to the test file, but this means a breaking change for existing PixelTest users.
