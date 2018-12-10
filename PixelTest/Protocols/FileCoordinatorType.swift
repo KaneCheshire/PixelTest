@@ -9,7 +9,7 @@ import Foundation
 
 protocol FileCoordinatorType {
     
-    func fileURL(for function: StaticString, file: StaticString, scale: Scale, imageType: ImageType, layoutStyle: LayoutStyle) -> URL?
+    func fileURL(for function: StaticString, file: StaticString, scale: Scale, imageType: ImageType, layoutStyle: LayoutStyle) -> URL
     func write(_ data: Data, to url: URL) throws
     func data(at url: URL) throws -> Data
     func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle)

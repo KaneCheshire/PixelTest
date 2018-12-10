@@ -30,7 +30,6 @@
 		C34411412091A72300E801E5 /* CustomTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C344113B209134C200E801E5 /* CustomTableViewHeaderView.swift */; };
 		C34411442091B62400E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34411422091B61800E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift */; };
 		C347D6042087293700E3BAE5 /* FileCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D602208728BF00E3BAE5 /* FileCoordinatorTests.swift */; };
-		C347D6062087B62200E3BAE5 /* NSObject+ModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D6052087B62200E3BAE5 /* NSObject+ModuleTests.swift */; };
 		C347D6082087B70600E3BAE5 /* ScaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D6072087B70600E3BAE5 /* ScaleTests.swift */; };
 		C347D60A2087B81000E3BAE5 /* LayoutCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D6092087B81000E3BAE5 /* LayoutCoordinatorTests.swift */; };
 		C347D60C2088807A00E3BAE5 /* LayoutStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D60B2088807A00E3BAE5 /* LayoutStyleTests.swift */; };
@@ -110,7 +109,6 @@
 		C344113D2091A71000E801E5 /* CustomTableViewHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTableViewHeaderView.xib; sourceTree = "<group>"; };
 		C34411422091B61800E801E5 /* CustomTableViewHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		C347D602208728BF00E3BAE5 /* FileCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCoordinatorTests.swift; sourceTree = "<group>"; };
-		C347D6052087B62200E3BAE5 /* NSObject+ModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+ModuleTests.swift"; sourceTree = "<group>"; };
 		C347D6072087B70600E3BAE5 /* ScaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleTests.swift; sourceTree = "<group>"; };
 		C347D6092087B81000E3BAE5 /* LayoutCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutCoordinatorTests.swift; sourceTree = "<group>"; };
 		C347D60B2088807A00E3BAE5 /* LayoutStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutStyleTests.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 				C347D602208728BF00E3BAE5 /* FileCoordinatorTests.swift */,
 				C347D6092087B81000E3BAE5 /* LayoutCoordinatorTests.swift */,
 				C347D60B2088807A00E3BAE5 /* LayoutStyleTests.swift */,
-				C347D6052087B62200E3BAE5 /* NSObject+ModuleTests.swift */,
 				C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */,
 				C347D6072087B70600E3BAE5 /* ScaleTests.swift */,
 				C347D60D2088818600E3BAE5 /* TestCoordinatorTests.swift */,
@@ -578,7 +575,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C347D60A2087B81000E3BAE5 /* LayoutCoordinatorTests.swift in Sources */,
-				C347D6062087B62200E3BAE5 /* NSObject+ModuleTests.swift in Sources */,
 				C347D6042087293700E3BAE5 /* FileCoordinatorTests.swift in Sources */,
 				C347D60C2088807A00E3BAE5 /* LayoutStyleTests.swift in Sources */,
 				C347D6082087B70600E3BAE5 /* ScaleTests.swift in Sources */,

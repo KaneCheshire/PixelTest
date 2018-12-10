@@ -40,9 +40,6 @@ struct TestCoordinator: TestCoordinatorType {
                 testCase: PixelTestCase,
                 function: StaticString,
                 file: StaticString) -> Result<UIImage, String> {
-        guard let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle) else {
-            return .fail("Unable to get URL")
-        }
         guard let image = view.image(withScale: scale) else {
             return .fail("Unable to create snapshot")
         }
@@ -50,6 +47,7 @@ struct TestCoordinator: TestCoordinatorType {
             return .fail("Unable to create image data")
         }
         do {
+            let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle)
             try fileCoordinator.write(data, to: url)
             return .success(image)
         } catch {
@@ -72,18 +70,17 @@ struct TestCoordinator: TestCoordinatorType {
               testCase: PixelTestCase,
               function: StaticString,
               file: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
-        guard let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle) else {
-            return .fail((nil, nil, "Unable to get URL"))
-        }
         guard let testImage = view.image(withScale: scale) else {
             return .fail((nil, nil, "Unable to create snapshot"))
         }
+        let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle)
         guard let data = try? fileCoordinator.data(at: url) else {
             return .fail((nil, nil, "Unable to get recorded image data"))
         }
         guard let recordedImage = UIImage(data: data, scale: scale.explicitOrScreenNativeValue) else {
             return .fail((nil, nil, "Unable to get recorded image"))
         }
+        
         if !testImage.equalTo(recordedImage) {
             return .fail((recordedImage, testImage, "Snapshot test failed, images are different"))
         } else {

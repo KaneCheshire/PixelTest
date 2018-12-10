@@ -20,17 +20,7 @@ class TestCoordinatorTests: XCTestCase {
         testCoordinator = TestCoordinator(fileCoordinator: mockFileCoordinator)
     }
     
-    func test_record_noURL() {
-        let result = testCoordinator.record(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed): XCTAssertEqual(failed, "Unable to get URL")
-        }
-    }
-    
     func test_record_noSnapshot() {
-        let url = URL(string: "file://something")
-        mockFileCoordinator.fileURLReturnValue = url
         let result = testCoordinator.record(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
@@ -61,20 +51,7 @@ class TestCoordinatorTests: XCTestCase {
         }
     }
     
-    func test_test_noURL() {
-        let result = testCoordinator.test(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, testCase: .init(), function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Unable to get URL")
-            XCTAssertNil(failed.oracle)
-            XCTAssertNil(failed.test)
-        }
-    }
-    
     func test_test_noSnapshot() {
-        let url = URL(string: "file://something")
-        mockFileCoordinator.fileURLReturnValue = url
         let result = testCoordinator.test(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, testCase: PixelTestCase(), function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")

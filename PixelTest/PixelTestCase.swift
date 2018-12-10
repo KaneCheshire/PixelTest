@@ -12,6 +12,17 @@ import XCTest
 /// Subclass `PixelTestCase` after `import PixelTest`
 open class PixelTestCase: XCTestCase {
     
+    override open class var defaultTestSuite: XCTestSuite {
+        print("default ts")
+        let resultCoordinator = ResultsCoordinator.shared
+        return super.defaultTestSuite
+    }
+    
+    open override var testRunClass: AnyClass? {
+        print("run class")
+        return super.testRunClass
+    }
+    
     // MARK: - Properties -
     // MARK: Open
     
@@ -33,7 +44,7 @@ open class PixelTestCase: XCTestCase {
     
     // MARK: Private
     
-    private let resultCoordinator = ResultsCoordinator.shared
+    
     
     // MARK: - Functions -
     // MARK: Open

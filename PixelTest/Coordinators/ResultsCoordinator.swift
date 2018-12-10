@@ -8,7 +8,7 @@
 import XCTest
 
 /// Coordinates handling results and turning them into something useful, like a web page.
-final class ResultsCoordinator: NSObject { // TODO: Test with parallel tests
+final class ResultsCoordinator: NSObject {
 
     // MARK: - Properties -
     // MARK: Internal
@@ -17,7 +17,7 @@ final class ResultsCoordinator: NSObject { // TODO: Test with parallel tests
     
     // MARK: Private
     
-    private var failures: [PixelTestCase] = []
+    private var failingFiles: Set<String> = []
     private let fileCoordinator = FileCoordinator()
     
     // MARK: - Init -
@@ -32,65 +32,45 @@ final class ResultsCoordinator: NSObject { // TODO: Test with parallel tests
 
 extension ResultsCoordinator: XCTestObservation {
     
-    func testSuiteWillStart(_ testSuite: XCTestSuite) {
-        handleTestSuiteStarted(testSuite)
-    }
-    
     func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
-        handleTestCaseFailed(testCase)
+        guard let filePath = filePath, let testCase = testCase as? PixelTestCase, testCase.mode != .record else { return }
+        failingFiles.insert(filePath)
     }
-    
-    func testSuiteDidFinish(_ testSuite: XCTestSuite) {
-        handleTestSuiteFinished()
+    func testBundleDidFinish(_ testBundle: Bundle) {
+        guard !failingFiles.isEmpty else { return }
+        let failedURLs = Set(failingFiles.map { URL(fileURLWithPath: $0).deletingLastPathComponent() })
+        guard let commonPath = fileCoordinator.commonPath(from: failedURLs) else { return }
+        let htmlDir = URL(fileURLWithPath: commonPath)
+        let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
+        let allHTML = generateHTMLFileString(withBody: htmlStrings(forFailedURLs: failedURLs, htmlDir: htmlDir).joined() + footerHTML)
+        try? fileCoordinator.write(Data(allHTML.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
+        failingFiles.removeAll()
     }
     
 }
 
 extension ResultsCoordinator {
     
-    private func handleTestSuiteStarted(_ testSuite: XCTestSuite) {
-        if failures.isEmpty, let module = testSuite.tests.first?.module {
-            removeExistingHTML(for: module)
+    private func htmlStrings(forFailedURLs failedURLs: Set<URL>, htmlDir: URL) -> [String] {
+        return failedURLs.compactMap { fileURL in
+            let enumerator = FileManager.default.enumerator(atPath: fileURL.path)
+            let diffURLs: [URL] = enumerator!.compactMap { thing in
+                guard let path = thing as? String else { return nil }
+                let url = fileURL.appendingPathComponent(path)
+                guard url.pathComponents.contains("Diff"), url.pathExtension == "png" else { return nil }
+                return url
+            }
+            return generateHTMLString(for: diffURLs, htmlDir: htmlDir)
         }
     }
     
-    private func removeExistingHTML(for module: Module) {
-//        guard let htmlDir = fileCoordinator.snapshotsDirectory(for: module), let enumerator = FileManager.default.enumerator(atPath: htmlDir.path) else { return }
-//        let htmlFiles = enumerator.compactMap { $0 as? String }.filter { $0.contains("\(PixelTestCase.failureHTMLFilename).html") }.map { URL(fileURLWithPath: htmlDir.appendingPathComponent($0).path ) }
-//        htmlFiles.forEach { try? FileManager.default.removeItem(at: $0) }
-    }
-    
-    private func handleTestCaseFailed(_ testCase: XCTestCase) {
-        guard let testCase = testCase as? PixelTestCase, testCase.mode != .record else { return }
-        let hasAlreadyStoredTestCaseClass = failures.contains { $0.className == testCase.className }
-        if !hasAlreadyStoredTestCaseClass {
-            failures.append(testCase)
-        }
-    }
-    
-    private func handleTestSuiteFinished() {
-//        guard let module = failures.first?.module, let htmlDir = fileCoordinator.snapshotsDirectory(for: module) else { return }
-//        let headerHTML = "<h1 style='padding:32pt 32pt 0;'>Snapshot test failures for \(module.name)</h1>"
-//        let htmlStrings = failures.compactMap { generateHTMLString(for: $0) }
-//        let footerHTML = "<footer style='text-align:center; padding:0 32pt 32pt;'>PixelTest by Kane Cheshire</footer>"
-//        let htmlBody = generateHTMLFileString(withBody: headerHTML + htmlStrings.joined() + footerHTML)
-//        try? fileCoordinator.write(Data(htmlBody.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
-    }
-    
-    private func generateHTMLString(for testCase: PixelTestCase) -> String? {
-        fatalError()
-//        let diffDir = fileCoordinator.baseDirectoryURL(with: .diff, for: testCase)
-//        let enumerator = FileManager.default.enumerator(atPath: diffDir.path)
-//        let diffURLs = enumerator?.compactMap { $0 as? String }.compactMap { URL(string: "\(diffDir.path)/\($0)") } ?? []
-//        return generateHTMLString(for: diffURLs)
-    }
-    
-    private func generateHTMLString(for diffURLs: [URL]) -> String {
+    private func generateHTMLString(for diffURLs: [URL], htmlDir: URL) -> String {
         return diffURLs.map { diffURL in
             let diffPath = diffURL.path
             let failurePath = diffPath.replacingOccurrences(of: ImageType.diff.rawValue, with: ImageType.failure.rawValue)
             let referencePath = diffPath.replacingOccurrences(of: ImageType.diff.rawValue, with: ImageType.reference.rawValue)
-            let heading = diffURL.pathComponents.reversed()[..<2].reversed().joined(separator: ": ")
+            let pixelTestComponentComponent = diffURL.pathComponents.firstIndex(where: { $0 == ".pixeltest" })!
+            let heading = diffURL.pathComponents.dropFirst(pixelTestComponentComponent + 1).joined(separator: " ").replacingOccurrences(of: "/\(ImageType.diff.rawValue)", with: "")
             return """
             <section style='border-radius:5pt;background:rgba(245,245,245,0.9);margin:32pt 32pt;padding:0pt 16pt 0pt;'>
             <h2 style='padding:16pt 0;position:-webkit-sticky;background:rgba(245,245,245,0.9);top:0;-webkit-backdrop-filter: blur(2px); z-index:100;'>\(heading)</h2>
@@ -106,7 +86,7 @@ extension ResultsCoordinator {
             <div onmousemove="mouseMoved(event, this)" style='width:33%; display:inline-block; position:relative;vertical-align:top;margin:0pt 0pt 16pt;'><img src=\(referencePath) width='100%' /><div class='split-overlay' style='position:absolute; top:0; left:0; width: 50%; height:100%; overflow:hidden; pointer-events:none;'>
                     <img src=\(failurePath) style='width:calc(33vw - 32pt);max-height:100%;' />
                 </div>
-            <div class='separator' style='margin-left:-1pt;position:absolute;left:50%;top:0; height:100%;width:1pt;background:red;pointer-events:none;'></div>
+            <div class='separator' style='margin-left:-1pt;position:absolute;left:50%;top:0; height:100%;width:0.5pt;background:red;pointer-events:none;'></div>
             </section>
             """
             }.joined()

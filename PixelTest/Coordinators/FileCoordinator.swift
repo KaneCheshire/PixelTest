@@ -39,14 +39,16 @@ struct FileCoordinator: FileCoordinatorType {
                  file: StaticString,
                  scale: Scale,
                  imageType: ImageType,
-                 layoutStyle: LayoutStyle) -> URL? { // TODO: No need for optional
+                 layoutStyle: LayoutStyle) -> URL {
+        let fullFileURL = URL(fileURLWithPath: "\(file)")
         var alphaNumericFunctionName = "\(function)".strippingNonAlphaNumerics
         alphaNumericFunctionName.remove(firstOccurenceOf: "test_")
         alphaNumericFunctionName.remove(firstOccurenceOf: "test")
-        let url = URL(fileURLWithPath: "\(file)")
+        let directoryName = fullFileURL.deletingPathExtension().lastPathComponent
+        let url = fullFileURL
             .deletingLastPathComponent()
             .appendingPathComponent(".pixeltest")
-            .appendingPathComponent("snapshots")
+            .appendingPathComponent(directoryName)
             .appendingPathComponent(alphaNumericFunctionName)
             .appendingPathComponent(imageType.rawValue)
         createDirectoryIfNecessary(url)
@@ -80,11 +82,13 @@ struct FileCoordinator: FileCoordinatorType {
     ///   - scale: The scale the images were created with.
     ///   - layoutStyle: The style of layout the images were created with.
     func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        if let url = fileURL(for: function, file: file, scale: scale, imageType: .diff, layoutStyle: layoutStyle), let data = diffImage.pngData() {
-            try? write(data, to: url)
+        let diffUrl = fileURL(for: function, file: file, scale: scale, imageType: .diff, layoutStyle: layoutStyle)
+        if let diffData = diffImage.pngData() {
+            try? write(diffData, to: diffUrl)
         }
-        if let url = fileURL(for: function, file: file, scale: scale, imageType: .failure, layoutStyle: layoutStyle), let data = failedImage.pngData() {
-            try? write(data, to: url)
+        let url = fileURL(for: function, file: file, scale: scale, imageType: .failure, layoutStyle: layoutStyle)
+        if let failedData = failedImage.pngData() {
+            try? write(failedData, to: url)
         }
     }
     
@@ -96,12 +100,30 @@ struct FileCoordinator: FileCoordinatorType {
     ///   - scale: The scale the diff and failure images were originally created in.
     ///   - layoutStyle: The style of layout the images were created with.
     func removeDiffAndFailureImages(function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        if let url = fileURL(for: function, file: file, scale: scale, imageType: .diff, layoutStyle: layoutStyle) {
-            try? fileManager.removeItem(at: url)
+        let diffURL = fileURL(for: function, file: file, scale: scale, imageType: .diff, layoutStyle: layoutStyle)
+        try? fileManager.removeItem(at: diffURL)
+        let failureUrl = fileURL(for: function, file: file, scale: scale, imageType: .failure, layoutStyle: layoutStyle)
+        try? fileManager.removeItem(at: failureUrl)
+    }
+    
+    /// Attempts to find the common path from a set of URLs.
+    /// For example, the common path between these urls:
+    ///
+    /// `/a/b/c`
+    /// `/a/b/c/d`
+    /// `/a/b`
+    ///
+    /// Would return `"/a/b"`
+    func commonPath(from urls: Set<URL>) -> String? {
+        let allUniqueComponents = urls.map { $0.pathComponents }
+        guard var smallestComponentsCount = allUniqueComponents.min(by: { $0.count < $1.count })?.count else { return nil }
+        var unique = Set(allUniqueComponents.map { $0[..<smallestComponentsCount] })
+        while unique.count > 1 {
+            smallestComponentsCount -= 1
+            unique = Set(unique.map { $0[..<smallestComponentsCount] })
         }
-        if let url = fileURL(for: function, file: file, scale: scale, imageType: .failure, layoutStyle: layoutStyle) {
-            try? fileManager.removeItem(at: url)
-        }
+        guard var components = unique.first, let url = URL(string: components.removeFirst()) else { return nil }
+        return components.reduce(into: url, { $0.appendPathComponent($1) }).path
     }
     
     // MARK: Private

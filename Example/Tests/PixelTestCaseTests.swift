@@ -79,9 +79,9 @@ class MockFileCoordinator: FileCoordinatorType {
     
     var fileURLCallCount = 0
     var onFileURL: ((StaticString, Scale, ImageType, LayoutStyle) -> Void)?
-    var fileURLReturnValue: URL?
+    var fileURLReturnValue: URL!
     
-    func fileURL(for function: StaticString, file: StaticString, scale: Scale, imageType: ImageType, layoutStyle: LayoutStyle) -> URL? {
+    func fileURL(for function: StaticString, file: StaticString, scale: Scale, imageType: ImageType, layoutStyle: LayoutStyle) -> URL {
         fileURLCallCount += 1
         onFileURL?(function, scale, imageType, layoutStyle)
         return fileURLReturnValue
