@@ -33,7 +33,7 @@ open class PixelTestCase: XCTestCase {
     
     // MARK: Private
     
-    private let resultCoordinator = ResultsCoordinator.shared
+    private let resultsCoordinator = ResultsCoordinator.shared
     
     // MARK: - Functions -
     // MARK: Open
@@ -68,35 +68,35 @@ extension PixelTestCase {
     // MARK: Private
     
     private func record(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
-        let result = testCoordinator.record(view, layoutStyle: layoutStyle, scale: scale, testCase: self, function: function)
+        let result = testCoordinator.record(view, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
         switch result {
         case .success(let image):
             addAttachment(named: "Recorded image", image: image)
-            XCTFail("Snapshot recorded (see recorded image in logs), disable record mode and re-run tests to verify.", file: file, line: line)
+            XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: file, line: line)
         case .fail(let errorMessage):
             XCTFail(errorMessage, file: file, line: line)
         }
     }
     
     private func test(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
-        let result = testCoordinator.test(view, layoutStyle: layoutStyle, scale: scale, testCase: self, function: function)
+        let result = testCoordinator.test(view, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
         switch result {
         case .success:
-            fileCoordinator.removeDiffAndFailureImages(for: self, function: function, scale: scale, layoutStyle: layoutStyle)
+            fileCoordinator.removeDiffAndFailureImages(function: function, file: file, scale: scale, layoutStyle: layoutStyle)
         case .fail(let failed):
             if let testImage = failed.test, let oracleImage = failed.oracle {
-                storeDiffAndFailureImages(from: testImage, recordedImage: oracleImage, function: function, scale: scale, layoutStyle: layoutStyle)
+                storeDiffAndFailureImages(from: testImage, recordedImage: oracleImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
             }
             XCTFail(failed.message, file: file, line: line)
         }
     }
     
-    private func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, function: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        guard let diffImage = failedImage.diff(with: recordedImage) else { return }
-        fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, for: self, function: function, scale: scale, layoutStyle: layoutStyle)
-        addAttachment(named: "Diff image", image: diffImage)
+    private func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
         addAttachment(named: "Failed image", image: failedImage)
         addAttachment(named: "Original image", image: recordedImage)
+        guard let diffImage = failedImage.diff(with: recordedImage) else { return }
+        fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
+        addAttachment(named: "Diff image", image: diffImage)
     }
     
 }

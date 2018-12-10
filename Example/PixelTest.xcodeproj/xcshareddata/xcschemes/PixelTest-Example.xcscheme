@@ -100,13 +100,6 @@
             ReferencedContainer = "container:PixelTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "PIXELTEST_BASE_DIR"
-            value = "$(SOURCE_ROOT)"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
