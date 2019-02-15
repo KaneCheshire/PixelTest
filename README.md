@@ -118,9 +118,15 @@ The PixelTest example app has examples for how to do it, but with cells specific
 
 PixelTest currently [only works in iOS projects](https://github.com/KaneCheshire/PixelTest/issues/13).
 
+## Changes from the original repository
+
+Enabled PixelTest to be used directly from UI tests.
+
 ## Author
 
 @KaneCheshire, [kane.codes](http://kanecheshire.com)
+
+Modified by Przemysław Wrzesiński
 
 ## License
 
