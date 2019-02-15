@@ -18,7 +18,7 @@ extension UIImage {
         return self.pngData() == image.pngData()
     }
     
-    /// Creates a diff image betweeh the view and another image.
+    /// Creates a diff image between the view and another image.
     ///
     /// - Parameter image: The other image
     /// - Returns: A new image representing a diff of the two images, or nil if an image couldn't be created.
@@ -39,6 +39,22 @@ extension UIImage {
         let diffImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return diffImage
+    }
+    
+}
+
+extension UIImage: Imageable {
+    
+    /// Creates a scaled image from the current instance.
+    ///
+    /// - Parameter scale: The scale of the image to create.
+    /// - Returns: An image, or nil if an image couldn't be created.
+    public func image(withScale scale: Scale) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale.explicitOrCoreGraphicsValue)
+        draw(at: CGPoint.zero)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
     }
     
 }

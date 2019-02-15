@@ -33,12 +33,12 @@ struct TestCoordinator: TestCoordinatorType {
     ///   - scale: The scale to use when creating an image of the view.
     ///   - function: The function called when requesting the recording.
     /// - Returns: A result with either an image for success or failure message.
-    func record(_ view: UIView,
+    func record(_ imageable: Imageable,
                 layoutStyle: LayoutStyle,
                 scale: Scale,
                 function: StaticString,
                 file: StaticString) -> Result<UIImage, String> {
-        guard let image = view.image(withScale: scale) else {
+        guard let image = imageable.image(withScale: scale) else {
             return .fail("Unable to create snapshot")
         }
         guard let data = image.pngData() else {
@@ -61,12 +61,12 @@ struct TestCoordinator: TestCoordinatorType {
     ///   - scale: The scale to use when creating an image of the view.
     ///   - function: The function called when requesting the test.
     /// - Returns: A result with an image for success, or message with failed images for failure.
-    func test(_ view: UIView,
+    func test(_ imageable: Imageable,
               layoutStyle: LayoutStyle,
               scale: Scale,
               function: StaticString,
               file: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
-        guard let testImage = view.image(withScale: scale) else {
+        guard let testImage = imageable.image(withScale: scale) else {
             return .fail((nil, nil, "Unable to create snapshot"))
         }
         let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle)

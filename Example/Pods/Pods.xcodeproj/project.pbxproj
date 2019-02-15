@@ -27,6 +27,8 @@
 		9959616CA60FF3E7BD8CE045E668BA6E /* UIView+PixelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594283BE96F51362224CB9FAB9187FF /* UIView+PixelTest.swift */; };
 		ABCCC942611844D1E7A59893ABBD1B0A /* Pods-PixelTest_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 717111452F2BB3B4EAA2D4B049DC1507 /* Pods-PixelTest_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABE63305B71016B0437C6BA51F6F4779 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC018B5950F852BFC8837A7CFA781BCC /* Mode.swift */; };
+		B13D668B2216A49300BF5EBE /* Imageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D668A2216A49300BF5EBE /* Imageable.swift */; };
+		B13D668D2216A9B400BF5EBE /* PixelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D668C2216A9B400BF5EBE /* PixelTest.swift */; };
 		C399168A69D803F74FF5C8D6E82D50A5 /* PixelTest-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF03B09E18FBAF785F05B1D42D00B573 /* PixelTest-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4EEB2B3930475F927F1165DE8BCA993 /* Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93922AB980A94D59CF37E48048423D1 /* Scale.swift */; };
 		CDAD035CE1663F7FF6C19C4C101CE3A5 /* XCTestCase+AddAttachmentWithName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2302C4A2F5A7BE4E5F06F79986D7F /* XCTestCase+AddAttachmentWithName.swift */; };
@@ -97,6 +99,8 @@
 		A4B4A52550652800A53896670AB8AD3C /* Pods-PixelTest_Example-PixelTest_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PixelTest_Example-PixelTest_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		A8D6325EC4025E13AF57AF032A575DF4 /* Pods-PixelTest_Example-PixelTest_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PixelTest_Example-PixelTest_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		ACBF546A95A25C66591DFCB3F633C600 /* LayoutStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LayoutStyle.swift; sourceTree = "<group>"; };
+		B13D668A2216A49300BF5EBE /* Imageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Imageable.swift; sourceTree = "<group>"; };
+		B13D668C2216A9B400BF5EBE /* PixelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTest.swift; sourceTree = "<group>"; };
 		B4305BE6623A1B4CB98EC06AD0D3EB8D /* PixelTest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PixelTest.xcconfig; sourceTree = "<group>"; };
 		B70CA712658CAB9F154FCDE02FBCE5B5 /* Pods-PixelTest_Example-PixelTestExampleSnapshotTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PixelTest_Example-PixelTestExampleSnapshotTests.modulemap"; sourceTree = "<group>"; };
 		BBDD1C9FF017E2B76C3A3616B39FA1DC /* PixelTest-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PixelTest-dummy.m"; sourceTree = "<group>"; };
@@ -200,6 +204,7 @@
 		319108C29C46486770BDDC322C4F9497 /* PixelTest */ = {
 			isa = PBXGroup;
 			children = (
+				B13D668C2216A9B400BF5EBE /* PixelTest.swift */,
 				0B4B1D00D33CCDD7B0E7B3BC1B55AE97 /* PixelTestCase.swift */,
 				DC56FBC2D43DA605940D6CD4B1634E41 /* Coordinators */,
 				6CC939EBD140F370F0763073598CACDE /* Extensions */,
@@ -349,6 +354,7 @@
 			children = (
 				CEF25BB919ED28AC7687837FB9CB3602 /* FileCoordinatorType.swift */,
 				4CEFCA6BB974D2D74B5CA326CE5A2004 /* FileManagerType.swift */,
+				B13D668A2216A49300BF5EBE /* Imageable.swift */,
 				E270C4AA0362A0446079847768D17C32 /* LayoutCoordinatorType.swift */,
 				C14148CC9B2849D3E746359F1DE3F3CE /* TestCoordinatorType.swift */,
 			);
@@ -566,12 +572,14 @@
 				F75DA2D170C59B380B3B307FBB344109 /* LayoutCoordinatorType.swift in Sources */,
 				7608D2913AA4A415FDB38C3749F5794C /* LayoutStyle.swift in Sources */,
 				ABE63305B71016B0437C6BA51F6F4779 /* Mode.swift in Sources */,
+				B13D668B2216A49300BF5EBE /* Imageable.swift in Sources */,
 				495D12A560A8711A38D0DE8DE7726275 /* PixelTest-dummy.m in Sources */,
 				D2ECA9D665BFE233A625A15BCE398021 /* PixelTestCase.swift in Sources */,
 				6C43A6271010211CD6E7AAC32CE346F9 /* Result.swift in Sources */,
 				5A762F0A7409366883E998D78778C8A7 /* ResultsCoordinator.swift in Sources */,
 				C4EEB2B3930475F927F1165DE8BCA993 /* Scale.swift in Sources */,
 				ED1654791D2DDA80491D80786758E182 /* TestCoordinator.swift in Sources */,
+				B13D668D2216A9B400BF5EBE /* PixelTest.swift in Sources */,
 				8873AD5BA0350F9FB2DB0E6CCA8F1D0A /* TestCoordinatorType.swift in Sources */,
 				CE2B782726F81480452B729CEF57C9D4 /* UIImage+PixelTest.swift in Sources */,
 				9959616CA60FF3E7BD8CE045E668BA6E /* UIView+PixelTest.swift in Sources */,

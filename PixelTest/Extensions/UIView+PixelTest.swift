@@ -7,13 +7,13 @@
 
 import UIKit
 
-extension UIView {
+extension UIView: Imageable {
     
     /// Creates an image from the view's contents, using its layer.
     ///
     /// - Parameter scale: The scale of the image to create.
     /// - Returns: An image, or nil if an image couldn't be created.
-    func image(withScale scale: Scale) -> UIImage? {
+    public func image(withScale scale: Scale) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale.explicitOrCoreGraphicsValue)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.saveGState()

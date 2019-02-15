@@ -25,8 +25,8 @@ struct FileCoordinator: FileCoordinatorType {
     // MARK: - Functions -
     // MARK: Internal
     
-    /// Attempts to create a full file URL.
-    /// Ensure PIXELTEST_BASE_DIR is set in your scheme before calling this function.
+    /// Creates a full file URL.
+    /// Ensure PIXELTEST_BASE_DIR is set in your scheme before calling this function. // TODO: is this really needed?
     ///
     /// - Parameters:
     ///   - function: The function used to construct the file URL.
@@ -52,6 +52,19 @@ struct FileCoordinator: FileCoordinatorType {
             .appendingPathComponent(imageType.rawValue)
         createDirectoryIfNecessary(url)
         return url.appendingPathComponent("\(layoutStyle.fileValue)@\(scale.explicitOrScreenNativeValue)x.png") // TODO: Use native name?
+    }
+    
+    func imageExists(for function: StaticString,
+                     file: StaticString,
+                     scale: Scale,
+                     imageType: ImageType,
+                     layoutStyle: LayoutStyle) -> Bool {
+        let url = fileURL(for: function,
+                          file: file,
+                          scale: scale,
+                          imageType: imageType,
+                          layoutStyle: layoutStyle)
+        return fileManager.fileExists(atPath: url.absoluteString)
     }
     
     /// Writes data to a file URL.
