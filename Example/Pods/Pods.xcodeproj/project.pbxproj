@@ -100,7 +100,7 @@
 		A8D6325EC4025E13AF57AF032A575DF4 /* Pods-PixelTest_Example-PixelTest_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PixelTest_Example-PixelTest_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		ACBF546A95A25C66591DFCB3F633C600 /* LayoutStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LayoutStyle.swift; sourceTree = "<group>"; };
 		B13D668A2216A49300BF5EBE /* Imageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Imageable.swift; sourceTree = "<group>"; };
-		B13D668C2216A9B400BF5EBE /* PixelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTest.swift; sourceTree = "<group>"; };
+		B13D668C2216A9B400BF5EBE /* PixelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PixelTest.swift; path = PixelTest/PixelTest.swift; sourceTree = "<group>"; };
 		B4305BE6623A1B4CB98EC06AD0D3EB8D /* PixelTest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PixelTest.xcconfig; sourceTree = "<group>"; };
 		B70CA712658CAB9F154FCDE02FBCE5B5 /* Pods-PixelTest_Example-PixelTestExampleSnapshotTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PixelTest_Example-PixelTestExampleSnapshotTests.modulemap"; sourceTree = "<group>"; };
 		BBDD1C9FF017E2B76C3A3616B39FA1DC /* PixelTest-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PixelTest-dummy.m"; sourceTree = "<group>"; };
