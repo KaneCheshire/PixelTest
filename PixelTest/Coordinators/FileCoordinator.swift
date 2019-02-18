@@ -64,7 +64,7 @@ struct FileCoordinator: FileCoordinatorType {
                           scale: scale,
                           imageType: imageType,
                           layoutStyle: layoutStyle)
-        return fileManager.fileExists(atPath: url.absoluteString)
+        return fileManager.fileExists(atPath: url.relativePath)
     }
     
     /// Writes data to a file URL.
