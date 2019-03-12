@@ -2,7 +2,7 @@
 //  PixelTest.swift
 //  PixelTest
 //
-//  Created by Przemek Wrzesinski on 15/02/2019.
+//  Created by Przemysław Wrzesinski on 15/02/2019.
 //
 
 import XCTest

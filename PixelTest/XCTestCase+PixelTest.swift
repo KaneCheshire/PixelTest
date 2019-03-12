@@ -2,7 +2,7 @@
 //  XCTestCase+PixelTest.swift
 //  PixelTest
 //
-//  Created by Przemek Wrzesinski on 12/03/2019.
+//  Created by Przemysław Wrzesinski on 12/03/2019.
 //
 
 import XCTest
