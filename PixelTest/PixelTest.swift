@@ -23,6 +23,12 @@ open class PixelTest {
     }
     
     // MARK: - Properties -
+    // MARK: Public
+    
+    /// The name of the HTML file PixelTest auto-generates
+    /// You might want to change this to something specific for your project or Fastlane setup, for example.
+    public static var failureHTMLFilename: String = "pixeltest_failures"
+    
     // MARK: Internal
     
     fileprivate static let layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
@@ -37,16 +43,19 @@ open class PixelTest {
     // MARK: - Functions -
     // MARK: Open
     
-    /// Verifies a view.
+    /// Verifies an imageable type.
+    ///
     /// If this is called while in record mode, a new snapshot are recorded, overwriting any existing recorded snapshot.
-    /// If this is called while in test mode, a new snapshot is created and compared to a previously recorded snapshot.
+    /// If this is called while in test mode, a new snapshot is created and compared to a previously recorded snapshot, unless the reference image doesn't exist, in which case a reference image is recorded and saved.
     /// If tests fail while in test mode, a failure and diff image are stored locally, which you can find in the same directory as the snapshot recording. This should show up in your git changes.
     /// If tests succeed after diffs and failures have been stored, PixelTest will automatically remove them so you don't have to clear them from git yourself.
     ///
     /// - Parameters:
-    ///   - view: The view to verify.
+    ///   - imageable: The imageable to verify.
     ///   - layoutStyle: The layout style to verify the view with.
     ///   - scale: The scale to record/test the snapshot with.
+    ///   - mode: Record the reference image or test against an existing one.
+    ///   - filenameSuffix: The suffix to append to the saved image. This is used to differentiate screenshots taken in multiple runs of the same instruction.
     public static func verify(_ imageable: Imageable,
                               layoutStyle: LayoutStyle,
                               scale: Scale = .native,
@@ -59,6 +68,15 @@ open class PixelTest {
         if let view = imageable as? UIView {
             layoutCoordinator.layOut(view, with: layoutStyle)
         }
+        
+        guard let image = imageable.image(withScale: scale) else {
+            print("PixelTest: Could not capture image from supplied imageable")
+            return PixelTestResult(original: nil, current: nil, diff: nil)
+        }
+        
+        XCTAssertTrue(image.size.width > 0, "Imageable has no width", file: file, line: line)
+        XCTAssertTrue(image.size.height > 0, "Imageable has no height", file: file, line: line)
+        
         switch mode {
         case .record:
             return record(imageable,

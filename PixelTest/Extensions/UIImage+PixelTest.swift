@@ -41,6 +41,30 @@ extension UIImage {
         return diffImage
     }
     
+    /// Creates an image by clipping it from top.
+    ///
+    /// - Parameter fromTop: Size to clip from top.
+    /// - Returns: Clipped image.
+    func clip(fromTop top: Int) -> UIImage? {
+        
+        guard let cgImage = cgImage else {
+            return nil
+        }
+        
+        let rect = CGRect(
+            x: 0,
+            y: top,
+            width: cgImage.width,
+            height: cgImage.height - top
+        )
+        
+        if let croppedCGImage = cgImage.cropping(to: rect) {
+            return UIImage(cgImage: croppedCGImage, scale: 1.0, orientation: imageOrientation)
+        }
+        
+        return nil
+    }
+    
 }
 
 extension UIImage: Imageable {

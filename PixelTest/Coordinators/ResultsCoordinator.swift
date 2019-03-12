@@ -44,7 +44,7 @@ extension ResultsCoordinator: XCTestObservation {
         let htmlDir = URL(fileURLWithPath: commonPath)
         let footerHTML = "<footer><a href='https://github.com/KaneCheshire/PixelTest' target='_blank'>PixelTest</a> by <a href='https://twitter.com/kanecheshire' target='_blank'>Kane Cheshire</a></footer>"
         let allHTML = generateHTMLFileString(withBody: htmlStrings(forFailedURLs: failedURLs, htmlDir: htmlDir).joined() + footerHTML)
-        try? fileCoordinator.write(Data(allHTML.utf8), to: htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html"))
+        try? fileCoordinator.write(Data(allHTML.utf8), to: htmlDir.appendingPathComponent("\(PixelTest.failureHTMLFilename).html"))
         failingFiles.removeAll()
     }
     
