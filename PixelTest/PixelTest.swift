@@ -14,6 +14,14 @@ import XCTest
 /// Remember to add `import PixelTest` at the beginning.
 open class PixelTest {
     
+    // MARK: - Embedded types
+    
+    public struct PixelTestResult {
+        let original: UIImage?
+        let current: UIImage?
+        let diff: UIImage?
+    }
+    
     // MARK: - Properties -
     // MARK: Open
     
@@ -25,9 +33,14 @@ open class PixelTest {
     
     // MARK: Internal
     
-    static let layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
-    static let testCoordinator: TestCoordinatorType = TestCoordinator()
-    static let fileCoordinator: FileCoordinatorType = FileCoordinator()
+    fileprivate static let layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
+    fileprivate static let testCoordinator: TestCoordinatorType = TestCoordinator()
+    fileprivate static let fileCoordinator: FileCoordinatorType = FileCoordinator()
+    
+    // MARK: - Initializers -
+    
+    /// This class is not supposed to be initialized.
+    private init() { }
     
     // MARK: - Functions -
     // MARK: Open
@@ -46,21 +59,41 @@ open class PixelTest {
                               layoutStyle: LayoutStyle,
                               scale: Scale = .native,
                               mode: Mode = .test,
+                              filenameSuffix: String = "",
                               file: StaticString = #file,
                               function: StaticString = #function,
-                              line: UInt = #line) {
+                              line: UInt = #line) -> PixelTestResult {
         
         if let view = imageable as? UIView {
             layoutCoordinator.layOut(view, with: layoutStyle)
         }
         switch mode {
         case .record:
-            record(imageable, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
+            return record(imageable,
+                          scale: scale,
+                          file: file, 
+                          function: function,
+                          line: line,
+                          layoutStyle: layoutStyle)
         case .test:
-            if fileCoordinator.imageExists(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle) {
-                test(imageable, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
+            if fileCoordinator.imageExists(for: function,
+                                           file: file,
+                                           scale: scale,
+                                           imageType: .reference,
+                                           layoutStyle: layoutStyle) {
+                return test(imageable,
+                            scale: scale,
+                            file: file,
+                            function: function,
+                            line: line,
+                            layoutStyle: layoutStyle)
             } else {
-                record(imageable, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
+                return record(imageable,
+                              scale: scale,
+                              file: file,
+                              function: function,
+                              line: line,
+                              layoutStyle: layoutStyle)
             }
         }
     }
@@ -71,31 +104,61 @@ extension PixelTest {
     
     // MARK: Private
     
-    private static func record(_ imageable: Imageable, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
+    private static func record(_ imageable: Imageable, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) -> PixelTestResult {
         let result = testCoordinator.record(imageable, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
         switch result {
-        case .success(_):
+        case .success(let image):
             XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: file, line: line)
+            return PixelTestResult(original: image, current: nil, diff: nil)
         case .fail(let errorMessage):
             XCTFail(errorMessage, file: file, line: line)
+            return PixelTestResult(original: nil, current: nil, diff: nil)
         }
     }
     
-    private static func test(_ imageable: Imageable, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
+    private static func test(_ imageable: Imageable,
+                             scale: Scale,
+                             file: StaticString,
+                             function: StaticString,
+                             line: UInt,
+                             layoutStyle: LayoutStyle) -> PixelTestResult {
+        
         let result = testCoordinator.test(imageable, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
+        
         switch result {
-        case .success:
+        case .success(let image):
             fileCoordinator.removeDiffAndFailureImages(function: function, file: file, scale: scale, layoutStyle: layoutStyle)
+            return PixelTestResult(original: nil, current: image, diff: nil)
+            
         case .fail(let failed):
             if let testImage = failed.test, let oracleImage = failed.oracle {
-                storeDiffAndFailureImages(from: testImage, recordedImage: oracleImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
+                storeDiffAndFailureImages(from: testImage,
+                                          recordedImage: oracleImage,
+                                          function: function,
+                                          file: file,
+                                          scale: scale,
+                                          layoutStyle: layoutStyle)
             }
             XCTFail(failed.message, file: file, line: line)
+            return PixelTestResult(original: failed.oracle,
+                                   current: failed.test,
+                                   diff: failed.oracle.flatMap { failed.test?.diff(with: $0) } )
         }
     }
     
-    private static func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+    private static func storeDiffAndFailureImages(from failedImage: UIImage,
+                                                  recordedImage: UIImage,
+                                                  function: StaticString,
+                                                  file: StaticString,
+                                                  scale: Scale,
+                                                  layoutStyle: LayoutStyle) {
+        
         guard let diffImage = failedImage.diff(with: recordedImage) else { return }
-        fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
+        fileCoordinator.storeDiffImage(diffImage,
+                                       failedImage: failedImage,
+                                       function: function,
+                                       file: file,
+                                       scale: scale,
+                                       layoutStyle: layoutStyle)
     }
 }

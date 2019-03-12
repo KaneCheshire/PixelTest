@@ -19,17 +19,9 @@ open class PixelTestCase: XCTestCase {
     /// Defaults to `.test`.
     open var mode: Mode = .test
     
-    // MARK: Public
-    
-    /// The name of the HTML file PixelTest auto-generates
-    /// You might want to change this to something specific for your project or Fastlane setup, for example.
-    public static var failureHTMLFilename: String = "pixeltest_failures"
- 
     // MARK: Internal
     
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
-    var testCoordinator: TestCoordinatorType = TestCoordinator()
-    var fileCoordinator: FileCoordinatorType = FileCoordinator()
     
     // MARK: - Functions -
     // MARK: Open
@@ -44,55 +36,29 @@ open class PixelTestCase: XCTestCase {
     ///   - view: The view to verify.
     ///   - layoutStyle: The layout style to verify the view with.
     ///   - scale: The scale to record/test the snapshot with.
-    open func verify(_ view: UIView, layoutStyle: LayoutStyle,
-                     scale: Scale = .native, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+    open func verify(_ view: UIView,
+                     layoutStyle: LayoutStyle,
+                     scale: Scale = .native,
+                     file: StaticString = #file,
+                     function: StaticString = #function,
+                     line: UInt = #line) {
+        
         layoutCoordinator.layOut(view, with: layoutStyle)
         XCTAssertTrue(view.bounds.width > 0, "View has no width after layout", file: file, line: line)
         XCTAssertTrue(view.bounds.height > 0, "View has no height after layout", file: file, line: line)
-        switch mode {
-        case .record:
-            record(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
-        case .test:
-            test(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
+        
+        let result = PixelTest.verify(view, layoutStyle: layoutStyle, scale: scale, mode: mode)
+        
+        if let original = result.original {
+            addAttachment(named: "Original image", image: original)
+        }
+        
+        if let current = result.current {
+            addAttachment(named: "Current image", image: current)
+        }
+        
+        if let diff = result.diff {
+            addAttachment(named: "Diff image", image: diff)
         }
     }
-    
-}
-
-extension PixelTestCase {
-    
-    // MARK: Private
-    
-    private func record(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
-        let result = testCoordinator.record(view, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
-        switch result {
-        case .success(let image):
-            addAttachment(named: "Recorded image", image: image)
-            XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: file, line: line)
-        case .fail(let errorMessage):
-            XCTFail(errorMessage, file: file, line: line)
-        }
-    }
-    
-    private func test(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
-        let result = testCoordinator.test(view, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
-        switch result {
-        case .success:
-            fileCoordinator.removeDiffAndFailureImages(function: function, file: file, scale: scale, layoutStyle: layoutStyle)
-        case .fail(let failed):
-            if let testImage = failed.test, let oracleImage = failed.oracle {
-                storeDiffAndFailureImages(from: testImage, recordedImage: oracleImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
-            }
-            XCTFail(failed.message, file: file, line: line)
-        }
-    }
-    
-    private func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        addAttachment(named: "Failed image", image: failedImage)
-        addAttachment(named: "Original image", image: recordedImage)
-        guard let diffImage = failedImage.diff(with: recordedImage) else { return }
-        fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
-        addAttachment(named: "Diff image", image: diffImage)
-    }
-    
 }
