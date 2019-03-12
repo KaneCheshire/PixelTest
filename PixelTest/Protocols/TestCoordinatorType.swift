@@ -9,7 +9,17 @@ import Foundation
 
 protocol TestCoordinatorType {
     
-    func record(_ imageable: Imageable, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, String>
-    func test(_ imageable: Imageable, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)>
+    func record(_ imageable: Imageable,
+                layoutStyle: LayoutStyle,
+                scale: Scale,
+                filenameSuffix: String,
+                function: StaticString,
+                file: StaticString) -> Result<UIImage, String>
     
+    func test(_ imageable: Imageable,
+              layoutStyle: LayoutStyle,
+              scale: Scale,
+              filenameSuffix: String,
+              function: StaticString,
+              file: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)>
 }

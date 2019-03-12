@@ -19,6 +19,12 @@ open class PixelTestCase: XCTestCase {
     /// Defaults to `.test`.
     open var mode: Mode = .test
     
+    // MARK: Public
+    
+    /// The name of the HTML file PixelTest auto-generates
+    /// You might want to change this to something specific for your project or Fastlane setup, for example.
+    public static var failureHTMLFilename: String = "pixeltest_failures"
+    
     // MARK: Internal
     
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()

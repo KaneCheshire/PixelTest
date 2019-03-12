@@ -23,14 +23,6 @@ open class PixelTest {
     }
     
     // MARK: - Properties -
-    // MARK: Open
-    
-    // MARK: Public
-    
-    /// The name of the HTML file PixelTest auto-generates
-    /// You might want to change this to something specific for your project or Fastlane setup, for example.
-    public static var failureHTMLFilename: String = "pixeltest_failures"
-    
     // MARK: Internal
     
     fileprivate static let layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
@@ -71,6 +63,7 @@ open class PixelTest {
         case .record:
             return record(imageable,
                           scale: scale,
+                          filenameSuffix: filenameSuffix,
                           file: file, 
                           function: function,
                           line: line,
@@ -78,11 +71,13 @@ open class PixelTest {
         case .test:
             if fileCoordinator.imageExists(for: function,
                                            file: file,
+                                           filenameSuffix: filenameSuffix,
                                            scale: scale,
                                            imageType: .reference,
                                            layoutStyle: layoutStyle) {
                 return test(imageable,
                             scale: scale,
+                            filenameSuffix: filenameSuffix,
                             file: file,
                             function: function,
                             line: line,
@@ -90,6 +85,7 @@ open class PixelTest {
             } else {
                 return record(imageable,
                               scale: scale,
+                              filenameSuffix: filenameSuffix,
                               file: file,
                               function: function,
                               line: line,
@@ -104,8 +100,20 @@ extension PixelTest {
     
     // MARK: Private
     
-    private static func record(_ imageable: Imageable, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) -> PixelTestResult {
-        let result = testCoordinator.record(imageable, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
+    private static func record(_ imageable: Imageable,
+                               scale: Scale,
+                               filenameSuffix: String,
+                               file: StaticString,
+                               function: StaticString,
+                               line: UInt,
+                               layoutStyle: LayoutStyle) -> PixelTestResult {
+        
+        let result = testCoordinator.record(imageable,
+                                            layoutStyle: layoutStyle,
+                                            scale: scale,
+                                            filenameSuffix: filenameSuffix,
+                                            function: function,
+                                            file: file)
         switch result {
         case .success(let image):
             XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: file, line: line)
@@ -118,16 +126,26 @@ extension PixelTest {
     
     private static func test(_ imageable: Imageable,
                              scale: Scale,
+                             filenameSuffix: String,
                              file: StaticString,
                              function: StaticString,
                              line: UInt,
                              layoutStyle: LayoutStyle) -> PixelTestResult {
         
-        let result = testCoordinator.test(imageable, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
+        let result = testCoordinator.test(imageable,
+                                          layoutStyle: layoutStyle,
+                                          scale: scale,
+                                          filenameSuffix: filenameSuffix,
+                                          function: function,
+                                          file: file)
         
         switch result {
         case .success(let image):
-            fileCoordinator.removeDiffAndFailureImages(function: function, file: file, scale: scale, layoutStyle: layoutStyle)
+            fileCoordinator.removeDiffAndFailureImages(function: function,
+                                                       file: file,
+                                                       filenameSuffix: filenameSuffix,
+                                                       scale: scale,
+                                                       layoutStyle: layoutStyle)
             return PixelTestResult(original: nil, current: image, diff: nil)
             
         case .fail(let failed):
@@ -136,6 +154,7 @@ extension PixelTest {
                                           recordedImage: oracleImage,
                                           function: function,
                                           file: file,
+                                          filenameSuffix: filenameSuffix,
                                           scale: scale,
                                           layoutStyle: layoutStyle)
             }
@@ -150,6 +169,7 @@ extension PixelTest {
                                                   recordedImage: UIImage,
                                                   function: StaticString,
                                                   file: StaticString,
+                                                  filenameSuffix: String,
                                                   scale: Scale,
                                                   layoutStyle: LayoutStyle) {
         
@@ -158,6 +178,7 @@ extension PixelTest {
                                        failedImage: failedImage,
                                        function: function,
                                        file: file,
+                                       filenameSuffix: filenameSuffix,
                                        scale: scale,
                                        layoutStyle: layoutStyle)
     }
