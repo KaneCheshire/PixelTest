@@ -31,7 +31,14 @@ public extension XCTestCase {
                        function: StaticString = #function,
                        line: UInt = #line) {
         
-        let result = PixelTest.verify(view, layoutStyle: layoutStyle, scale: scale, mode: mode, filenameSuffix: filenameSuffix)
+        let result = PixelTest.verify(view,
+                                      layoutStyle: layoutStyle,
+                                      scale: scale,
+                                      mode: mode,
+                                      filenameSuffix: filenameSuffix,
+                                      file: file,
+                                      function: function,
+                                      line: line)
         
         if let original = result.original {
             addAttachment(named: "Original image", image: original)
@@ -70,7 +77,13 @@ public extension XCTestCase {
             return
         }
         
-        let result = PixelTest.verify(screenshot, layoutStyle: .dynamicWidthHeight, mode: mode, filenameSuffix: filenameSuffix)
+        let result = PixelTest.verify(screenshot,
+                                      layoutStyle: .dynamicWidthHeight,
+                                      mode: mode,
+                                      filenameSuffix: filenameSuffix,
+                                      file: file,
+                                      function: function,
+                                      line: line)
         
         if let original = result.original {
             addAttachment(named: "Original image", image: original)
