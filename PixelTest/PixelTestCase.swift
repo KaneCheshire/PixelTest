@@ -67,4 +67,5 @@ open class PixelTestCase: XCTestCase {
             addAttachment(named: "Diff image", image: diff)
         }
     }
+    
 }
