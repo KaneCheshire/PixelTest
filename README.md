@@ -104,6 +104,12 @@ You can decide whether PixelTest tests your view with dynamic height or width, o
 
 This leaves you free to populate your view without having ugly layout code in your project or modules.
 
+Additionally, PixelTest now comes with some String constants that you can use for short/long/very long etc content when populating your view models:
+
+```swift
+let viewModel = ViewModel(title: .shortContent, subtitle: .mediumContent)
+```
+
 ## Accessibility
 
 You can use PixelTest to test different Dynamic Type sizes if you set up your fonts and views in the right way. The example project has some examples on how to do this in `DynamicTypeViewSnapshotTests.swift`
