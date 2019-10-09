@@ -23,6 +23,9 @@ final class SimpleView: UIView {
     func configure(with viewModel: SimpleViewModel) {
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
+//        layer.cornerRadius = 15
+//        backgroundColor = .red
+//        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
     
 }

@@ -34,6 +34,8 @@
 		C347D60A2087B81000E3BAE5 /* LayoutCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D6092087B81000E3BAE5 /* LayoutCoordinatorTests.swift */; };
 		C347D60C2088807A00E3BAE5 /* LayoutStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D60B2088807A00E3BAE5 /* LayoutStyleTests.swift */; };
 		C347D60E2088818600E3BAE5 /* TestCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D60D2088818600E3BAE5 /* TestCoordinatorTests.swift */; };
+		C3C42048234E79A2008993C7 /* ExampleModule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C42047234E79A2008993C7 /* ExampleModule.framework */; };
+		C3C42049234E79A2008993C7 /* ExampleModule.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C3C42047234E79A2008993C7 /* ExampleModule.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D69359C8793DDAB5BEF7BEF5 /* Pods_PixelTest_Example_PixelTest_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAFAE7E461054DF09C9CC59 /* Pods_PixelTest_Example_PixelTest_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				C3C42049234E79A2008993C7 /* ExampleModule.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -113,6 +116,7 @@
 		C347D6092087B81000E3BAE5 /* LayoutCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutCoordinatorTests.swift; sourceTree = "<group>"; };
 		C347D60B2088807A00E3BAE5 /* LayoutStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutStyleTests.swift; sourceTree = "<group>"; };
 		C347D60D2088818600E3BAE5 /* TestCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoordinatorTests.swift; sourceTree = "<group>"; };
+		C3C42047234E79A2008993C7 /* ExampleModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ExampleModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				144A6C1E9CCE41600BC1A001 /* Pods_PixelTest_Example.framework in Frameworks */,
+				C3C42048234E79A2008993C7 /* ExampleModule.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +222,7 @@
 		6835D1D91929144BC0B6292B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3C42047234E79A2008993C7 /* ExampleModule.framework */,
 				8293221098F32E0B0864D6BE /* Pods_PixelTest_Example.framework */,
 				AF296BA4B0D7A174CBC8C621 /* Pods_PixelTest_Example_PixelTestExampleSnapshotTests.framework */,
 				BFAFAE7E461054DF09C9CC59 /* Pods_PixelTest_Example_PixelTest_Tests.framework */,

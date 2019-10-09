@@ -25,8 +25,9 @@
     "UIKit",
     "XCTest"
   ],
-  "swift_version": "4.2",
+  "swift_versions": "4.2",
   "pod_target_xcconfig": {
     "ENABLE_BITCODE": "NO"
-  }
+  },
+  "swift_version": "4.2"
 }
