@@ -16,6 +16,7 @@ open class PixelTestCase: XCTestCase {
     // MARK: Open
     
     /// The current mode of the test case. Set to `.record` when setting up or recording tests.
+    /// If you have set a global override in the test target's Info.plist, this value is ignored.
     /// Defaults to `.test`.
     open var mode: Mode = .test
     
@@ -33,7 +34,9 @@ open class PixelTestCase: XCTestCase {
     
     // MARK: Private
     
-    private let resultsCoordinator = ResultsCoordinator.shared
+    private let resultsCoordinator: ResultsCoordinator = .shared
+    private lazy var infoPlist = InfoPlist(bundle: Bundle(for: type(of: self)))
+    private var globalMode: Mode? { return infoPlist.recordAll ? .record : nil }
     
     // MARK: - Functions -
     // MARK: Open
@@ -53,7 +56,7 @@ open class PixelTestCase: XCTestCase {
         layoutCoordinator.layOut(view, with: layoutStyle)
         XCTAssertTrue(view.bounds.width > 0, "View has no width after layout", file: file, line: line)
         XCTAssertTrue(view.bounds.height > 0, "View has no height after layout", file: file, line: line)
-        switch mode {
+        switch globalMode ?? mode {
         case .record:
             record(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
         case .test:
