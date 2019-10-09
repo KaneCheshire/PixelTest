@@ -36,7 +36,12 @@ open class PixelTestCase: XCTestCase {
     
     private let resultsCoordinator: ResultsCoordinator = .shared
     private lazy var infoPlist = InfoPlist(bundle: Bundle(for: type(of: self)))
-    private var globalMode: Mode? { return infoPlist.recordAll ? .record : nil }
+    private var actualMode: Mode {
+        if infoPlist.recordAll {
+            return .record
+        }
+        return mode
+    }
     
     // MARK: - Functions -
     // MARK: Open
@@ -56,7 +61,7 @@ open class PixelTestCase: XCTestCase {
         layoutCoordinator.layOut(view, with: layoutStyle)
         XCTAssertTrue(view.bounds.width > 0, "View has no width after layout", file: file, line: line)
         XCTAssertTrue(view.bounds.height > 0, "View has no height after layout", file: file, line: line)
-        switch globalMode ?? mode {
+        switch actualMode {
         case .record:
             record(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
         case .test:
