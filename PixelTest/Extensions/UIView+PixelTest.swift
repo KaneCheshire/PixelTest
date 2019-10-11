@@ -17,6 +17,8 @@ extension UIView {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale.explicitOrCoreGraphicsValue)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.saveGState()
+        layer.setNeedsLayout()
+        layer.layoutIfNeeded()
         layer.render(in: context)
         context.restoreGState()
         guard let image = UIGraphicsGetImageFromCurrentImageContext() else { return nil }

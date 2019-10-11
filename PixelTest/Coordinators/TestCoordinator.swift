@@ -37,19 +37,19 @@ struct TestCoordinator: TestCoordinatorType {
                 layoutStyle: LayoutStyle,
                 scale: Scale,
                 function: StaticString,
-                file: StaticString) -> Result<UIImage, String> {
+                file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Record> {
         guard let image = view.image(withScale: scale) else {
-            return .fail("Unable to create snapshot")
+            return .failure(.unableToCreateSnapshot)
         }
         guard let data = image.pngData() else {
-            return .fail("Unable to create image data")
+            return .failure(.unableToCreateImageData)
         }
         do {
             let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle)
             try fileCoordinator.write(data, to: url)
             return .success(image)
         } catch {
-            return .fail("Unable to write image data to disk")
+            return .failure(.unableToWriteImageToDisk(error))
         }
     }
     
@@ -65,20 +65,20 @@ struct TestCoordinator: TestCoordinatorType {
               layoutStyle: LayoutStyle,
               scale: Scale,
               function: StaticString,
-              file: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
+              file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Test> { // TODO: Should this throw?
         guard let testImage = view.image(withScale: scale) else {
-            return .fail((nil, nil, "Unable to create snapshot"))
+            return .failure(.unableToCreateSnapshot)
         }
         let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle)
         guard let data = try? fileCoordinator.data(at: url) else {
-            return .fail((nil, nil, "Unable to get recorded image data"))
+            return .failure(.unableToGetRecordedImageData)
         }
         guard let recordedImage = UIImage(data: data, scale: scale.explicitOrScreenNativeValue) else {
-            return .fail((nil, nil, "Unable to get recorded image"))
+            return .failure(.unableToGetRecordedImage)
         }
         
         if !testImage.equalTo(recordedImage) {
-            return .fail((recordedImage, testImage, "Snapshot test failed, images are different"))
+            return .failure(.imagesAreDifferent(reference: recordedImage, failed: testImage))
         } else {
             return .success(testImage)
         }

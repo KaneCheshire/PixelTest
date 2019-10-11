@@ -29,6 +29,9 @@ final class ExampleModuleView: UIView {
 	// MARK: Private
 
 	private func setup() {
+        backgroundColor = .red
+        layer.cornerRadius = 15
+        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner]
 	}
 
 }

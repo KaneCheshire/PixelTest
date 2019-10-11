@@ -35,9 +35,9 @@ open class PixelTestCase: XCTestCase {
     // MARK: Private
     
     private let resultsCoordinator: ResultsCoordinator = .shared
-    private lazy var infoPlist = InfoPlist(bundle: Bundle(for: type(of: self)))
+    private lazy var testTargetInfoPlist = InfoPlist(bundle: Bundle(for: type(of: self)))
     private var actualMode: Mode {
-        if infoPlist.recordAll {
+        if testTargetInfoPlist.recordAll {
             return .record
         }
         return mode
@@ -81,8 +81,8 @@ extension PixelTestCase {
         case .success(let image):
             addAttachment(named: "Recorded image", image: image)
             XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: file, line: line)
-        case .fail(let errorMessage):
-            XCTFail(errorMessage, file: file, line: line)
+        case .failure(let error):
+            XCTFail(error.errorMessage, file: file, line: line)
         }
     }
     
@@ -91,11 +91,13 @@ extension PixelTestCase {
         switch result {
         case .success:
             fileCoordinator.removeDiffAndFailureImages(function: function, file: file, scale: scale, layoutStyle: layoutStyle)
-        case .fail(let failed):
-            if let testImage = failed.test, let oracleImage = failed.oracle {
-                storeDiffAndFailureImages(from: testImage, recordedImage: oracleImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
+        case .failure(let error):
+            switch error {
+                case .imagesAreDifferent(let referenceImage, let failedImage):
+                storeDiffAndFailureImages(from: failedImage, recordedImage: referenceImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
+                case .unableToCreateSnapshot, .unableToGetRecordedImage, .unableToGetRecordedImageData: break
             }
-            XCTFail(failed.message, file: file, line: line)
+            XCTFail(error.errorMessage, file: file, line: line)
         }
     }
     

@@ -55,9 +55,9 @@ class MockTestCoordinator: TestCoordinatorType {
     
     var recordCallCount = 0
     var onRecord: ((UIView, LayoutStyle, Scale, StaticString) -> Void)?
-    var recordReturnValue: Result<UIImage, String> = .success(UIImage())
+    var recordReturnValue: Result<UIImage, TestCoordinatorErrors.Record> = .success(UIImage())
     
-    func record(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, String> {
+    func record(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Record> {
         recordCallCount += 1
         onRecord?(view, layoutStyle, scale, function)
         return recordReturnValue
@@ -65,14 +65,13 @@ class MockTestCoordinator: TestCoordinatorType {
     
     var testCallCount = 0
     var onTest: ((UIView, LayoutStyle, Scale, StaticString) -> Void)?
-    var testReturnValue: Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> = .success(UIImage())
+    var testReturnValue: Result<UIImage, TestCoordinatorErrors.Test> = .success(UIImage())
     
-    func test(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, (oracle: UIImage?, test: UIImage?, message: String)> {
+    func test(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Test> {
         testCallCount += 1
         onTest?(view, layoutStyle, scale, function)
         return testReturnValue
     }
-    
 }
 
 class MockFileCoordinator: FileCoordinatorType {

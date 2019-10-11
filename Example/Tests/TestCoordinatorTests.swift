@@ -23,8 +23,8 @@ class TestCoordinatorTests: XCTestCase {
     func test_record_noSnapshot() {
         let result = testCoordinator.record(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed): XCTAssertEqual(failed, "Unable to create snapshot")
+            case .success: XCTFail("Incorrect result: \(result)")
+            case .failure(let failed): XCTAssertEqual(failed.errorMessage, "Unable to create snapshot image")
         }
     }
     
@@ -35,8 +35,8 @@ class TestCoordinatorTests: XCTestCase {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed): XCTAssertEqual(failed, "Unable to write image data to disk")
+            case .success: XCTFail("Incorrect result: \(result)")
+            case .failure(let failed): XCTAssertEqual(failed.errorMessage, "Unable to write image data to disk: The file couldn't be saved.")
         }
     }
     
@@ -47,7 +47,7 @@ class TestCoordinatorTests: XCTestCase {
         let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success(let image): XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))
-        case .fail: XCTFail("Incorrect result: \(result)")
+        case .failure: XCTFail("Incorrect result: \(result)")
         }
     }
     
@@ -55,10 +55,8 @@ class TestCoordinatorTests: XCTestCase {
         let result = testCoordinator.test(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Unable to create snapshot")
-            XCTAssertNil(failed.oracle)
-            XCTAssertNil(failed.test)
+        case .failure(let error):
+           XCTAssertEqual(error.errorMessage, "Unable to create snapshot image")
         }
     }
     
@@ -70,10 +68,8 @@ class TestCoordinatorTests: XCTestCase {
         let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Unable to get recorded image data")
-            XCTAssertNil(failed.oracle)
-            XCTAssertNil(failed.test)
+        case .failure(let error):
+            XCTAssertEqual(error.errorMessage, "Unable to get recorded image data")
         }
     }
     
@@ -84,10 +80,8 @@ class TestCoordinatorTests: XCTestCase {
         let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Unable to get recorded image")
-            XCTAssertNil(failed.oracle)
-            XCTAssertNil(failed.test)
+        case .failure(let failed):
+            XCTAssertEqual(failed.errorMessage, "Unable to get recorded image")
         }
     }
     
@@ -99,10 +93,15 @@ class TestCoordinatorTests: XCTestCase {
         let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
         switch result {
         case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Snapshot test failed, images are different")
-            XCTAssertTrue(failed.oracle!.equalTo(mockRecordedImage))
-            XCTAssertTrue(failed.test!.equalTo(view.image(withScale: .native)!))
+        case .failure(let error):
+            switch error {
+                case .imagesAreDifferent(reference: let reference, failed: let failed):
+                    XCTAssertTrue(reference.equalTo(mockRecordedImage))
+                    XCTAssertTrue(failed.equalTo(view.image(withScale: .native)!))
+                    XCTAssertEqual(error.errorMessage, "Images are different")
+                default: XCTFail("Unexpected result")
+            }
+           
         }
     }
     
@@ -115,7 +114,7 @@ class TestCoordinatorTests: XCTestCase {
         switch result {
         case .success(let image):
             XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))
-        case .fail: XCTFail("Incorrect result: \(result)")
+        case .failure: XCTFail("Incorrect result: \(result)")
         }
     }
     
