@@ -80,7 +80,7 @@ private extension PixelTestCase {
             addAttachment(named: "Recorded image", image: image)
             XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: config.file, line: config.line)
         } catch let error as TestCoordinatorErrors.Record {
-            XCTFail(error.errorMessage, file: config.file, line: config.line)
+            XCTFail(error.localizedDescription, file: config.file, line: config.line)
         } catch {
             XCTFail("Unexpected error: \(error.localizedDescription)")
         }
@@ -103,7 +103,7 @@ private extension PixelTestCase {
                 storeDiffAndFailureImages(from: failedImage, recordedImage: referenceImage, config: config)
             case .unableToCreateSnapshot, .unableToGetRecordedImage, .unableToGetRecordedImageData: break
         }
-        XCTFail(error.errorMessage, file: config.file, line: config.line)
+        XCTFail(error.localizedDescription, file: config.file, line: config.line)
     }
     
     func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, config: Config) {

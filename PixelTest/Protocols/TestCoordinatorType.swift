@@ -33,7 +33,7 @@ enum TestCoordinatorErrors { // TODO: Move
 
 extension TestCoordinatorErrors.Record {
     
-    var errorMessage: String {
+    var localizedDescription: String {
         switch self {
             case .unableToCreateImageData: return "Unable to create image data"
             case .unableToCreateSnapshot: return "Unable to create snapshot image"
@@ -45,7 +45,7 @@ extension TestCoordinatorErrors.Record {
 
 extension TestCoordinatorErrors.Test {
     
-    var errorMessage: String {
+    var localizedDescription: String {
         switch self {
             case .unableToCreateSnapshot: return "Unable to create snapshot image"
             case .unableToGetRecordedImage: return "Unable to get recorded image"
