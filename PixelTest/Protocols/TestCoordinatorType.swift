@@ -9,12 +9,12 @@ import Foundation
 
 protocol TestCoordinatorType {
     
-    func record(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Record>
-    func test(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Test>
+    func record(_ view: UIView, config: Config) throws -> UIImage
+    func test(_ view: UIView, config: Config) throws
     
 }
 
-enum TestCoordinatorErrors {
+enum TestCoordinatorErrors { // TODO: Move
     
     enum Record: Error {
         case unableToCreateSnapshot
@@ -50,7 +50,7 @@ extension TestCoordinatorErrors.Test {
             case .unableToCreateSnapshot: return "Unable to create snapshot image"
             case .unableToGetRecordedImage: return "Unable to get recorded image"
             case .unableToGetRecordedImageData: return "Unable to get recorded image data"
-            case .imagesAreDifferent: return "Images are different"
+            case .imagesAreDifferent: return "Images are different (see attached diff/failure images in logs)"
         }
     }
     

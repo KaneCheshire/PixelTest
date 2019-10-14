@@ -54,35 +54,42 @@ class MockLayoutCoordinator: LayoutCoordinatorType {
 class MockTestCoordinator: TestCoordinatorType {
     
     var recordCallCount = 0
-    var onRecord: ((UIView, LayoutStyle, Scale, StaticString) -> Void)?
-    var recordReturnValue: Result<UIImage, TestCoordinatorErrors.Record> = .success(UIImage())
+    var onRecord: ((UIView, Config) -> Void)?
+    var recordErrorToThrow: Error?
+    var recordReturnValue: UIImage!
     
-    func record(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Record> {
+    func record(_ view: UIView, config: Config) throws -> UIImage {
         recordCallCount += 1
-        onRecord?(view, layoutStyle, scale, function)
+        onRecord?(view, config)
+        if let recordErrorToThrow = recordErrorToThrow {
+            throw recordErrorToThrow
+        }
         return recordReturnValue
     }
     
     var testCallCount = 0
-    var onTest: ((UIView, LayoutStyle, Scale, StaticString) -> Void)?
-    var testReturnValue: Result<UIImage, TestCoordinatorErrors.Test> = .success(UIImage())
+    var onTest: ((UIView, Config) -> Void)?
+    var testErrorToThrow: Error?
     
-    func test(_ view: UIView, layoutStyle: LayoutStyle, scale: Scale, function: StaticString, file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Test> {
+    func test(_ view: UIView, config: Config) throws {
         testCallCount += 1
-        onTest?(view, layoutStyle, scale, function)
-        return testReturnValue
+        onTest?(view, config)
+        if let testErrorToThrow = testErrorToThrow {
+            throw testErrorToThrow
+        }
     }
 }
 
 class MockFileCoordinator: FileCoordinatorType {
     
+    
     var fileURLCallCount = 0
-    var onFileURL: ((StaticString, Scale, ImageType, LayoutStyle) -> Void)?
+    var onFileURL: ((Config, ImageType) -> Void)?
     var fileURLReturnValue: URL!
     
-    func fileURL(for function: StaticString, file: StaticString, scale: Scale, imageType: ImageType, layoutStyle: LayoutStyle) -> URL {
+    func fileURL(for config: Config, imageType: ImageType) -> URL {
         fileURLCallCount += 1
-        onFileURL?(function, scale, imageType, layoutStyle)
+        onFileURL?(config, imageType)
         return fileURLReturnValue
     }
     
@@ -113,19 +120,19 @@ class MockFileCoordinator: FileCoordinatorType {
     }
     
     var storeDiffImageCallCount = 0
-    var onStoreDiffImage: ((UIImage, UIImage, StaticString, Scale, LayoutStyle) -> Void)?
+    var onStoreDiffImage: ((UIImage, UIImage, Config) -> Void)?
     
-    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, config: Config) {
         storeDiffImageCallCount += 1
-        onStoreDiffImage?(diffImage, failedImage, function, scale, layoutStyle)
+        onStoreDiffImage?(diffImage, failedImage, config)
     }
     
     var removeDiffAndFailureImagesCallCount = 0
-    var onRemoveDiffAndFailureImages: ((StaticString, Scale, LayoutStyle) -> Void)?
+    var onRemoveDiffAndFailureImages: ((Config) -> Void)?
     
-    func removeDiffAndFailureImages(function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+    func removeDiffAndFailureImages(config: Config) {
         removeDiffAndFailureImagesCallCount += 1
-        onRemoveDiffAndFailureImages?(function, scale, layoutStyle)
+        onRemoveDiffAndFailureImages?(config)
     }
     
 }

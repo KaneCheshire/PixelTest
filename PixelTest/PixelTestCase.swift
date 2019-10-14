@@ -25,7 +25,7 @@ open class PixelTestCase: XCTestCase {
     /// The name of the HTML file PixelTets auto-generates
     /// You might want to change this to something specific for your project or Fastlane setup, for example.
     public static var failureHTMLFilename: String = "pixeltest_failures"
- 
+    
     // MARK: Internal
     
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
@@ -61,52 +61,67 @@ open class PixelTestCase: XCTestCase {
         layoutCoordinator.layOut(view, with: layoutStyle)
         XCTAssertTrue(view.bounds.width > 0, "View has no width after layout", file: file, line: line)
         XCTAssertTrue(view.bounds.height > 0, "View has no height after layout", file: file, line: line)
+        let config = Config(function: function, file: file, line: line, scale: scale, layoutStyle: layoutStyle)
         switch actualMode {
-        case .record:
-            record(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
-        case .test:
-            test(view, scale: scale, file: file, function: function, line: line, layoutStyle: layoutStyle)
+            case .record: record(view, config: config)
+            case .test: test(view, config: config)
         }
     }
     
 }
 
-extension PixelTestCase {
+private extension PixelTestCase {
     
     // MARK: Private
     
-    private func record(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
-        let result = testCoordinator.record(view, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
-        switch result {
-        case .success(let image):
+    func record(_ view: UIView, config: Config) {
+        do {
+            let image = try testCoordinator.record(view, config: config)
             addAttachment(named: "Recorded image", image: image)
-            XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: file, line: line)
-        case .failure(let error):
-            XCTFail(error.errorMessage, file: file, line: line)
+            XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: config.file, line: config.line)
+        } catch let error as TestCoordinatorErrors.Record {
+            XCTFail(error.errorMessage, file: config.file, line: config.line)
+        } catch {
+            XCTFail("Unexpected error: \(error.localizedDescription)")
         }
     }
     
-    private func test(_ view: UIView, scale: Scale, file: StaticString, function: StaticString, line: UInt, layoutStyle: LayoutStyle) {
-        let result = testCoordinator.test(view, layoutStyle: layoutStyle, scale: scale, function: function, file: file)
-        switch result {
-        case .success:
-            fileCoordinator.removeDiffAndFailureImages(function: function, file: file, scale: scale, layoutStyle: layoutStyle)
-        case .failure(let error):
-            switch error {
-                case .imagesAreDifferent(let referenceImage, let failedImage):
-                storeDiffAndFailureImages(from: failedImage, recordedImage: referenceImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
-                case .unableToCreateSnapshot, .unableToGetRecordedImage, .unableToGetRecordedImageData: break
-            }
-            XCTFail(error.errorMessage, file: file, line: line)
+    func test(_ view: UIView, config: Config) {
+        do {
+            try testCoordinator.test(view, config: config)
+            fileCoordinator.removeDiffAndFailureImages(config: config) // TODO: Do this after recording
+        } catch let error as TestCoordinatorErrors.Test {
+            handle(error, config: config)
+        } catch {
+            XCTFail("Unexpected error: \(error.localizedDescription)")
         }
     }
     
-    private func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
+    private func handle(_ error: TestCoordinatorErrors.Test, config: Config) {
+        switch error {
+            case .imagesAreDifferent(let referenceImage, let failedImage):
+                storeDiffAndFailureImages(from: failedImage, recordedImage: referenceImage, config: config)
+            case .unableToCreateSnapshot, .unableToGetRecordedImage, .unableToGetRecordedImageData: break
+        }
+        XCTFail(error.errorMessage, file: config.file, line: config.line)
+    }
+    
+    func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, config: Config) {
         addAttachment(named: "Failed image", image: failedImage)
         addAttachment(named: "Original image", image: recordedImage)
         guard let diffImage = failedImage.diff(with: recordedImage) else { return }
-        fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, function: function, file: file, scale: scale, layoutStyle: layoutStyle)
+        fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, config: config)
         addAttachment(named: "Diff image", image: diffImage)
     }
+    
+}
+
+struct Config { // TODO: Move/name
+    
+    let function: StaticString
+    let file: StaticString
+    let line: UInt
+    let scale: Scale
+    let layoutStyle: LayoutStyle
     
 }

@@ -21,10 +21,14 @@ class TestCoordinatorTests: XCTestCase {
     }
     
     func test_record_noSnapshot() {
-        let result = testCoordinator.record(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-            case .success: XCTFail("Incorrect result: \(result)")
-            case .failure(let failed): XCTAssertEqual(failed.errorMessage, "Unable to create snapshot image")
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        do {
+            _ = try testCoordinator.record(UIView(), config: config)
+            XCTFail()
+        } catch let error as TestCoordinatorErrors.Record {
+            XCTAssertEqual(error.errorMessage, "Unable to create snapshot image")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
     
@@ -33,30 +37,35 @@ class TestCoordinatorTests: XCTestCase {
         mockFileCoordinator.fileURLReturnValue = url
         mockFileCoordinator.writeError = CocoaError.error(.fileWriteUnknown)
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-            case .success: XCTFail("Incorrect result: \(result)")
-            case .failure(let failed): XCTAssertEqual(failed.errorMessage, "Unable to write image data to disk: The file couldn't be saved.")
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        do {
+            _ = try testCoordinator.record(view, config: config)
+            XCTFail()
+        } catch let error as TestCoordinatorErrors.Record {
+            XCTAssertEqual(error.errorMessage, "Unable to write image to disk: The file couldn’t be saved.")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
     
-    func test_record_success() {
+    func test_record_success() throws {
         let url = URL(string: "file://something")
         mockFileCoordinator.fileURLReturnValue = url
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success(let image): XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))
-        case .failure: XCTFail("Incorrect result: \(result)")
-        }
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        let image = try testCoordinator.record(view, config: config)
+        XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))
     }
     
     func test_test_noSnapshot() {
-        let result = testCoordinator.test(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .failure(let error):
-           XCTAssertEqual(error.errorMessage, "Unable to create snapshot image")
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        do {
+            let _ = try testCoordinator.test(UIView(), config: config)
+            XCTFail()
+        } catch let error as TestCoordinatorErrors.Test {
+            XCTAssertEqual(error.errorMessage, "Unable to create snapshot image")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
     
@@ -65,11 +74,14 @@ class TestCoordinatorTests: XCTestCase {
         mockFileCoordinator.fileURLReturnValue = url
         mockFileCoordinator.dataError = CocoaError.error(.fileReadUnknown)
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .failure(let error):
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        do {
+            let _ = try testCoordinator.test(view, config: config)
+            XCTFail()
+        } catch let error as TestCoordinatorErrors.Test {
             XCTAssertEqual(error.errorMessage, "Unable to get recorded image data")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
     
@@ -77,11 +89,14 @@ class TestCoordinatorTests: XCTestCase {
         let url = URL(string: "file://something")
         mockFileCoordinator.fileURLReturnValue = url
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .failure(let failed):
-            XCTAssertEqual(failed.errorMessage, "Unable to get recorded image")
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        do {
+            let _ = try testCoordinator.test(view, config: config)
+            XCTFail()
+        } catch let error as TestCoordinatorErrors.Test {
+            XCTAssertEqual(error.errorMessage, "Unable to get recorded image")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
     
@@ -90,32 +105,30 @@ class TestCoordinatorTests: XCTestCase {
         let mockRecordedImage = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 11)).image(withScale: .native)!
         mockFileCoordinator.dataReturnValue = mockRecordedImage.pngData()!
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .failure(let error):
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        do {
+            let _ = try testCoordinator.test(view, config: config)
+            XCTFail()
+        } catch let error as TestCoordinatorErrors.Test {
             switch error {
                 case .imagesAreDifferent(reference: let reference, failed: let failed):
                     XCTAssertTrue(reference.equalTo(mockRecordedImage))
                     XCTAssertTrue(failed.equalTo(view.image(withScale: .native)!))
-                    XCTAssertEqual(error.errorMessage, "Images are different")
+                    XCTAssertEqual(error.errorMessage, "Images are different (see attached diff/failure images in logs)")
                 default: XCTFail("Unexpected result")
             }
-           
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
-    
-    func test_test_success() {
+        
+    func test_test_success() throws {
         mockFileCoordinator.fileURLReturnValue = URL(string: "file://something")
         let mockRecordedImage = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)).image(withScale: .native)!
         mockFileCoordinator.dataReturnValue = mockRecordedImage.pngData()!
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success(let image):
-            XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))
-        case .failure: XCTFail("Incorrect result: \(result)")
-        }
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        try testCoordinator.test(view, config: config)
     }
-    
+        
 }

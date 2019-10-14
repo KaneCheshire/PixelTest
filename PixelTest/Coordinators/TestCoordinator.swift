@@ -33,23 +33,19 @@ struct TestCoordinator: TestCoordinatorType {
     ///   - scale: The scale to use when creating an image of the view.
     ///   - function: The function called when requesting the recording.
     /// - Returns: A result with either an image for success or failure message.
-    func record(_ view: UIView,
-                layoutStyle: LayoutStyle,
-                scale: Scale,
-                function: StaticString,
-                file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Record> {
-        guard let image = view.image(withScale: scale) else {
-            return .failure(.unableToCreateSnapshot)
+    func record(_ view: UIView, config: Config) throws -> UIImage {
+        guard let image = view.image(withScale: config.scale) else {
+            throw TestCoordinatorErrors.Record.unableToCreateSnapshot
         }
         guard let data = image.pngData() else {
-            return .failure(.unableToCreateImageData)
+            throw TestCoordinatorErrors.Record.unableToCreateImageData
         }
         do {
-            let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle)
+            let url = fileCoordinator.fileURL(for: config, imageType: .reference)
             try fileCoordinator.write(data, to: url)
-            return .success(image)
+            return image
         } catch {
-            return .failure(.unableToWriteImageToDisk(error))
+            throw TestCoordinatorErrors.Record.unableToWriteImageToDisk(error)
         }
     }
     
@@ -61,26 +57,19 @@ struct TestCoordinator: TestCoordinatorType {
     ///   - scale: The scale to use when creating an image of the view.
     ///   - function: The function called when requesting the test.
     /// - Returns: A result with an image for success, or message with failed images for failure.
-    func test(_ view: UIView,
-              layoutStyle: LayoutStyle,
-              scale: Scale,
-              function: StaticString,
-              file: StaticString) -> Result<UIImage, TestCoordinatorErrors.Test> { // TODO: Should this throw?
-        guard let testImage = view.image(withScale: scale) else {
-            return .failure(.unableToCreateSnapshot)
+    func test(_ view: UIView, config: Config) throws {
+        guard let testImage = view.image(withScale: config.scale) else {
+            throw TestCoordinatorErrors.Test.unableToCreateSnapshot
         }
-        let url = fileCoordinator.fileURL(for: function, file: file, scale: scale, imageType: .reference, layoutStyle: layoutStyle)
-        guard let data = try? fileCoordinator.data(at: url) else {
-            return .failure(.unableToGetRecordedImageData)
+        let referenceURL = fileCoordinator.fileURL(for: config, imageType: .reference)
+        guard let data = try? fileCoordinator.data(at: referenceURL) else {
+            throw TestCoordinatorErrors.Test.unableToGetRecordedImageData
         }
-        guard let recordedImage = UIImage(data: data, scale: scale.explicitOrScreenNativeValue) else {
-            return .failure(.unableToGetRecordedImage)
+        guard let recordedImage = UIImage(data: data, scale: config.scale.explicitOrScreenNativeValue) else {
+            throw TestCoordinatorErrors.Test.unableToGetRecordedImage
         }
-        
-        if !testImage.equalTo(recordedImage) {
-            return .failure(.imagesAreDifferent(reference: recordedImage, failed: testImage))
-        } else {
-            return .success(testImage)
+        guard testImage.equalTo(recordedImage) else {
+            throw TestCoordinatorErrors.Test.imagesAreDifferent(reference: recordedImage, failed: testImage)
         }
     }
     
