@@ -12,7 +12,7 @@ protocol FileCoordinatorType {
     func fileURL(for config: Config, imageType: ImageType) -> URL
     func write(_ data: Data, to url: URL) throws
     func data(at url: URL) throws -> Data
-    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, config: Config)
+    func store(diffImage: UIImage, failedImage: UIImage, config: Config)
     func removeDiffAndFailureImages(config: Config)
     
 }

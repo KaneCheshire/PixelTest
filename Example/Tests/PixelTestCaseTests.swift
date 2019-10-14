@@ -122,7 +122,7 @@ class MockFileCoordinator: FileCoordinatorType {
     var storeDiffImageCallCount = 0
     var onStoreDiffImage: ((UIImage, UIImage, Config) -> Void)?
     
-    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, config: Config) {
+    func store(diffImage: UIImage, failedImage: UIImage, config: Config) {
         storeDiffImageCallCount += 1
         onStoreDiffImage?(diffImage, failedImage, config)
     }

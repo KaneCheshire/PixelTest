@@ -218,7 +218,7 @@ class FileCoordinatorTests: XCTestCase {
     
     func test_storingDiffFailureImage() {
         let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
-        fileCoordinator.storeDiffImage(UIImage(), failedImage: UIImage(), config: config)
+        fileCoordinator.store(diffImage: UIImage(), failedImage: UIImage(), config: config)
         XCTAssertEqual(mockFileManager.removeItemCallCount, 0)
         XCTAssertEqual(mockFileManager.fileExistsCallCount, 2)
     }

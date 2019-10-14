@@ -9,8 +9,13 @@ import Foundation
 
 protocol TestCoordinatorType {
     
-    func record(_ view: UIView, config: Config) throws -> UIImage
     func test(_ view: UIView, config: Config) throws
+    
+}
+
+protocol RecordCoordinatorType {
+    
+    func record(_ view: UIView, config: Config) throws -> UIImage
     
 }
 

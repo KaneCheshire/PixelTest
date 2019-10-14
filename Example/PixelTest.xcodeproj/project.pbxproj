@@ -36,6 +36,7 @@
 		C347D60E2088818600E3BAE5 /* TestCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D60D2088818600E3BAE5 /* TestCoordinatorTests.swift */; };
 		C3C42048234E79A2008993C7 /* ExampleModule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C42047234E79A2008993C7 /* ExampleModule.framework */; };
 		C3C42049234E79A2008993C7 /* ExampleModule.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C3C42047234E79A2008993C7 /* ExampleModule.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C3C420632354E25B008993C7 /* RecordCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C420612354E225008993C7 /* RecordCoordinatorTests.swift */; };
 		D69359C8793DDAB5BEF7BEF5 /* Pods_PixelTest_Example_PixelTest_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAFAE7E461054DF09C9CC59 /* Pods_PixelTest_Example_PixelTest_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,7 @@
 		C347D60B2088807A00E3BAE5 /* LayoutStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutStyleTests.swift; sourceTree = "<group>"; };
 		C347D60D2088818600E3BAE5 /* TestCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoordinatorTests.swift; sourceTree = "<group>"; };
 		C3C42047234E79A2008993C7 /* ExampleModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ExampleModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3C420612354E225008993C7 /* RecordCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoordinatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				C3441119209064EC00E801E5 /* PixelTestCaseTests.swift */,
 				C347D6072087B70600E3BAE5 /* ScaleTests.swift */,
 				C347D60D2088818600E3BAE5 /* TestCoordinatorTests.swift */,
+				C3C420612354E225008993C7 /* RecordCoordinatorTests.swift */,
 				C344111B2090F67400E801E5 /* UIImage+EqualToTests.swift */,
 				C344111D2090F76A00E801E5 /* UIImage+DiffImageTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
@@ -585,6 +588,7 @@
 				C347D6042087293700E3BAE5 /* FileCoordinatorTests.swift in Sources */,
 				C347D60C2088807A00E3BAE5 /* LayoutStyleTests.swift in Sources */,
 				C347D6082087B70600E3BAE5 /* ScaleTests.swift in Sources */,
+				C3C420632354E25B008993C7 /* RecordCoordinatorTests.swift in Sources */,
 				C344111A209064EC00E801E5 /* PixelTestCaseTests.swift in Sources */,
 				C347D60E2088818600E3BAE5 /* TestCoordinatorTests.swift in Sources */,
 				C344111E2090F76A00E801E5 /* UIImage+DiffImageTests.swift in Sources */,

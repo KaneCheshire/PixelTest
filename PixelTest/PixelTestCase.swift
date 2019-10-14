@@ -29,6 +29,7 @@ open class PixelTestCase: XCTestCase {
     // MARK: Internal
     
     var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
+    var recordCoordinator: RecordCoordinatorType = RecordCoordinator()
     var testCoordinator: TestCoordinatorType = TestCoordinator()
     var fileCoordinator: FileCoordinatorType = FileCoordinator()
     
@@ -76,7 +77,7 @@ private extension PixelTestCase {
     
     func record(_ view: UIView, config: Config) {
         do {
-            let image = try testCoordinator.record(view, config: config)
+            let image = try recordCoordinator.record(view, config: config)
             addAttachment(named: "Recorded image", image: image)
             XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: config.file, line: config.line)
         } catch let error as TestCoordinatorErrors.Record {
@@ -110,7 +111,7 @@ private extension PixelTestCase {
         addAttachment(named: "Failed image", image: failedImage)
         addAttachment(named: "Original image", image: recordedImage)
         guard let diffImage = failedImage.diff(with: recordedImage) else { return }
-        fileCoordinator.storeDiffImage(diffImage, failedImage: failedImage, config: config)
+        fileCoordinator.store(diffImage: diffImage, failedImage: failedImage, config: config)
         addAttachment(named: "Diff image", image: diffImage)
     }
     
