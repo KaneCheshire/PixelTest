@@ -27,7 +27,7 @@ final class RecordCoordinatorTests: XCTestCase {
         do {
             _ = try recordCoordinator.record(UIView(), config: config)
             XCTFail()
-        } catch let error as TestCoordinatorErrors.Record {
+        } catch let error as Errors.Record {
             XCTAssertEqual(error.localizedDescription, "Unable to create snapshot image")
         } catch {
             XCTFail("Unexpected error: \(error)")
@@ -40,7 +40,7 @@ final class RecordCoordinatorTests: XCTestCase {
         do {
             _ = try recordCoordinator.record(view, config: config)
             XCTFail()
-        } catch let error as TestCoordinatorErrors.Record {
+        } catch let error as Errors.Record {
             XCTAssertEqual(error.localizedDescription, "Unable to write image to disk: The file couldn’t be saved.")
         } catch {
             XCTFail("Unexpected error: \(error)")

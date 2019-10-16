@@ -80,7 +80,7 @@ private extension PixelTestCase {
             let image = try recordCoordinator.record(view, config: config)
             addAttachment(named: "Recorded image", image: image)
             XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: config.file, line: config.line)
-        } catch let error as TestCoordinatorErrors.Record {
+        } catch let error as Errors.Record {
             XCTFail(error.localizedDescription, file: config.file, line: config.line)
         } catch {
             XCTFail("Unexpected error: \(error.localizedDescription)")
@@ -91,14 +91,14 @@ private extension PixelTestCase {
         do {
             try testCoordinator.test(view, config: config)
             fileCoordinator.removeDiffAndFailureImages(config: config) // TODO: Do this after recording
-        } catch let error as TestCoordinatorErrors.Test {
+        } catch let error as Errors.Test {
             handle(error, config: config)
         } catch {
             XCTFail("Unexpected error: \(error.localizedDescription)")
         }
     }
     
-    private func handle(_ error: TestCoordinatorErrors.Test, config: Config) {
+    func handle(_ error: Errors.Test, config: Config) {
         switch error {
             case .imagesAreDifferent(let referenceImage, let failedImage):
                 storeDiffAndFailureImages(from: failedImage, recordedImage: referenceImage, config: config)
@@ -110,19 +110,10 @@ private extension PixelTestCase {
     func storeDiffAndFailureImages(from failedImage: UIImage, recordedImage: UIImage, config: Config) {
         addAttachment(named: "Failed image", image: failedImage)
         addAttachment(named: "Original image", image: recordedImage)
-        guard let diffImage = failedImage.diff(with: recordedImage) else { return }
-        fileCoordinator.store(diffImage: diffImage, failedImage: failedImage, config: config)
-        addAttachment(named: "Diff image", image: diffImage)
+        if let diffImage = failedImage.diff(with: recordedImage) {
+            fileCoordinator.store(diffImage: diffImage, failedImage: failedImage, config: config)
+            addAttachment(named: "Diff image", image: diffImage)
+        }
     }
-    
-}
-
-struct Config { // TODO: Move/name
-    
-    let function: StaticString
-    let file: StaticString
-    let line: UInt
-    let scale: Scale
-    let layoutStyle: LayoutStyle
     
 }

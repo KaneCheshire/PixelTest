@@ -27,7 +27,7 @@ final class TestCoordinatorTests: XCTestCase {
         do {
             let _ = try testCoordinator.test(UIView(), config: config)
             XCTFail()
-        } catch let error as TestCoordinatorErrors.Test {
+        } catch let error as Errors.Test {
             XCTAssertEqual(error.localizedDescription, "Unable to create snapshot image")
         } catch {
             XCTFail("Unexpected error: \(error)")
@@ -40,7 +40,7 @@ final class TestCoordinatorTests: XCTestCase {
         do {
             let _ = try testCoordinator.test(view, config: config)
             XCTFail()
-        } catch let error as TestCoordinatorErrors.Test {
+        } catch let error as Errors.Test {
             XCTAssertEqual(error.localizedDescription, "Unable to get recorded image data")
         } catch {
             XCTFail("Unexpected error: \(error)")
@@ -52,7 +52,7 @@ final class TestCoordinatorTests: XCTestCase {
         do {
             let _ = try testCoordinator.test(view, config: config)
             XCTFail()
-        } catch let error as TestCoordinatorErrors.Test {
+        } catch let error as Errors.Test {
             XCTAssertEqual(error.localizedDescription, "Unable to get recorded image")
         } catch {
             XCTFail("Unexpected error: \(error)")
@@ -67,7 +67,7 @@ final class TestCoordinatorTests: XCTestCase {
         do {
             let _ = try testCoordinator.test(view, config: config)
             XCTFail()
-        } catch let error as TestCoordinatorErrors.Test {
+        } catch let error as Errors.Test {
             switch error {
                 case .imagesAreDifferent(reference: let reference, failed: let failed):
                     XCTAssertTrue(reference.equalTo(mockRecordedImage))

@@ -28,17 +28,17 @@ struct TestCoordinator: TestCoordinatorType {
     /// Tests a snapshot of a view, assuming a previously recorded snapshot exists for comparison.
     func test(_ view: UIView, config: Config) throws {
         guard let testImage = view.image(withScale: config.scale) else {
-            throw TestCoordinatorErrors.Test.unableToCreateSnapshot
+            throw Errors.Test.unableToCreateSnapshot
         }
         let referenceURL = fileCoordinator.fileURL(for: config, imageType: .reference)
         guard let data = try? fileCoordinator.data(at: referenceURL) else {
-            throw TestCoordinatorErrors.Test.unableToGetRecordedImageData
+            throw Errors.Test.unableToGetRecordedImageData
         }
         guard let recordedImage = UIImage(data: data, scale: config.scale.explicitOrScreenNativeValue) else {
-            throw TestCoordinatorErrors.Test.unableToGetRecordedImage
+            throw Errors.Test.unableToGetRecordedImage
         }
         guard testImage.equalTo(recordedImage) else {
-            throw TestCoordinatorErrors.Test.imagesAreDifferent(reference: recordedImage, failed: testImage)
+            throw Errors.Test.imagesAreDifferent(reference: recordedImage, failed: testImage)
         }
     }
     
