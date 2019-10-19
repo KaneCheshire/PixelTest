@@ -39,6 +39,8 @@
 		C3C4206723577EB4008993C7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C4206623577EB4008993C7 /* Configuration.swift */; };
 		C3C4206923577F03008993C7 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C4206823577F03008993C7 /* Errors.swift */; };
 		C3C4206B23577F2C008993C7 /* RecordCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C4206A23577F2C008993C7 /* RecordCoordinatorType.swift */; };
+		C3C4206D235B99E8008993C7 /* PlaceholderImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C4206C235B99E8008993C7 /* PlaceholderImageGenerator.swift */; };
+		C3C4206F235B9AC5008993C7 /* UIImage+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C4206E235B9AC5008993C7 /* UIImage+Placeholder.swift */; };
 		C43E31FD96C9F5397B178D17C93FA186 /* Pods-PixelTest_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D12CBE97C64D7C2F7EF076FF2A3596 /* Pods-PixelTest_Example-dummy.m */; };
 		C9B8C04A20AB322999216EA65E9956C2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D70BF75F62472300149937331A6D04A /* XCTest.framework */; };
 		CDF37946855E4FA6814A7C4799266622 /* Pods-PixelTest_Example-PixelTestExampleSnapshotTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D635D3DD7E4399E0A207AB2AF4F43BF0 /* Pods-PixelTest_Example-PixelTestExampleSnapshotTests-dummy.m */; };
@@ -149,6 +151,8 @@
 		C3C4206623577EB4008993C7 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		C3C4206823577F03008993C7 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		C3C4206A23577F2C008993C7 /* RecordCoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCoordinatorType.swift; sourceTree = "<group>"; };
+		C3C4206C235B99E8008993C7 /* PlaceholderImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImageGenerator.swift; sourceTree = "<group>"; };
+		C3C4206E235B9AC5008993C7 /* UIImage+Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Placeholder.swift"; sourceTree = "<group>"; };
 		C71AB8E874D803081791B145636DACB9 /* Pods-ExampleModule-ExampleModuleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ExampleModule-ExampleModuleTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		CE7AF48E1C778790E52F44638AAAF469 /* Pods-PixelTest_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PixelTest_Example-umbrella.h"; sourceTree = "<group>"; };
 		CF888046A18427E882FE8D8D9D87B9B5 /* Pods-ExampleModule.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleModule.debug.xcconfig"; sourceTree = "<group>"; };
@@ -310,6 +314,7 @@
 				90327614B0347A6CF1D1DD6678E0B52F /* Scale.swift */,
 				C3C4206623577EB4008993C7 /* Configuration.swift */,
 				C3C4206823577F03008993C7 /* Errors.swift */,
+				C3C4206C235B99E8008993C7 /* PlaceholderImageGenerator.swift */,
 			);
 			name = Models;
 			path = PixelTest/Models;
@@ -421,6 +426,7 @@
 				D300D07FFC19DA081B155D3C538795E9 /* UIImage+PixelTest.swift */,
 				60A38135878B2F2EA9E1260515421240 /* UIView+PixelTest.swift */,
 				114A603CC9F2E1447625BCADED46DE0B /* XCTestCase+AddAttachmentWithName.swift */,
+				C3C4206E235B9AC5008993C7 /* UIImage+Placeholder.swift */,
 			);
 			name = Extensions;
 			path = PixelTest/Extensions;
@@ -714,10 +720,12 @@
 				6B735510C5CA6CC035F8B1EF91E7D3DF /* FileManagerType.swift in Sources */,
 				2001BF54BBEE1F0CA56D59508A980F57 /* ImageType.swift in Sources */,
 				C3C420602354E1E4008993C7 /* RecordCoordinator.swift in Sources */,
+				C3C4206D235B99E8008993C7 /* PlaceholderImageGenerator.swift in Sources */,
 				60297BC592C47E61594165D834692C8D /* InfoPlist.swift in Sources */,
 				98EC0DF263FE3C27532503FFA49175D9 /* LayoutCoordinator.swift in Sources */,
 				FE21D380B92608FF5F18AF2FF3A6D4A5 /* LayoutCoordinatorType.swift in Sources */,
 				C3C4206723577EB4008993C7 /* Configuration.swift in Sources */,
+				C3C4206F235B9AC5008993C7 /* UIImage+Placeholder.swift in Sources */,
 				F7371238543D7AEADE6D47424423DD37 /* LayoutStyle.swift in Sources */,
 				2FA192016E6E998E5BF2DE309244B471 /* Mode.swift in Sources */,
 				913D1355B6BCEF2EC1A8D19DA71396B6 /* PixelTest-dummy.m in Sources */,
