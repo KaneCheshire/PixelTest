@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PixelTest'
-  s.version          = '2.0.0'
+  s.version          = '2.1.0'
   s.summary          = 'PixelTest is a Swift-first, simple and modern snapshot testing tool.'
   s.description      = <<-DESC
   PixelTest is a modern, Swift-only snapshot testing tool.

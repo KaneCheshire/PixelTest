@@ -1,6 +1,6 @@
 {
   "name": "PixelTest",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "summary": "PixelTest is a Swift-first, simple and modern snapshot testing tool.",
   "description": "PixelTest is a modern, Swift-only snapshot testing tool.\n\nSnapshot testing compares one of your views rendered into an image, to a previously recorded image, allowing for 0% difference or the test will fail.\n\nSnapshot tests are perfect for quickly checking complex layouts, while at the same time future proofing them against accidental changes.\n\nAs an added bonus, PixelTest also clears up after itself. If you fix a failing test, the failure and diff images are automatically removed for you.",
   "homepage": "https://github.com/kanecheshire/PixelTest",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/kanecheshire/PixelTest.git",
-    "tag": "2.0.0"
+    "tag": "2.1.0"
   },
   "social_media_url": "https://twitter.com/kanecheshire",
   "platforms": {

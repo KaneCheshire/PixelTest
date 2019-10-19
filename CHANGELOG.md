@@ -1,6 +1,10 @@
 # Changelog
 
-# Pending
+# 2.1.0
+
+- Added public extension on String for generating short/medium/long content when populating view models for snapshots. See README for me information.
+
+# 2.0.0
 
 - Removed requirement for the `PIXELTEST_BASE_DIR` environment variable.
   - Snapshots are now stored in a directory relative to the test file, but this means a breaking change for existing PixelTest users.
