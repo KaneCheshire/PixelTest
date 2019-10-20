@@ -56,24 +56,24 @@ struct PlaceholderImageGenerator {
         UIColor(white: 0.96, alpha: 1).setFill()
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.fill(CGRect(origin: .zero, size: size))
-        paint([
-            ((2 + xOffset, 2 + yOffset), .triangle(.bottomRight)),
-            ((3 + xOffset, 2 + yOffset), .square),
-            ((4 + xOffset, 2 + yOffset), .triangle(.bottomLeft)),
-            ((2 + xOffset, 3 + yOffset), .square),
-            ((4 + xOffset, 3 + yOffset), .square),
-            ((2 + xOffset, 4 + yOffset), .square),
-            ((3 + xOffset, 4 + yOffset), .square),
-            ((4 + xOffset, 4 + yOffset), .triangle(.topLeft)),
-            ((2 + xOffset, 5 + yOffset), .triangle(.topRight))
+       paint([
+            ((0 + xOffset, 1 + yOffset), .triangle(.bottomRight)),
+            ((1 + xOffset, 1 + yOffset), .square),
+            ((2 + xOffset, 1 + yOffset), .triangle(.bottomLeft)),
+            ((0 + xOffset, 2 + yOffset), .square),
+            ((2 + xOffset, 2 + yOffset), .square),
+            ((0 + xOffset, 3 + yOffset), .square),
+            ((1 + xOffset, 3 + yOffset), .square),
+            ((2 + xOffset, 3 + yOffset), .triangle(.topLeft)),
+            ((0 + xOffset, 4 + yOffset), .triangle(.topRight))
         ], colors: pinks, componentWidth: componentWidth)
         paint([
-            ((3 + xOffset, 4 + yOffset), .triangle(.topRight)),
-            ((4 + xOffset, 4 + yOffset), .triangle(.bottomRight)),
-            ((5 + xOffset, 4 + yOffset), .square),
-            ((4 + xOffset, 5 + yOffset), .square),
-            ((4 + xOffset, 6 + yOffset), .square),
-            ((4 + xOffset, 7 + yOffset), .triangle(.topRight)),
+            ((1 + xOffset, 3 + yOffset), .triangle(.topRight)),
+            ((2 + xOffset, 3 + yOffset), .triangle(.bottomRight)),
+            ((3 + xOffset, 3 + yOffset), .square),
+            ((2 + xOffset, 4 + yOffset), .square),
+            ((2 + xOffset, 5 + yOffset), .square),
+            ((2 + xOffset, 6 + yOffset), .triangle(.topRight)),
         ], colors: teals, componentWidth: componentWidth)
         let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
