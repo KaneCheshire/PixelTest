@@ -111,7 +111,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "PTRecordAll"
-            value = "YES"
+            value = "NO"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

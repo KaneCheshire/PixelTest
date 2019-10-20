@@ -38,7 +38,7 @@ open class PixelTestCase: XCTestCase {
     private let resultsCoordinator: ResultsCoordinator = .shared
     private lazy var testTargetInfoPlist = InfoPlist(bundle: Bundle(for: type(of: self)))
     private var actualMode: Mode {
-        if testTargetInfoPlist.recordAll {
+        if ProcessInfo.recordAll || testTargetInfoPlist.recordAll {
             return .record
         }
         return mode
