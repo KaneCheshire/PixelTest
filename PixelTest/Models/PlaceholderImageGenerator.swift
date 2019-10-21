@@ -9,7 +9,7 @@ import Foundation
 
 struct PlaceholderImageGenerator {
     
-   private enum Shape {
+    private enum Shape {
         
         case square
         
@@ -23,7 +23,7 @@ struct PlaceholderImageGenerator {
         case triangle(Triangle)
         
     }
-
+    
     private typealias ShapeComponent = (coord: (x: CGFloat, y: CGFloat), shape: Shape)
     
     private let pinks = [
@@ -38,7 +38,7 @@ struct PlaceholderImageGenerator {
         UIColor(red: 0.78, green: 0.18, blue: 0.73, alpha: 1.00)
         
     ]
-
+    
     private let teals = [
         UIColor(red: 0.11, green: 0.85, blue: 0.87, alpha: 1.00),
         UIColor(red: 0.09, green: 0.77, blue: 0.79, alpha: 1.00),
@@ -56,7 +56,7 @@ struct PlaceholderImageGenerator {
         UIColor(white: 0.96, alpha: 1).setFill()
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.fill(CGRect(origin: .zero, size: size))
-       paint([
+        paint([
             ((0 + xOffset, 1 + yOffset), .triangle(.bottomRight)),
             ((1 + xOffset, 1 + yOffset), .square),
             ((2 + xOffset, 1 + yOffset), .triangle(.bottomLeft)),

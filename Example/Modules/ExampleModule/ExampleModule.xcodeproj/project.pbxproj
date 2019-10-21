@@ -13,8 +13,8 @@
 		C3C42051234E79DA008993C7 /* ExampleModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C42050234E79DA008993C7 /* ExampleModuleTests.swift */; };
 		C3C42053234E79DA008993C7 /* ExampleModule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3C4203C234E798C008993C7 /* ExampleModule.framework */; };
 		C3C4205C234E7A0A008993C7 /* ExampleModuleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C42059234E7A0A008993C7 /* ExampleModuleView.swift */; };
-		C3C4205D234E7A0A008993C7 /* ExampleModuleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C4205A234E7A0A008993C7 /* ExampleModuleViewModel.swift */; };
 		C3C4205E234E7A0A008993C7 /* ExampleModuleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3C4205B234E7A0A008993C7 /* ExampleModuleView.xib */; };
+		C3DDF2A8235DD74F007220F4 /* UIView+NibLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DDF2A7235DD74F007220F4 /* UIView+NibLoading.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,8 +38,8 @@
 		C3C42050234E79DA008993C7 /* ExampleModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleModuleTests.swift; sourceTree = "<group>"; };
 		C3C42052234E79DA008993C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3C42059234E7A0A008993C7 /* ExampleModuleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleModuleView.swift; sourceTree = "<group>"; };
-		C3C4205A234E7A0A008993C7 /* ExampleModuleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleModuleViewModel.swift; sourceTree = "<group>"; };
 		C3C4205B234E7A0A008993C7 /* ExampleModuleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExampleModuleView.xib; sourceTree = "<group>"; };
+		C3DDF2A7235DD74F007220F4 /* UIView+NibLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NibLoading.swift"; sourceTree = "<group>"; };
 		DB2BCCC9C69164C2BFDF5467 /* Pods-ExampleModule.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleModule.debug.xcconfig"; path = "Target Support Files/Pods-ExampleModule/Pods-ExampleModule.debug.xcconfig"; sourceTree = "<group>"; };
 		E5BB92C56D54726946C6DC54 /* Pods_ExampleModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E79A5CA2C6DD1E1D19B9B570 /* Pods_ExampleModule_ExampleModuleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleModule_ExampleModuleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,8 +92,8 @@
 				C3C4203F234E798C008993C7 /* ExampleModule.h */,
 				C3C42040234E798C008993C7 /* Info.plist */,
 				C3C42059234E7A0A008993C7 /* ExampleModuleView.swift */,
-				C3C4205A234E7A0A008993C7 /* ExampleModuleViewModel.swift */,
 				C3C4205B234E7A0A008993C7 /* ExampleModuleView.xib */,
+				C3DDF2A7235DD74F007220F4 /* UIView+NibLoading.swift */,
 			);
 			path = ExampleModule;
 			sourceTree = "<group>";
@@ -306,8 +306,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3C4205D234E7A0A008993C7 /* ExampleModuleViewModel.swift in Sources */,
 				C3C4205C234E7A0A008993C7 /* ExampleModuleView.swift in Sources */,
+				C3DDF2A8235DD74F007220F4 /* UIView+NibLoading.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

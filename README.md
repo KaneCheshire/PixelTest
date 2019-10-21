@@ -11,15 +11,15 @@
 - [Quick start](#quick-start)
 - [Options](#options)
 - [Accessibility](#accessibility)
-- [Known limitations](#known-limitations)
+- [Good to know](#good-to-know)
 
-PixelTest is a modern, Swift-first snapshot testing tool.
+PixelTest is a modern, Swift-first snapshot testing tool, and is designed to get you writing snapshot tests as quickly as possible.
 
 Snapshot testing compares one of your views rendered into an image, to a previously recorded image, allowing for 0% difference or the test will fail.
 
 Snapshot tests are perfect for quickly checking complex layouts, while at the same time future proofing them against accidental changes.
 
-As an added bonus, PixelTest also clears up after itself. If you fix a failing test, the failure and diff images are automatically removed for you.
+As an added bonus, PixelTest also clears up after itself. If you fix a failing test, the failure and diff images are automatically removed for you from disk.
 
 ## Key features
 
@@ -45,7 +45,7 @@ Logic is covered with unit tests, behaviour with automation/UI tests, and snapsh
 
 PixelTest is available on Cocoapods.
 
-Add PixelTest to a **test target** in your `Podfile`:
+Add PixelTest to a **unit test target** in your `Podfile`:
 
 ```ruby
 target 'YourAppTarget' do
@@ -100,9 +100,11 @@ You can use these images to see what's changed and what went wrong. If it was an
 
 ## Options
 
-You can decide whether PixelTest tests your view with dynamic height or width, or fixed height and width. When you call `verify(view, ...)` you're also required to pass in an `LayoutStyle`. Typically this would be `.dynamicHeight`, which means that PixelTest will attempt to test your view with a fixed with of `320`, but allow it to dynamically resize in height based on its content.
+You can decide whether PixelTest tests your view with dynamic height or width, or fixed height and width. When you call `verify(view, ...)` you're also required to pass in an `LayoutStyle`. Typically this would be `.dynamicHeight(fixedWidth: 320)`, which means that PixelTest will attempt to test your view with a fixed width of `320`, but allow it to dynamically resize in height based on its content.
 
 This leaves you free to populate your view without having ugly layout code in your project or modules.
+
+Since it's so common to use `.dynamicHeight(fixedWidth: 320)`, PixelTest provides a shorthand so you can just use `.dynamicHeight` in your tests, which will automatically use a `fixedWidth` of `320`.
 
 Additionally, PixelTest now comes with some String constants that you can use for short/long/very long etc content when populating your view models:
 
@@ -110,15 +112,23 @@ Additionally, PixelTest now comes with some String constants that you can use fo
 let viewModel = ViewModel(title: .shortContent, subtitle: .mediumContent)
 ```
 
+PixelTest will also let you generate placeholder images of any size, so you don't have to add any assets to your testing targets:
+
+```swift
+let viewModel = ViewModel(image: .sized(width: 250, height: 100))
+```
+
 ## Accessibility
 
 You can use PixelTest to test different Dynamic Type sizes if you set up your fonts and views in the right way. The example project has some examples on how to do this in `DynamicTypeViewSnapshotTests.swift`
 
-## Known limitations
+## Good to know
 
-The way UIKit works with reusable views like `UITableViewCell`s and `UITableViewHeaderFooterView`s means that sometimes PixelTest needs to be used in a slightly different way.
+The way UIKit works with reusable views like `UITableViewCell`s and `UITableViewHeaderFooterView`s means that sometimes views need to be snapshotted in a particular way.
 
-The PixelTest example app has examples for how to do it, but with cells specifically you'll need to snapshot test the **`contentView`**, not the cell itself.
+Luckily, PixelTest helps you out once again and will automatically use the contentView of cells if you pass it in directly.
+
+You can also snapshot test the view of any `UIViewController`, but just like any view, if the height cannot be determined dynamically (as is the case with many controllers), you will have to provide an explicit height using something like  `LayoutStyle.fixed(width: 320,  height: 640)`.
 
 ## Requirements
 

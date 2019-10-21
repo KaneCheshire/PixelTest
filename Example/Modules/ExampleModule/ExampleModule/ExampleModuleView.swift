@@ -18,32 +18,6 @@ final class ExampleModuleView: UIView {
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		setup()
+		backgroundColor = .white
 	}
-
-	// MARK: Internal
-
-	func configure(with viewModel: ExampleModuleViewModel) {
-	}
-
-	// MARK: Private
-
-	private func setup() {
-        backgroundColor = .red
-        layer.cornerRadius = 15
-        layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMaxYCorner]
-	}
-
 }
-
-extension UIView {
-    
-    static var nib: UINib {
-        return UINib(nibName: "\(classForCoder())", bundle: Bundle(for: self))
-    }
-    
-    static func loadFromNib<T>() -> T {
-        return nib.instantiate(withOwner: nil, options: nil).first as! T
-    }
-}
-

@@ -13,7 +13,7 @@ public extension UIImage {
     static let medium = placeholderImageGenerator.generate(CGSize(width: 64, height: 64))
     static let large = placeholderImageGenerator.generate(CGSize(width: 128, height: 128))
     
-    static func sized(_ size: CGSize) -> UIImage { return placeholderImageGenerator.generate(size) }
+    static func sized(width: CGFloat, height: CGFloat) -> UIImage { return placeholderImageGenerator.generate(CGSize(width: width, height: height)) }
     
 }
 
