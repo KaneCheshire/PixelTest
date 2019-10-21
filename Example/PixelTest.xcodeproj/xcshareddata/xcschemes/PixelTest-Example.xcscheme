@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "PixelTest.app"
+               BuildableName = "PixelTest_Example.app"
                BlueprintName = "PixelTest_Example"
                ReferencedContainer = "container:PixelTest.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "PixelTest.app"
+            BuildableName = "PixelTest_Example.app"
             BlueprintName = "PixelTest_Example"
             ReferencedContainer = "container:PixelTest.xcodeproj">
          </BuildableReference>
@@ -103,7 +103,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "PixelTest.app"
+            BuildableName = "PixelTest_Example.app"
             BlueprintName = "PixelTest_Example"
             ReferencedContainer = "container:PixelTest.xcodeproj">
          </BuildableReference>
@@ -127,7 +127,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "PixelTest.app"
+            BuildableName = "PixelTest_Example.app"
             BlueprintName = "PixelTest_Example"
             ReferencedContainer = "container:PixelTest.xcodeproj">
          </BuildableReference>

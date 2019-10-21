@@ -1,5 +1,5 @@
 use_frameworks!
-platform :ios, '11.2'
+platform :ios, '13.0'
 workspace 'PixelTest'
 
 target 'PixelTest_Example' do
