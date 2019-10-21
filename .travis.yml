@@ -2,4 +2,4 @@
 osx_image: xcode10
 language: objective-c
 script:
-- xcodebuild test -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -sdk iphonesimulator12.0 -destination 'platform=iOS Simulator,name=iPhone X,OS=12.0' ONLY_ACTIVE_ARCH=NO | xcpretty
+- xcodebuild test -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -sdk iphonesimulator13.0 -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=13.0' ONLY_ACTIVE_ARCH=NO | xcpretty
