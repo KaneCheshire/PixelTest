@@ -26,21 +26,10 @@ struct FileCoordinator: FileCoordinatorType {
     // MARK: Internal
     
     /// Attempts to create a full file URL.
-    /// Ensure PIXELTEST_BASE_DIR is set in your scheme before calling this function.
-    ///
-    /// - Parameters:
-    ///   - function: The function used to construct the file URL.
-    ///   - scale: The scale used to to construct the file URL.
-    ///   - imageType: The image type used to construct the file URL.
-    ///   - layoutStyle: The layout style used to construct the file URL.
     /// - Returns: A full file URL, or nil if a URL could not be created.
-    func fileURL(for function: StaticString,
-                 file: StaticString,
-                 scale: Scale,
-                 imageType: ImageType,
-                 layoutStyle: LayoutStyle) -> URL {
-        let fullFileURL = URL(fileURLWithPath: "\(file)")
-        var alphaNumericFunctionName = "\(function)".strippingNonAlphaNumerics
+    func fileURL(for config: Config, imageType: ImageType) -> URL {
+        let fullFileURL = URL(fileURLWithPath: "\(config.file)")
+        var alphaNumericFunctionName = "\(config.function)".strippingNonAlphaNumerics
         alphaNumericFunctionName.remove(firstOccurenceOf: "test_")
         alphaNumericFunctionName.remove(firstOccurenceOf: "test")
         let directoryName = fullFileURL.deletingPathExtension().lastPathComponent
@@ -51,7 +40,7 @@ struct FileCoordinator: FileCoordinatorType {
             .appendingPathComponent(alphaNumericFunctionName)
             .appendingPathComponent(imageType.rawValue)
         createDirectoryIfNecessary(url)
-        return url.appendingPathComponent("\(layoutStyle.fileValue)@\(scale.explicitOrScreenNativeValue)x.png") // TODO: Use native name?
+        return url.appendingPathComponent("\(config.layoutStyle.fileValue)@\(config.scale.explicitOrScreenNativeValue)x.png") // TODO: Use native name?
     }
     
     /// Writes data to a file URL.
@@ -76,30 +65,22 @@ struct FileCoordinator: FileCoordinatorType {
     /// - Parameters:
     ///   - diffImage: The diff image to store.
     ///   - failedImage: The failed image to store.
-    ///   - function: The function the images were created with.
-    ///   - scale: The scale the images were created with.
-    ///   - layoutStyle: The style of layout the images were created with.
-    func storeDiffImage(_ diffImage: UIImage, failedImage: UIImage, function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        let diffUrl = fileURL(for: function, file: file, scale: scale, imageType: .diff, layoutStyle: layoutStyle)
+    func store(diffImage: UIImage, failedImage: UIImage, config: Config) {
+        let diffUrl = fileURL(for: config, imageType: .diff)
         if let diffData = diffImage.pngData() {
             try? write(diffData, to: diffUrl)
         }
-        let url = fileURL(for: function, file: file, scale: scale, imageType: .failure, layoutStyle: layoutStyle)
+        let url = fileURL(for: config, imageType: .failure)
         if let failedData = failedImage.pngData() {
             try? write(failedData, to: url)
         }
     }
     
     /// Removes diff and failure images from disk (if they exist).
-    ///
-    /// - Parameters:
-    ///   - function: The function the diff and failure images were originally for.
-    ///   - scale: The scale the diff and failure images were originally created in.
-    ///   - layoutStyle: The style of layout the images were created with.
-    func removeDiffAndFailureImages(function: StaticString, file: StaticString, scale: Scale, layoutStyle: LayoutStyle) {
-        let diffURL = fileURL(for: function, file: file, scale: scale, imageType: .diff, layoutStyle: layoutStyle)
+    func removeDiffAndFailureImages(config: Config) { // TODO: Delete test images for tests that no longer exist
+        let diffURL = fileURL(for: config, imageType: .diff)
         try? fileManager.removeItem(at: diffURL)
-        let failureUrl = fileURL(for: function, file: file, scale: scale, imageType: .failure, layoutStyle: layoutStyle)
+        let failureUrl = fileURL(for: config, imageType: .failure)
         try? fileManager.removeItem(at: failureUrl)
     }
     

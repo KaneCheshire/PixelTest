@@ -20,14 +20,14 @@ class CustomTableViewHeaderViewSnapshotTests: PixelTestCase {
         let view: CustomTableViewHeaderView = .loadFromNib()
         let viewModel = CustomTableViewHeaderViewModel(title: "This is a title ")
         view.configure(with: viewModel)
-        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
     }
     
     func test_longData() {
         let view: CustomTableViewHeaderView = .loadFromNib()
         let viewModel = CustomTableViewHeaderViewModel(title: "This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title This is a title ")
         view.configure(with: viewModel)
-        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
     }
     
 }

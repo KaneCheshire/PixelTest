@@ -9,10 +9,13 @@
 import XCTest
 @testable import PixelTest
 
-class TestCoordinatorTests: XCTestCase {
+final class TestCoordinatorTests: XCTestCase {
     
     private var testCoordinator: TestCoordinator!
     private var mockFileCoordinator: MockFileCoordinator!
+    private let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+    private let url = URL(string: "file://something")
+    private let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
     
     override func setUp() {
         super.setUp()
@@ -20,103 +23,68 @@ class TestCoordinatorTests: XCTestCase {
         testCoordinator = TestCoordinator(fileCoordinator: mockFileCoordinator)
     }
     
-    func test_record_noSnapshot() {
-        let result = testCoordinator.record(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed): XCTAssertEqual(failed, "Unable to create snapshot")
+    func test_noSnapshot() {
+        do {
+            let _ = try testCoordinator.test(UIView(), config: config)
+            XCTFail()
+        } catch let error as Errors.Test {
+            XCTAssertEqual(error.localizedDescription, "Unable to create snapshot image")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
     
-    func test_record_noWrite() {
-        let url = URL(string: "file://something")
-        mockFileCoordinator.fileURLReturnValue = url
-        mockFileCoordinator.writeError = CocoaError.error(.fileWriteUnknown)
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed): XCTAssertEqual(failed, "Unable to write image data to disk")
-        }
-    }
-    
-    func test_record_success() {
-        let url = URL(string: "file://something")
-        mockFileCoordinator.fileURLReturnValue = url
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.record(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success(let image): XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))
-        case .fail: XCTFail("Incorrect result: \(result)")
-        }
-    }
-    
-    func test_test_noSnapshot() {
-        let result = testCoordinator.test(UIView(), layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Unable to create snapshot")
-            XCTAssertNil(failed.oracle)
-            XCTAssertNil(failed.test)
-        }
-    }
-    
-    func test_test_noRecordedData() {
-        let url = URL(string: "file://something")
+    func test_noRecordedData() {
         mockFileCoordinator.fileURLReturnValue = url
         mockFileCoordinator.dataError = CocoaError.error(.fileReadUnknown)
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Unable to get recorded image data")
-            XCTAssertNil(failed.oracle)
-            XCTAssertNil(failed.test)
+        do {
+            let _ = try testCoordinator.test(view, config: config)
+            XCTFail()
+        } catch let error as Errors.Test {
+            XCTAssertEqual(error.localizedDescription, "Unable to get recorded image data")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
     
-    func test_test_noRecordedImage() {
-        let url = URL(string: "file://something")
+    func test_noRecordedImage() {
         mockFileCoordinator.fileURLReturnValue = url
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Unable to get recorded image")
-            XCTAssertNil(failed.oracle)
-            XCTAssertNil(failed.test)
+        do {
+            let _ = try testCoordinator.test(view, config: config)
+            XCTFail()
+        } catch let error as Errors.Test {
+            XCTAssertEqual(error.localizedDescription, "Unable to get recorded image")
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
     
-    func test_test_mismatch() {
-        mockFileCoordinator.fileURLReturnValue = URL(string: "file://something")
+    func test_mismatch() {
+        mockFileCoordinator.fileURLReturnValue = url
         let mockRecordedImage = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 11)).image(withScale: .native)!
         mockFileCoordinator.dataReturnValue = mockRecordedImage.pngData()!
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success: XCTFail("Incorrect result: \(result)")
-        case .fail(let failed):
-            XCTAssertEqual(failed.message, "Snapshot test failed, images are different")
-            XCTAssertTrue(failed.oracle!.equalTo(mockRecordedImage))
-            XCTAssertTrue(failed.test!.equalTo(view.image(withScale: .native)!))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        do {
+            let _ = try testCoordinator.test(view, config: config)
+            XCTFail()
+        } catch let error as Errors.Test {
+            switch error {
+                case .imagesAreDifferent(reference: let reference, failed: let failed):
+                    XCTAssertTrue(reference.equalTo(mockRecordedImage))
+                    XCTAssertTrue(failed.equalTo(view.image(withScale: .native)!))
+                    XCTAssertEqual(error.localizedDescription, "Images are different (see attached diff/failure images in logs)")
+                default: XCTFail("Unexpected result")
+            }
+        } catch {
+            XCTFail("Unexpected error: \(error)")
         }
     }
-    
-    func test_test_success() {
-        mockFileCoordinator.fileURLReturnValue = URL(string: "file://something")
+        
+    func test_success() throws {
+        mockFileCoordinator.fileURLReturnValue = url
         let mockRecordedImage = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)).image(withScale: .native)!
         mockFileCoordinator.dataReturnValue = mockRecordedImage.pngData()!
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        let result = testCoordinator.test(view, layoutStyle: .dynamicWidthHeight, scale: .native, function: #function, file: #file)
-        switch result {
-        case .success(let image):
-            XCTAssertTrue(image.equalTo(view.image(withScale: .native)!))
-        case .fail: XCTFail("Incorrect result: \(result)")
-        }
+        try testCoordinator.test(view, config: config)
     }
-    
+        
 }

@@ -20,14 +20,14 @@ class CustomTableViewCellSnapshotTests: PixelTestCase {
         let viewModel = CustomTableViewCellViewModel(title: .shortContent, content: .shortContent)
         let view: CustomTableViewCell = .loadFromNib()
         view.configure(with: viewModel)
-        verify(view.contentView, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
     }
     
     func test_longData() {
         let viewModel = CustomTableViewCellViewModel(title: .longContent, content: .veryLongContent)
         let view: CustomTableViewCell = .loadFromNib()
         view.configure(with: viewModel)
-        verify(view.contentView, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
     }
     
 }

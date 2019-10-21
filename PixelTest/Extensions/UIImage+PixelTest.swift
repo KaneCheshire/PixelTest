@@ -15,7 +15,7 @@ extension UIImage {
     /// - Returns: `true` if the two images are identical.
     func equalTo(_ image: UIImage) -> Bool {
         guard size == image.size else { return false }
-        return self.pngData() == image.pngData()
+        return pngData() == image.pngData()
     }
     
     /// Creates a diff image betweeh the view and another image.
