@@ -18,7 +18,7 @@ class ExampleModuleTests: PixelTestCase {
     
     func test_view() {
         let view: ExampleModuleView = ExampleModuleView.loadFromNib()
-        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
     }
     
 }

@@ -16,8 +16,15 @@ open class PixelTestCase: XCTestCase {
     // MARK: Open
     
     /// The current mode of the test case. Set to `.record` when setting up or recording tests.
-    /// If you have set a global override in the test target's Info.plist, this value is ignored.
-    /// Defaults to `.test`.
+    /// If you have set a global override in the Xcode scheme, or in the test target's Info.plist, this value is ignored.
+    ///
+    /// To override this globally and re-record every test target (i.e. when moving to a new simulator or iOS version),
+    /// simply add an environment variable to the Xcode scheme called `PTRecordAll` with a value of `YES`.
+    ///
+    /// To override this globally for an individual test target (i.e. when changing a theme), simply add
+    /// an entry into the **test target's** Info.plist called `PTRecordAll`, type `Boolean ` with a value of `YES`.
+    ///
+    /// Defaults to `.test`, unless a global override is present.
     open var mode: Mode = .test
     
     // MARK: Public
@@ -26,22 +33,30 @@ open class PixelTestCase: XCTestCase {
     /// You might want to change this to something specific for your project or Fastlane setup, for example.
     public static var failureHTMLFilename: String = "pixeltest_failures"
     
-    // MARK: Internal
-    
-    var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
-    var recordCoordinator: RecordCoordinatorType = RecordCoordinator()
-    var testCoordinator: TestCoordinatorType = TestCoordinator()
-    var fileCoordinator: FileCoordinatorType = FileCoordinator()
-    
     // MARK: Private
     
     private let resultsCoordinator: ResultsCoordinator = .shared
-    private lazy var testTargetInfoPlist = InfoPlist(bundle: Bundle(for: type(of: self)))
+    private var layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator()
+    private var recordCoordinator: RecordCoordinatorType = RecordCoordinator()
+    private var testCoordinator: TestCoordinatorType = TestCoordinator()
+    private var fileCoordinator: FileCoordinatorType = FileCoordinator()
+    private var verifyHasBeenCalled = false
     private var actualMode: Mode {
         if ProcessInfo.recordAll || testTargetInfoPlist.recordAll {
             return .record
         }
         return mode
+    }
+    
+    // MARK: - Init -
+    // MARK: Internal
+    
+    convenience init(layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator(), recordCoordinator: RecordCoordinatorType = RecordCoordinator(), testCoordinator: TestCoordinatorType = TestCoordinator(), fileCoordinator: FileCoordinatorType = FileCoordinator()) {
+        self.init(selector: #selector(setUp))
+        self.layoutCoordinator = layoutCoordinator
+        self.recordCoordinator = recordCoordinator
+        self.testCoordinator = testCoordinator
+        self.fileCoordinator = fileCoordinator
     }
     
     // MARK: - Functions -
@@ -53,12 +68,15 @@ open class PixelTestCase: XCTestCase {
     /// If tests fail while in test mode, a failure and diff image are stored locally, which you can find in the same directory as the snapshot recording. This should show up in your git changes.
     /// If tests succeed after diffs and failures have been stored, PixelTest will automatically remove them so you don't have to clear them from git yourself.
     ///
+    /// You must call this at least once in your test function (although you can call it multiple times with different layout styles if you want).
+    ///
     /// - Parameters:
     ///   - view: The view to verify.
     ///   - layoutStyle: The layout style to verify the view with.
     ///   - scale: The scale to record/test the snapshot with.
     open func verify(_ view: UIView, layoutStyle: LayoutStyle,
                      scale: Scale = .native, file: StaticString = #file, function: StaticString = #function, line: UInt = #line) {
+        verifyHasBeenCalled = true
         layoutCoordinator.layOut(view, with: layoutStyle)
         XCTAssertTrue(view.bounds.width > 0, "View has no width after layout", file: file, line: line)
         XCTAssertTrue(view.bounds.height > 0, "View has no height after layout", file: file, line: line)
@@ -71,9 +89,18 @@ open class PixelTestCase: XCTestCase {
     
 }
 
-private extension PixelTestCase {
+extension PixelTestCase {
     
-    // MARK: Private
+    open override func tearDown() {
+        super.tearDown()
+        if !verifyHasBeenCalled {
+            XCTFail("`verify` was not called before tearDown, did you forget to add a call to`verify` a view?")
+        }
+    }
+    
+}
+
+private extension PixelTestCase {
     
     func record(_ view: UIView, config: Config) {
         do {

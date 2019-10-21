@@ -100,7 +100,7 @@ You can use these images to see what's changed and what went wrong. If it was an
 
 ## Options
 
-You can decide whether PixelTest tests your view with dynamic height or width, or fixed height and width. When you call `verify(view, ...)` you're also required to pass in an `LayoutStyle`. Typically this would be `.dynamicHeight(fixedWidth: 320)`, which means that PixelTest will attempt to test your view with a fixed with of `320`, but allow it to dynamically resize in height based on its content.
+You can decide whether PixelTest tests your view with dynamic height or width, or fixed height and width. When you call `verify(view, ...)` you're also required to pass in an `LayoutStyle`. Typically this would be `.dynamicHeight`, which means that PixelTest will attempt to test your view with a fixed with of `320`, but allow it to dynamically resize in height based on its content.
 
 This leaves you free to populate your view without having ugly layout code in your project or modules.
 

@@ -21,10 +21,7 @@ class PixelTestCaseTests: XCTestCase {
         mockLayoutCoordinator = MockLayoutCoordinator()
         mockTestCoordinator = MockTestCoordinator()
         mockFileCoordinator = MockFileCoordinator()
-        testCase = PixelTestCase()
-        testCase.layoutCoordinator = mockLayoutCoordinator
-        testCase.testCoordinator = mockTestCoordinator
-        testCase.fileCoordinator = mockFileCoordinator
+        testCase = PixelTestCase(layoutCoordinator: mockLayoutCoordinator, testCoordinator: mockTestCoordinator, fileCoordinator: mockFileCoordinator)
     }
     
     func test_test_success() {

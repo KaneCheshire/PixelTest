@@ -25,7 +25,7 @@ class PixelTestExampleSnapshotTests: PixelTestCase {
         let view: SimpleView = .loadFromNib()
         let model = SimpleViewModel(title: .shortContent, subtitle: .shortContent, image: .small)
         view.configure(with: model)
-        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
     }
     
     // By populating the view with super long data we can test how the layout works, without ever running the app.
@@ -34,7 +34,7 @@ class PixelTestExampleSnapshotTests: PixelTestCase {
         let view: SimpleView = .loadFromNib()
         let model = SimpleViewModel(title: .longContent, subtitle: .longContent, image: .large)
         view.configure(with: model)
-        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
     }
     
     // We can even go as far as testing how the view should look when data is missing
@@ -43,7 +43,7 @@ class PixelTestExampleSnapshotTests: PixelTestCase {
         let view: SimpleView = .loadFromNib()
         let model = SimpleViewModel(title: .shortContent, subtitle: .emptyContent, image: .large)
         view.configure(with: model)
-        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
     }
     
     // More advanced usage could even test multiple widths, useful for checking layouts gracefully handle common screen sizes
@@ -52,7 +52,7 @@ class PixelTestExampleSnapshotTests: PixelTestCase {
         let view: SimpleView = .loadFromNib()
         let model = SimpleViewModel(title: .longContent, subtitle: .longContent, image: .large)
         view.configure(with: model)
-        verify(view, layoutStyle: .dynamicHeight(fixedWidth: 320))
+        verify(view, layoutStyle: .dynamicHeight)
         verify(view, layoutStyle: .dynamicHeight(fixedWidth: 375))
         verify(view, layoutStyle: .dynamicHeight(fixedWidth: 414))
     }
