@@ -24,44 +24,52 @@ class FileCoordinatorTests: XCTestCase {
     // MARK: Native Scale
     
     func test_fileURL_nativeScale_diff_dynamicWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .diff, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        let url = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_diff_dynamicWidthHeight/Diff/dw_dh@3.0x.png"))
     }
     
     func test_fileURL_nativeScale_diff_dynamicWidth() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .diff, layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_diff_dynamicWidth/Diff/dw_100.0@\(UIScreen.main.scale)x.png"))
     }
     
     func test_fileURL_nativeScale_diff_dynamicHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .diff, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_diff_dynamicHeight/Diff/100.0_dh@\(UIScreen.main.scale)x.png"))
     }
     
     func test_fileURL_nativeScale_diff_fixedWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .diff, layoutStyle: .fixed(width: 100, height: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .fixed(width: 100, height: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_diff_fixedWidthHeight/Diff/100.0_100.0@\(UIScreen.main.scale)x.png"))
     }
     
     // MARK: Explicit scale
     
     func test_fileURL_explicitScale_diff_dynamicWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .diff, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicWidthHeight)
+        let url = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_diff_dynamicWidthHeight/Diff/dw_dh@100.0x.png"))
     }
     
     func test_fileURL_explicitScale_diff_dynamicWidth() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .diff, layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_diff_dynamicWidth/Diff/dw_100.0@100.0x.png"))
     }
     
     func test_fileURL_explicitScale_diff_dynamicHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .diff, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_diff_dynamicHeight/Diff/100.0_dh@100.0x.png"))
     }
     
     func test_fileURL_explicitScale_diff_fixedWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .diff, layoutStyle: .fixed(width: 100, height: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .fixed(width: 100, height: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_diff_fixedWidthHeight/Diff/100.0_100.0@100.0x.png"))
     }
     
@@ -69,45 +77,53 @@ class FileCoordinatorTests: XCTestCase {
     // MARK: Native Scale
     
     func test_fileURL_nativeScale_reference_dynamicWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .reference, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        let url = fileCoordinator.fileURL(for: config, imageType: .reference)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_reference_dynamicWidthHeight/Reference/dw_dh@\(UIScreen.main.scale)x.png"))
     }
     
     func test_fileURL_nativeScale_reference_dynamicWidth() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .reference, layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle:.dynamicWidth(fixedHeight: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .reference)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_reference_dynamicWidth/Reference/dw_100.0@\(UIScreen.main.scale)x.png"))
     }
     
     func test_fileURL_nativeScale_reference_dynamicHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .reference, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .reference)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_reference_dynamicHeight/Reference/100.0_dh@\(UIScreen.main.scale)x.png"))
     }
     
     func test_fileURL_nativeScale_reference_fixedWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .reference, layoutStyle: .fixed(width: 100, height: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .fixed(width: 100, height: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .reference)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_reference_fixedWidthHeight/Reference/100.0_100.0@\(UIScreen.main.scale)x.png"))
     }
     
     // MARK: Explicit scale
     
     func test_fileURL_explicitScale_reference_dynamicWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .reference, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicWidthHeight)
+        let url = fileCoordinator.fileURL(for: config, imageType: .reference)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_reference_dynamicWidthHeight/Reference/dw_dh@100.0x.png"))
     }
     
     func test_fileURL_explicitScale_reference_dynamicWidth() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .reference, layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .reference)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_reference_dynamicWidth/Reference/dw_100.0@100.0x.png"))
     }
     
     func test_fileURL_explicitScale_reference_dynamicHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .reference, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .reference)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_reference_dynamicHeight/Reference/100.0_dh@100.0x.png"))
         
     }
     
     func test_fileURL_explicitScale_reference_fixedWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .reference, layoutStyle: .fixed(width: 100, height: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .fixed(width: 100, height: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .reference)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_reference_fixedWidthHeight/Reference/100.0_100.0@100.0x.png"))
     }
     
@@ -115,44 +131,52 @@ class FileCoordinatorTests: XCTestCase {
     // MARK: Native Scale
     
     func test_fileURL_nativeScale_failure_dynamicWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .failure, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        let url = fileCoordinator.fileURL(for: config, imageType: .failure)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_failure_dynamicWidthHeight/Failure/dw_dh@\(UIScreen.main.scale)x.png"))
     }
     
     func test_fileURL_nativeScale_failure_dynamicWidth() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .failure, layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .failure)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_failure_dynamicWidth/Failure/dw_100.0@\(UIScreen.main.scale)x.png"))
     }
     
     func test_fileURL_nativeScale_failure_dynamicHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .failure, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .failure)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_failure_dynamicHeight/Failure/100.0_dh@\(UIScreen.main.scale)x.png"))
     }
     
     func test_fileURL_nativeScale_failure_fixedWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .failure, layoutStyle: .fixed(width: 100, height: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .fixed(width: 100, height: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .failure)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_nativeScale_failure_fixedWidthHeight/Failure/100.0_100.0@\(UIScreen.main.scale)x.png"))
     }
     
     // MARK: Explicit scale
     
     func test_fileURL_explicitScale_failure_dynamicWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .failure, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicWidthHeight)
+        let url = fileCoordinator.fileURL(for: config, imageType: .failure)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_failure_dynamicWidthHeight/Failure/dw_dh@100.0x.png"))
     }
     
     func test_fileURL_explicitScale_failure_dynamicWidth() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .failure, layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicWidth(fixedHeight: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .failure)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_failure_dynamicWidth/Failure/dw_100.0@100.0x.png"))
     }
     
     func test_fileURL_explicitScale_failure_dynamicHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .failure, layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .dynamicHeight(fixedWidth: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .failure)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_failure_dynamicHeight/Failure/100.0_dh@100.0x.png"))
     }
     
     func test_fileURL_explicitScale_failure_fixedWidthHeight() {
-        let url = fileCoordinator.fileURL(for: #function, file: #file, scale: .explicit(100), imageType: .failure, layoutStyle: .fixed(width: 100, height: 100))
+        let config = Config(function: #function, file: #file, line: #line, scale: .explicit(100), layoutStyle: .fixed(width: 100, height: 100))
+        let url = fileCoordinator.fileURL(for: config, imageType: .failure)
         XCTAssertEqual(url, URL(string: "\(currentFilePath()).pixeltest/FileCoordinatorTests/fileURL_explicitScale_failure_fixedWidthHeight/Failure/100.0_100.0@100.0x.png"))
     }
     
@@ -162,7 +186,8 @@ class FileCoordinatorTests: XCTestCase {
         observeDefaultFileExistsCalls()
         observeDefaultCreateDirectoryCalls()
         mockFileManager.fileExistsReturnValue = false
-        _ = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .diff, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        _ = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(mockFileManager.fileExistsCallCount, 1)
         XCTAssertEqual(mockFileManager.createDirectoryCallCount, 1)
     }
@@ -170,7 +195,8 @@ class FileCoordinatorTests: XCTestCase {
     func test_doesntCreateBaseDirectory_whenExists() {
         observeDefaultFileExistsCalls()
         mockFileManager.fileExistsReturnValue = true
-        _ = fileCoordinator.fileURL(for: #function, file: #file, scale: .native, imageType: .diff, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        _ = fileCoordinator.fileURL(for: config, imageType: .diff)
         XCTAssertEqual(mockFileManager.fileExistsCallCount, 1)
         XCTAssertEqual(mockFileManager.createDirectoryCallCount, 0)
     }
@@ -184,13 +210,15 @@ class FileCoordinatorTests: XCTestCase {
             default: XCTFail("Unepected URL \(url) for call \(self.mockFileManager.removeItemCallCount)")
             }
         }
-        fileCoordinator.removeDiffAndFailureImages(function: #function, file: #file, scale: .native, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        fileCoordinator.removeDiffAndFailureImages(config: config)
         XCTAssertEqual(mockFileManager.removeItemCallCount, 2)
         XCTAssertEqual(mockFileManager.fileExistsCallCount, 2)
     }
     
     func test_storingDiffFailureImage() {
-        fileCoordinator.storeDiffImage(UIImage(), failedImage: UIImage(), function: #function, file: #file, scale: .native, layoutStyle: .dynamicWidthHeight)
+        let config = Config(function: #function, file: #file, line: #line, scale: .native, layoutStyle: .dynamicWidthHeight)
+        fileCoordinator.store(diffImage: UIImage(), failedImage: UIImage(), config: config)
         XCTAssertEqual(mockFileManager.removeItemCallCount, 0)
         XCTAssertEqual(mockFileManager.fileExistsCallCount, 2)
     }

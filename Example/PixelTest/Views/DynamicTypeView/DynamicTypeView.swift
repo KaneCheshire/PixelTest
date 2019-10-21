@@ -18,7 +18,7 @@ final class DynamicTypeView: UIView {
 
     @IBOutlet private var label: UILabel!
     
-    func configure(with viewModel: DynamicTypeViewModel, traitCollection: UITraitCollection? = UIApplication.shared.keyWindow?.traitCollection) {
+    func configure(with viewModel: DynamicTypeViewModel, traitCollection: UITraitCollection? = .current) {
         label.text = viewModel.text
         configureFonts(with: traitCollection)
     }
