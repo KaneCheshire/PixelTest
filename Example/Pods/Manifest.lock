@@ -1,5 +1,5 @@
 PODS:
-  - PixelTest (2.1.0)
+  - PixelTest (2.3.0)
 
 DEPENDENCIES:
   - PixelTest (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  PixelTest: 9f3f213c2281b1fca48a9cb3e6ff3df4b660fb51
+  PixelTest: 95b84fa28fb62c454d31330d1494ed3b5480bf24
 
 PODFILE CHECKSUM: 1d5725b57fd8b4de19ec6cd0a6db6d4afe7c4197
 
-COCOAPODS: 1.7.0
+COCOAPODS: 1.8.4

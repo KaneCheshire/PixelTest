@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PixelTest'
-  s.version          = '2.2.0'
+  s.version          = '2.3.0'
   s.summary          = 'PixelTest is a Swift-first, simple and modern snapshot testing tool.'
   s.description      = <<-DESC
   PixelTest is a modern, Swift-only snapshot testing tool.
@@ -22,6 +22,6 @@ Pod::Spec.new do |s|
   s.source_files = 'PixelTest/**/*.swift'
   s.exclude_files = 'PixelTest/**/*.plist'
   s.frameworks = 'UIKit', 'XCTest'
-  s.swift_version = '4.2'
+  s.swift_version = '5.1'
   s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
 end
