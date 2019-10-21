@@ -130,6 +130,20 @@ Luckily, PixelTest helps you out once again and will automatically use the conte
 
 You can also snapshot test the view of any `UIViewController`, but just like any view, if the height cannot be determined dynamically (as is the case with many controllers), you will have to provide an explicit height using something like  `LayoutStyle.fixed(width: 320,  height: 640)`.
 
+## Changing simulator or iOS versions
+
+The only real downside to snapshot testing is that because UI renders slightly differently on @2x (iPhone SE) and @3x (iPhone X) screens, and also renders differently between iOS versions, it means you have to run your tests on the same simulator every time.
+
+Generally this isn't a problem once you get into the habit of it, but it poses a problem when trying to move to a new version of iOS (i.e. you dropped support for an older version of iOS which your tests were running on.)
+
+PixelTest helps you with this as well, and provides two ways to globally re-record tests. You can either force record the entire suite, or force record an indvidual test target (in the case of modular apps).
+
+To record globally across the entire test suite, add an environment variable called `PTRecordAll` with a value of `YES`.
+
+To record for an individual test target, add a `Boolean` entry into the **test target**'s `Info.plist` called `PTRecordAll` with a value of `YES`.
+
+Setting one of these will override any tests that have their mode set to `.test` in the appropriate places.
+
 ## Requirements
 
 PixelTest currently [only works in iOS projects](https://github.com/KaneCheshire/PixelTest/issues/13).
