@@ -1,6 +1,6 @@
 # Changelog
 
-## Pending
+## 2.2.0
 
 - Added conveniences for calling `verify` with a `UIViewController`, `UITableViewCell` or `UICollectionViewCell` directly without having to pass in the `view` or `contentView` manually.
 - Added convenience `.dynamicHeight` `LayoutStyle` you can use in your tests which automatically resolves to `.dynamicHeight(fixedWidth: 320)` since that's the most common: `verify(view, layoutStyle: .dynamicHeight)`
