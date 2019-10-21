@@ -11,9 +11,9 @@
 - Tests will now automatically fail if you forget to add at least one call to  `verify` in your test function.
 - Small improvements to the failure message when a test fails because the images are different.
 - Fixed a rogue apostrophe in the generated failure HTML code which caused the layout to break a bit.
-- Hides and shows the red split indicator on the generated failure HTML when you hover over the overlaid split images (so that it doesn't obscure the content)/
+- Hides and shows the red split indicator on the generated failure HTML when you hover over the overlaid split images (so that it doesn't obscure the content).
 - Added a conventional "checkerboard" background to transparent images in the generate failure HTML.
-- Generated failue HTML file now indicates how many failures there are in the tab title.
+- Generated failure HTML file now indicates how many failures there are in the tab title.
 
 
 
