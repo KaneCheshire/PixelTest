@@ -143,7 +143,7 @@ extension ResultsCoordinator {
     }
     
     private func footerHTML() -> String {
-        "<footer><div><a href='https://github.com/KaneCheshire/PixelTest' target='_blank'><img src='data:image/png;base64,\(UIImage.pixelTestIconBase64String)' height='32' /></a></div><div><a href='https://github.com/KaneCheshire/PixelTest' target='_blank'>PixelTest</a> by <a href='https://twitter.com/kanecheshire' target='_blank'>Kane Cheshire</a></div></footer>"
+        return "<footer><div><a href='https://github.com/KaneCheshire/PixelTest' target='_blank'><img src='data:image/png;base64,\(UIImage.pixelTestIconBase64String)' height='32' /></a></div><div><a href='https://github.com/KaneCheshire/PixelTest' target='_blank'>PixelTest</a> by <a href='https://twitter.com/kanecheshire' target='_blank'>Kane Cheshire</a></div></footer>"
     }
     
 }
