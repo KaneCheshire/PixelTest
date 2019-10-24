@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PlaceholderImageGenerator {
+final class PlaceholderImageGenerator {
     
     private enum Shape {
         
@@ -48,7 +48,16 @@ struct PlaceholderImageGenerator {
         UIColor(red: 0.06, green: 0.77, blue: 0.79, alpha: 1.00)
     ]
     
+    private var cache: [CGSize: UIImage] = [:]
+    
     func generate(_ size: CGSize) -> UIImage {
+        if let cached = cache[size] { return cached }
+        let new = generateNew(size)
+        cache[size] = new
+        return new
+    }
+    
+    private func generateNew(_ size: CGSize) -> UIImage {
         let componentWidth = min(size.width / 8, size.height / 8)
         let xOffset = ((size.width / componentWidth) - 4) / 2
         let yOffset = ((size.height / componentWidth) - 6) / 2
@@ -75,9 +84,9 @@ struct PlaceholderImageGenerator {
             ((2 + xOffset, 5 + yOffset), .square),
             ((2 + xOffset, 6 + yOffset), .triangle(.topRight)),
         ], colors: teals, componentWidth: componentWidth)
-        let img = UIGraphicsGetImageFromCurrentImageContext()
+        let img = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
         UIGraphicsEndImageContext()
-        return img ?? UIImage()
+        return img
     }
     
     private func paint(_ components: [ShapeComponent], colors: [UIColor], componentWidth: CGFloat) {
@@ -156,6 +165,15 @@ extension CGContext {
         color.setFill()
         fillPath()
         restoreGState()
+    }
+    
+}
+
+extension CGSize: Hashable {
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(width)
+        hasher.combine(height)
     }
     
 }

@@ -32,6 +32,6 @@ public enum LayoutStyle {
 public extension LayoutStyle {
     
     /// Default `dynamicHeight` with a `fixedWidth` of `320`, i.e. iPhone SE size.
-    static let dynamicHeight: LayoutStyle = .dynamicHeight(fixedWidth: 320) // TODO: Use enum associated value default values when supporting Swift 5.1
+    static let dynamicHeight: LayoutStyle = .dynamicHeight(fixedWidth: 320)
     
 }

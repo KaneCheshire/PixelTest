@@ -27,11 +27,9 @@ open class PixelTestCase: XCTestCase {
     /// Defaults to `.test`, unless a global override is present.
     open var mode: Mode = .test
     
-    // MARK: Public
+    // MARK: Internal
     
-    /// The name of the HTML file PixelTets auto-generates
-    /// You might want to change this to something specific for your project or Fastlane setup, for example.
-    public static var failureHTMLFilename: String = "pixeltest_failures"
+    private(set) var testError: Errors.Test?
     
     // MARK: Private
     
@@ -41,12 +39,7 @@ open class PixelTestCase: XCTestCase {
     private var testCoordinator: TestCoordinatorType = TestCoordinator()
     private var fileCoordinator: FileCoordinatorType = FileCoordinator()
     private var verifyHasBeenCalled = false
-    private var actualMode: Mode {
-        if ProcessInfo.recordAll || testTargetInfoPlist.recordAll {
-            return .record
-        }
-        return mode
-    }
+    private var actualMode: Mode { return ProcessInfo.recordAll || testTargetInfoPlist.recordAll ? .record : mode }
     
     // MARK: - Init -
     // MARK: Internal
@@ -106,6 +99,7 @@ private extension PixelTestCase {
         do {
             let image = try recordCoordinator.record(view, config: config)
             addAttachment(named: "Recorded image", image: image)
+            fileCoordinator.removeDiffAndFailureImages(config: config)
             XCTFail("Snapshot recorded (see attached image in logs), disable record mode and re-run tests to verify.", file: config.file, line: config.line)
         } catch let error as Errors.Record {
             XCTFail(error.localizedDescription, file: config.file, line: config.line)
@@ -117,7 +111,7 @@ private extension PixelTestCase {
     func test(_ view: UIView, config: Config) {
         do {
             try testCoordinator.test(view, config: config)
-            fileCoordinator.removeDiffAndFailureImages(config: config) // TODO: Do this after recording
+            fileCoordinator.removeDiffAndFailureImages(config: config)
         } catch let error as Errors.Test {
             handle(error, config: config)
         } catch {
@@ -126,6 +120,7 @@ private extension PixelTestCase {
     }
     
     func handle(_ error: Errors.Test, config: Config) {
+        testError = error
         switch error {
             case .imagesAreDifferent(let referenceImage, let failedImage):
                 storeDiffAndFailureImages(from: failedImage, recordedImage: referenceImage, config: config)

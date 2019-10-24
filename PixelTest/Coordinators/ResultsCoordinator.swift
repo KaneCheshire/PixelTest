@@ -35,7 +35,11 @@ extension ResultsCoordinator: XCTestObservation {
     func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
         guard let filePath = filePath, let testCase = testCase as? PixelTestCase else { return }
         switch testCase.mode {
-            case .test: failingFiles.insert(filePath)
+            case .test:
+                switch testCase.testError {
+                    case .imagesAreDifferent?: failingFiles.insert(filePath)
+                    case .unableToCreateSnapshot?, .unableToGetRecordedImage?, .unableToGetRecordedImageData?, .none: break
+                }
             case .record: break
         }
     }
@@ -46,7 +50,7 @@ extension ResultsCoordinator: XCTestObservation {
         guard let commonPath = fileCoordinator.commonPath(from: failedURLs) else { return }
         let htmlDir = URL(fileURLWithPath: commonPath)
         let allHTML = generateHTMLFileString(withBody: htmlStrings(forFailedURLs: failedURLs, htmlDir: htmlDir).joined() + footerHTML(), failureCount: failingFiles.count)
-        let filename = htmlDir.appendingPathComponent("\(PixelTestCase.failureHTMLFilename).html")
+        let filename = htmlDir.appendingPathComponent("pixeltest_failures.html")
         try? fileCoordinator.write(Data(allHTML.utf8), to: filename)
         failingFiles.removeAll()
     }
