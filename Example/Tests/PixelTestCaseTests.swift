@@ -9,7 +9,7 @@
 import XCTest
 @testable import PixelTest
 
-class PixelTestCaseTests: XCTestCase {
+final class PixelTestCaseTests: XCTestCase {
     
     private var testCase: PixelTestCase!
     private var mockLayoutCoordinator: MockLayoutCoordinator!
