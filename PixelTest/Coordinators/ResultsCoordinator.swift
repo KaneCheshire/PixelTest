@@ -37,8 +37,8 @@ extension ResultsCoordinator: XCTestObservation {
         switch testCase.mode {
             case .test:
                 switch testCase.testError {
-                    case .imagesAreDifferent: failingFiles.insert(filePath)
-                    case .unableToCreateSnapshot, .unableToGetRecordedImage, .unableToGetRecordedImageData, .none: break
+                    case .imagesAreDifferent?: failingFiles.insert(filePath)
+                    case .unableToCreateSnapshot?, .unableToGetRecordedImage?, .unableToGetRecordedImageData?, .none: break
                 }
             case .record: break
         }
