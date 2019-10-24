@@ -28,19 +28,9 @@ struct FileCoordinator: FileCoordinatorType {
     /// Attempts to create a full file URL.
     /// - Returns: A full file URL, or nil if a URL could not be created.
     func fileURL(for config: Config, imageType: ImageType) -> URL {
-        let fullFileURL = URL(fileURLWithPath: "\(config.file)")
-        var alphaNumericFunctionName = "\(config.function)".strippingNonAlphaNumerics
-        alphaNumericFunctionName.remove(firstOccurenceOf: "test_")
-        alphaNumericFunctionName.remove(firstOccurenceOf: "test")
-        let directoryName = fullFileURL.deletingPathExtension().lastPathComponent
-        let url = fullFileURL
-            .deletingLastPathComponent()
-            .appendingPathComponent(".pixeltest")
-            .appendingPathComponent(directoryName)
-            .appendingPathComponent(alphaNumericFunctionName)
-            .appendingPathComponent(imageType.rawValue)
+        let url = directoryURL(for: config, imageType: imageType)
         createDirectoryIfNecessary(url)
-        return url.appendingPathComponent("\(config.layoutStyle.fileValue)@\(config.scale.explicitOrScreenNativeValue)x.png") // TODO: Use native name?
+        return url.appendingPathComponent("\(config.layoutStyle.fileValue)@\(config.scale.explicitOrScreenNativeValue)x.png")
     }
     
     /// Writes data to a file URL.
@@ -109,6 +99,20 @@ struct FileCoordinator: FileCoordinatorType {
     private func createDirectoryIfNecessary(_ url: URL) {
         guard !fileManager.fileExists(atPath: url.absoluteString) else { return }
         try? fileManager.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil) // TODO: Catch error somewhere?
+    }
+    
+    private func directoryURL(for config: Config, imageType: ImageType) -> URL {
+        let fullFileURL = URL(fileURLWithPath: "\(config.file)")
+        var alphaNumericFunctionName = "\(config.function)".strippingNonAlphaNumerics
+        alphaNumericFunctionName.remove(firstOccurenceOf: "test_")
+        alphaNumericFunctionName.remove(firstOccurenceOf: "test")
+        let directoryName = fullFileURL.deletingPathExtension().lastPathComponent
+        return fullFileURL
+            .deletingLastPathComponent()
+            .appendingPathComponent(".pixeltest")
+            .appendingPathComponent(directoryName)
+            .appendingPathComponent(alphaNumericFunctionName)
+            .appendingPathComponent(imageType.rawValue)
     }
     
 }

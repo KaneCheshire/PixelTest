@@ -337,6 +337,6 @@ private extension FileCoordinatorTests {
     
 }
 
-func XCTPass() { // TODO: Move
+func XCTPass() {
     XCTAssert(true)
 }
