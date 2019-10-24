@@ -1,10 +1,17 @@
 # Changelog
 
+## 2.3.0
+
+- Diff and Failure images are now automatically deleted when re-recording snapshots, rather than just when a test passes.
+- Failure HTML file only gets generated when at least one test fails due to snapshot test failures, rather than any failure.
+- PlaceholderImageGenerator now caches generated images during tests
+- Removed static property for choosing the failure HTML file name, since it’s mostly pointless unless you’re using a principle class to set it. If this is an issue for you, please let me know and I can re-add it, but I'm fairly confident this doesn't affect anyone.
+
 ## 2.2.0
 
 - Added conveniences for calling `verify` with a `UIViewController`, `UITableViewCell` or `UICollectionViewCell` directly without having to pass in the `view` or `contentView` manually.
 - Added convenience `.dynamicHeight` `LayoutStyle` you can use in your tests which automatically resolves to `.dynamicHeight(fixedWidth: 320)` since that's the most common: `verify(view, layoutStyle: .dynamicHeight)`
-- Added a way to override the `mode` globally, either per-Xcode scheme (which re-records every test in every test target), or per-test target (which re-records every test in the target). 
+- Added a way to override the `mode` globally, either per-Xcode scheme (which re-records every test in every test target), or per-test target (which re-records every test in the target).
     - In the Xcode scheme you add an environment variable called `PTRecordAll` with a value of `YES`.
     - In the individual test targets you add a new `Boolean` entry into its `Info.plist` called `PTRecordAll` with a value of `YES`.
 - Added a way to generate placeholder images of any size using `UIImage.sized(width: 250, height: 100)`. Images are generated in code and aren't stored as assets, so PixelTest will be able to support Swift Package Manager still in the future.
