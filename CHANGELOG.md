@@ -6,6 +6,7 @@
 - Failure HTML file only gets generated when at least one test fails due to snapshot test failures, rather than any failure.
 - PixelTest now caches generated images during tests.
 - Removed static property for choosing the failure HTML file name, since it’s mostly pointless unless you’re using a principle class to set it. If this is an issue for you, please let me know and I can re-add it, but I'm fairly confident this doesn't affect anyone.
+- PixelTest now declares it uses Swift 5, although there was no source changes needed for this it was annoying to have the migration warning in Xcode which will disappear if you update to `2.3.0`.
 
 ## 2.2.0
 
