@@ -4,7 +4,7 @@
 
 - Diff and Failure images are now automatically deleted when re-recording snapshots, rather than just when a test passes.
 - Failure HTML file only gets generated when at least one test fails due to snapshot test failures, rather than any failure.
-- PlaceholderImageGenerator now caches generated images during tests
+- PixelTest now caches generated images during tests.
 - Removed static property for choosing the failure HTML file name, since it’s mostly pointless unless you’re using a principle class to set it. If this is an issue for you, please let me know and I can re-add it, but I'm fairly confident this doesn't affect anyone.
 
 ## 2.2.0
