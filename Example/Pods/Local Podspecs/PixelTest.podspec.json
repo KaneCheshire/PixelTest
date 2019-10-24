@@ -25,9 +25,9 @@
     "UIKit",
     "XCTest"
   ],
-  "swift_versions": "5.1",
+  "swift_versions": "5.0",
   "pod_target_xcconfig": {
     "ENABLE_BITCODE": "NO"
   },
-  "swift_version": "5.1"
+  "swift_version": "5.0"
 }
