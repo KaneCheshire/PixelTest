@@ -5,7 +5,7 @@
 //  Created by Kane Cheshire on 19/03/2018.
 //
 
-import Foundation
+import CoreGraphics
 
 /// Represents a layout style for verifying a view.
 ///

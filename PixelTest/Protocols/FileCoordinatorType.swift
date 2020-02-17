@@ -5,7 +5,7 @@
 //  Created by Kane Cheshire on 24/04/2018.
 //
 
-import Foundation
+import UIKit
 
 protocol FileCoordinatorType {
     
