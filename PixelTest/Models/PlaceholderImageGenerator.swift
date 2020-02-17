@@ -5,7 +5,7 @@
 //  Created by Kane Cheshire on 19/10/2019.
 //
 
-import Foundation
+import UIKit
 
 final class PlaceholderImageGenerator {
     
