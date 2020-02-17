@@ -5,7 +5,7 @@
 //  Created by Kane Cheshire on 16/04/2018.
 //
 
-import Foundation
+import UIKit
 
 /// Coordinates manipulating files.
 struct FileCoordinator: FileCoordinatorType {
