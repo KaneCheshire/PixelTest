@@ -5,7 +5,7 @@
 //  Created by Kane Cheshire on 19/03/2018.
 //
 
-import Foundation
+import UIKit
 
 /// Represents the scale of the resulting snapshot image.
 /// I.e. whether it's @1x, @2x, @3x etc.

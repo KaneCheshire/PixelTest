@@ -6,6 +6,7 @@
 - Failure HTML file only gets generated when at least one test fails due to snapshot test failures, rather than any failure.
 - PixelTest now caches generated images during tests.
 - Removed static property for choosing the failure HTML file name, since it’s mostly pointless unless you’re using a principle class to set it. If this is an issue for you, please let me know and I can re-add it, but I'm fairly confident this doesn't affect anyone.
+- PixelTest now declares it uses Swift 5, although there was no source changes needed for this it was annoying to have the migration warning in Xcode which will disappear if you update to `2.3.0`.
 
 ## 2.2.0
 
@@ -18,9 +19,9 @@
 - Tests will now automatically fail if you forget to add at least one call to  `verify` in your test function.
 - Small improvements to the failure message when a test fails because the images are different.
 - Fixed a rogue apostrophe in the generated failure HTML code which caused the layout to break a bit.
-- Hides and shows the red split indicator on the generated failure HTML when you hover over the overlaid split images (so that it doesn't obscure the content)/
+- Hides and shows the red split indicator on the generated failure HTML when you hover over the overlaid split images (so that it doesn't obscure the content).
 - Added a conventional "checkerboard" background to transparent images in the generate failure HTML.
-- Generated failue HTML file now indicates how many failures there are in the tab title.
+- Generated failure HTML file now indicates how many failures there are in the tab title.
 
 
 

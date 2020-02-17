@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import UIKit
 
 /// Coordinates testing.
 struct TestCoordinator: TestCoordinatorType {
