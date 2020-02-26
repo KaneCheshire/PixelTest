@@ -19,6 +19,22 @@ public enum Scale {
 
 }
 
+extension Scale: ExpressibleByIntegerLiteral {
+
+  public init(integerLiteral value: Int) {
+    self = value <= 0 ? .native : .explicit(CGFloat(value))
+  }
+
+}
+
+extension Scale: ExpressibleByFloatLiteral {
+
+  public init(floatLiteral value: Float) {
+    self = value <= 0 ? .native : .explicit(CGFloat(value))
+  }
+
+}
+
 extension Scale {
     
     /// The value of the scale using the explicit value, or screen value if native.
