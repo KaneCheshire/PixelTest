@@ -32,7 +32,7 @@ PixelTest is an excellent alternative to other options because PixelTest:
 - If tests fail, PixelTest automatically creates HTML files with interactive split overlays to see what went wrong.
 - Automatically cleans up after itself by removing failed/diff images stored on disk when the corresponding test is fixed and passes.
 - Works out of the box with no need to set up environment variables.
-- Has no depdenencies.
+- Has no dependencies.
 
 
 ## Why snapshot test?
