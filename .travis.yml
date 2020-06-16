@@ -5,4 +5,4 @@ before_install:
 - bundle install
 - pod install --project-directory=Example
 script:
-- set -o pipefail && xcodebuild test -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -sdk iphonesimulator -destination 'OS=13.4.1,name=iPhone 8' | xcpretty
+- set -o pipefail && xcodebuild test -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -sdk iphonesimulator -destination 'OS=13.4.1,name=iPhone 11 Pro' | xcpretty
