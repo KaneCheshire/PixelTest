@@ -45,7 +45,7 @@ open class PixelTestCase: XCTestCase {
     // MARK: Internal
     
     convenience init(layoutCoordinator: LayoutCoordinatorType = LayoutCoordinator(), recordCoordinator: RecordCoordinatorType = RecordCoordinator(), testCoordinator: TestCoordinatorType = TestCoordinator(), fileCoordinator: FileCoordinatorType = FileCoordinator()) {
-        self.init(selector: #selector(setUp))
+        self.init(selector: #selector(PixelTestCase.setUp))
         self.layoutCoordinator = layoutCoordinator
         self.recordCoordinator = recordCoordinator
         self.testCoordinator = testCoordinator
