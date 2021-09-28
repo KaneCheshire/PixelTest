@@ -8,18 +8,18 @@ on:
 jobs:
 
   test_xcode12_ios14:
-    name: Run tests on Xcode 12 and iOS 14
+    name: Run tests on Xcode 13 and iOS 15
     runs-on: macOS-11
 
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Set Xcode version to 12.5.1
-        run: sudo xcode-select -switch /Applications/Xcode_12.5.1.app
+      - name: Set Xcode version to 13
+        run: sudo xcode-select -switch /Applications/Xcode_13.app
       - name: Build for testing
-        run: xcodebuild build-for-testing -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.5'
-      - name: Test on iPhone 11
-        run: xcodebuild test-without-building -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.5'
+        run: xcodebuild build-for-testing -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -destination 'platform=iOS Simulator,name=iPhone 13,OS=15.0'
+      - name: Test on iPhone 13
+        run: xcodebuild test-without-building -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -destination 'platform=iOS Simulator,name=iPhone 13,OS=15.0'
           
   build_spm:
     name: Ensure Swift Package Manager builds
@@ -28,29 +28,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Set Xcode version to 12.5.1
-        run: sudo xcode-select -switch /Applications/Xcode_12.5.1.app
+      - name: Set Xcode version to 13
+        run: sudo xcode-select -switch /Applications/Xcode_13.app
       - name: Build Swift Package Manager
-        run: xcodebuild -workspace package.xcworkspace -scheme PixelTest -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.5'
+        run: xcodebuild -workspace package.xcworkspace -scheme PixelTest -destination 'platform=iOS Simulator,name=iPhone 13,OS=15.0'
 
   build_carthage:
     name: Ensure Carthage builds
     runs-on: macOS-11
 
     steps:
-      - name: Set Xcode version to 12.5.1
-        run: sudo xcode-select -switch /Applications/Xcode_12.5.1.app
+      - name: Set Xcode version to 13
+        run: sudo xcode-select -switch /Applications/Xcode_13.app
       - name: Build Carthage
         run: ./carthage.sh build --archive
 
   build_cocoapods:
     name: Ensure Cocoapods builds
-    runs-on: macOS-latest
+    runs-on: macOS-11
 
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Set Xcode version to 12.5.1
-        run: sudo xcode-select -switch /Applications/Xcode_12.5.1.app
+      - name: Set Xcode version to 13
+        run: sudo xcode-select -switch /Applications/Xcode_13.app
       - name: Build Cocoapods
         run: pod lib lint --verbose --allow-warnings
