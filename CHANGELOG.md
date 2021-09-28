@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.2
+
+- Fixes ambiguous selector error
+
+## 2.3.1
+
+- Carthage support
+
 ## 2.3.0
 
 - Diff and Failure images are now automatically deleted when re-recording snapshots, rather than just when a test passes.
