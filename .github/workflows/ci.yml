@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Set Xcode version to 13
-        run: sudo xcode-select -switch /Applications/Xcode_13.app
+        run: sudo xcode-select -switch /Applications/Xcode_13.0.app
       - name: Build for testing
         run: xcodebuild build-for-testing -workspace Example/PixelTest.xcworkspace -scheme PixelTest-Example -destination 'platform=iOS Simulator,name=iPhone 13,OS=15.0'
       - name: Test on iPhone 13
@@ -29,7 +29,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Set Xcode version to 13
-        run: sudo xcode-select -switch /Applications/Xcode_13.app
+        run: sudo xcode-select -switch /Applications/Xcode_13.0.app
       - name: Build Swift Package Manager
         run: xcodebuild -workspace package.xcworkspace -scheme PixelTest -destination 'platform=iOS Simulator,name=iPhone 13,OS=15.0'
 
@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: Set Xcode version to 13
-        run: sudo xcode-select -switch /Applications/Xcode_13.app
+        run: sudo xcode-select -switch /Applications/Xcode_13.0.app
       - name: Build Carthage
         run: ./carthage.sh build --archive
 
@@ -51,6 +51,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Set Xcode version to 13
-        run: sudo xcode-select -switch /Applications/Xcode_13.app
+        run: sudo xcode-select -switch /Applications/Xcode_13.0.app
       - name: Build Cocoapods
         run: pod lib lint --verbose --allow-warnings
