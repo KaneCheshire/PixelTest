@@ -4,8 +4,9 @@ import PackageDescription
 
 let pixelTest: Product = .library(name: "PixelTest", targets: ["PixelTest"])
 let target: Target = .target(name: pixelTest.name, path: "PixelTest")
+let testTarget: Target = .testTarget(name: "Tests", dependencies: [.target(name: "PixelTest")], path: "Example/Tests")
 
 let package = Package(name: pixelTest.name,
-                      platforms: [.iOS(.v9)],
+                      platforms: [.iOS(.v10)],
                       products: [pixelTest],
-                      targets: [target])
+                      targets: [target, testTarget])
